@@ -1,8 +1,8 @@
-package paw.my_mess.db_service.persistence.entities
+package paw.my_mess.db_service.business.bussines_models.get
 
 import java.sql.Date
 
-data class Message(
+data class BusinessMessage(
     var messageId: String,
     var chatId: String,
     var ownerId: String,
@@ -10,3 +10,4 @@ data class Message(
     var imagePath: String?,
     var date: Date
 )
+

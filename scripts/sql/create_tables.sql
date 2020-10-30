@@ -12,7 +12,7 @@ CREATE TABLE user_profiles(
 	status TEXT,
 	birthdate DATE CHECK (birthdate > '1900-01-01'),
 	gender TEXT,
-	dataRegistered DATE CHECK (dataRegistered > '2010-01-01'),
+	dateRegistered DATE CHECK (dateRegistered > '2010-01-01'),
 	city TEXT,
 	country TEXT,
 	CONSTRAINT uid_user_profiles_fk  FOREIGN KEY(uid) REFERENCES users(uid)
