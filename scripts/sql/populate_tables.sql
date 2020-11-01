@@ -22,7 +22,11 @@ INSERT INTO user_profiles (uid, status, birthdate, gender, dateRegistered, city,
 /* POPULATE MESSAGES TABLES */
 
 /* POPULATE BLOCKED USERS TABLES */
+INSERT INTO blocked_users (uid, targetid) VALUES (2, 3);
 
 /* POPULATE FRIENDS TABLES */
+INSERT INTO friends (uid1, uid2) VALUES (1, 2);
+INSERT INTO friends (uid1, uid2) VALUES (2, 3);
 
 /* POPULATE FRIEND REQUESTS TABLES */
+INSERT INTO friend_requests (fromid, toid) VALUES (1, 3);

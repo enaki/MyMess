@@ -7,9 +7,9 @@ import java.sql.ResultSet
 class RequestFriendRowMapper: RowMapper<FriendRequest>{
     override fun mapRow(resultSet: ResultSet, rowNumber: Int): FriendRequest? {
         return FriendRequest(
-                resultSet.getString("friendrequestid"),
-                resultSet.getString("fromid"),
-                resultSet.getString("toid")
+                resultSet.getString("friendRequestId"),
+                resultSet.getString("fromId"),
+                resultSet.getString("toId")
         )
     }
 
