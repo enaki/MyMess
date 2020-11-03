@@ -1,4 +1,5 @@
 DELETE FROM messages;
+DELETE FROM users_chats;
 DELETE FROM chats;
 DELETE FROM friend_requests;
 DELETE FROM friends;
