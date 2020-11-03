@@ -13,6 +13,7 @@ import paw.my_mess.db_service.persistence.persistence.interfaces.IBlockedUserRep
 import paw.my_mess.db_service.persistence.persistence.interfaces.IFriendRepository
 import paw.my_mess.db_service.persistence.persistence.interfaces.IRequestFriendRepository
 import paw.my_mess.db_service.persistence.persistence.interfaces.IUserRepository
+import java.sql.SQLDataException
 
 @Service
 class FriendServiceImpl: FriendService {
@@ -29,12 +30,16 @@ class FriendServiceImpl: FriendService {
     @Autowired
     private lateinit var _userRepository: IUserRepository<User>
 
+    private fun checkUsersId(userId1: String, userId2: String?=null){
+        this._userRepository.get(userId1)
+                ?: throw NoSuchElementException("User $userId1 not found.")
+        if (userId2 != null) this._userRepository.get(userId2)
+                ?: throw NoSuchElementException("User $userId2 not found.")
+    }
+
     override fun sendFriendRequest(senderId: String, targetId: String): Response<Any?> {
         return try {
-            this._userRepository.get(senderId)
-                    ?: throw NoSuchElementException("User $senderId not found.")
-            this._userRepository.get(targetId)
-                    ?: throw NoSuchElementException("User $targetId not found.")
+            checkUsersId(senderId, targetId)
 
             val response = this._friendRequestRepository.add(
                     FriendRequest(
@@ -71,19 +76,26 @@ class FriendServiceImpl: FriendService {
 
     override fun refuseFriendRequest(senderId: String, targetId: String): Response<Any?> {
         return try {
-            this._userRepository.get(senderId)
-                    ?: throw NoSuchElementException("User $senderId not found.")
-            this._userRepository.get(targetId)
-                    ?: throw NoSuchElementException("User $targetId not found.")
+            checkUsersId(senderId, targetId)
 
             val response = this._friendRequestRepository.deleteFriendRequestByUsersId(
                     senderId,
                     targetId
             )
+            if (!response) throw SQLDataException("The operation was not performed. The data is not found in database.")
             Response(
                     successful_operation = true,
                     code = 204,
                     data = response
+            )
+        }
+        catch (error: SQLDataException){
+            Response(
+                    successful_operation = false,
+                    code = 404,
+                    data = null,
+                    error = error.message ?: "null",
+                    message = "Data not found in database."
             )
         }
         catch (error: NoSuchElementException){
@@ -107,14 +119,13 @@ class FriendServiceImpl: FriendService {
 
     override fun acceptFriendRequest(senderId: String, targetId: String): Response<Any?> {
         return try {
-            this._userRepository.get(senderId)
-                    ?: throw NoSuchElementException("User $senderId not found.")
-            this._userRepository.get(targetId)
-                    ?: throw NoSuchElementException("User $targetId not found.")
+            checkUsersId(senderId, targetId)
+
             val response = this._friendRequestRepository.deleteFriendRequestByUsersId(
                     senderId,
                     targetId
             )
+            if (!response) throw SQLDataException("The operation was not performed. The data is not found in database.")
             if(response){
                 val tmp = this._friendRepository.add(
                         Friendship(
@@ -137,6 +148,15 @@ class FriendServiceImpl: FriendService {
                 )
             }
         }
+        catch (error: SQLDataException){
+            Response(
+                    successful_operation = false,
+                    code = 404,
+                    data = null,
+                    error = error.message ?: "null",
+                    message = "Data not found in database."
+            )
+        }
         catch (error: NoSuchElementException){
             Response(
                     successful_operation = false,
@@ -156,15 +176,13 @@ class FriendServiceImpl: FriendService {
         }
     }
 
+    //TODO ??? stergerea prieteniei dintre cele doua id-uri si adaugarea unei relatii de block in tabela ???
     override fun blockFriend(userId: String, targetId: String): Response<Any?> {
         return try {
-            this._userRepository.get(userId)
-                    ?: throw NoSuchElementException("User $userId not found.")
-            this._userRepository.get(targetId)
-                    ?: throw NoSuchElementException("User $targetId not found.")
+            checkUsersId(userId, targetId)
             val response = this._blockedUserRepository.add(
                     BlockedUser(
-                            blockedUserId = "",
+                            blockedUsersId = "",
                             uid = userId,
                             targetId = targetId
                     )
@@ -194,23 +212,26 @@ class FriendServiceImpl: FriendService {
         }
     }
 
+    //TODO ??? stergerea inregistrarii din blocked users si introducerea relatiei de prietenie intre id-uri ???
     override fun unblockFriend(userId: String, targetId: String): Response<Any?> {
         return try {
-            this._userRepository.get(userId)
-                    ?: throw NoSuchElementException("User $userId not found.")
-            this._userRepository.get(targetId)
-                    ?: throw NoSuchElementException("User $targetId not found.")
-            val response = this._blockedUserRepository.add(
-                    BlockedUser(
-                            blockedUserId = "",
-                            uid = userId,
-                            targetId = targetId
-                    )
-            )
+            checkUsersId(userId, targetId)
+
+            val response = this._blockedUserRepository.deleteBlockedUserByIds(userId, targetId)
+            if (!response) throw SQLDataException("The operation was not performed. The data is not found in database.")
             Response(
                     successful_operation = true,
                     code = 201,
                     data = response
+            )
+        }
+        catch (error: SQLDataException){
+            Response(
+                    successful_operation = false,
+                    code = 404,
+                    data = null,
+                    error = error.message ?: "null",
+                    message = "Data not found in database."
             )
         }
         catch (error: NoSuchElementException){
@@ -234,8 +255,7 @@ class FriendServiceImpl: FriendService {
 
     override fun getFriends(userId: String): Response<List<BusinessFriendship>> {
         return try {
-            this._userRepository.get(userId)
-                    ?: throw NoSuchElementException("User $userId not found.")
+            checkUsersId(userId)
 
             val response = this._friendRepository.getFriendsByUserId(userId)
             Response(
@@ -265,8 +285,8 @@ class FriendServiceImpl: FriendService {
 
     override fun getFriendship(userId: String): Response<BusinessFriendship> {
         return try {
-            this._userRepository.get(userId)
-                    ?: throw NoSuchElementException("User $userId not found.")
+            this._friendRepository.get(userId)
+                    ?: throw NoSuchElementException("Friendship $userId not found.")
 
             val response = this._friendRepository.get(userId)
             Response(
@@ -296,8 +316,7 @@ class FriendServiceImpl: FriendService {
 
     override fun getBlockedFriends(userId: String): Response<List<BusinessBlockedUser>> {
         return try {
-            this._userRepository.get(userId)
-                    ?: throw NoSuchElementException("User $userId not found.")
+            checkUsersId(userId)
             val response = this._blockedUserRepository.getBlockedUsersByUserId(userId)
 
             Response(
@@ -327,16 +346,23 @@ class FriendServiceImpl: FriendService {
 
     override fun removeFriend(userId: String, targetId: String): Response<Any?> {
         return try {
-            this._userRepository.get(userId)
-                    ?: throw NoSuchElementException("User $userId not found.")
-            this._userRepository.get(targetId)
-                    ?: throw NoSuchElementException("User $targetId not found.")
+            checkUsersId(userId, targetId)
 
             val response = this._friendRepository.deleteFriendByUsersId(userId, targetId)
+            if (!response) throw SQLDataException("The operation was not performed. The data is not found in the database.")
             Response(
                     successful_operation = true,
                     code = 204,
                     data = response
+            )
+        }
+        catch (error: SQLDataException) {
+            Response(
+                    successful_operation = false,
+                    code = 404,
+                    data = null,
+                    error = error.message ?: "null",
+                    message = "Data not found in database."
             )
         }
         catch (error: NoSuchElementException){

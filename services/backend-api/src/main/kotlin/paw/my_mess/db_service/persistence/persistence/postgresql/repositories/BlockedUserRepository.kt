@@ -30,7 +30,7 @@ class BlockedUserRepository: GenericRepository<BlockedUser>(), IBlockedUserRepos
                 item.uid.toLong(),
                 item.targetId.toLong()
         )
-        return if (tmp.isEmpty()) null else tmp[0].blockedUserId
+        return if (tmp.isEmpty()) null else tmp[0].blockedUsersId
     }
 
     override fun get(id: String): BlockedUser? {
@@ -45,7 +45,6 @@ class BlockedUserRepository: GenericRepository<BlockedUser>(), IBlockedUserRepos
     override fun delete(id: String): Boolean =
             this._jdbcTemplate.update(
                     "DELETE FROM ${this.tableName} WHERE blockeduserid=?",
-                    this._rowMapper,
                     id.toLong()
             ) !=0
 
@@ -67,7 +66,6 @@ class BlockedUserRepository: GenericRepository<BlockedUser>(), IBlockedUserRepos
     override fun deleteBlockedUserByIds(userId: String, targetId: String): Boolean =
             this._jdbcTemplate.update(
                     "DELETE FROM ${this.tableName} WHERE uid=? AND targetid=?",
-                    this._rowMapper,
                     userId.toLong(),
                     targetId.toLong()
             ) !=0

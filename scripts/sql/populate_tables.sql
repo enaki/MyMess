@@ -30,3 +30,4 @@ INSERT INTO friends (uid1, uid2) VALUES (2, 3);
 
 /* POPULATE FRIEND REQUESTS TABLES */
 INSERT INTO friend_requests (fromid, toid) VALUES (1, 3);
+INSERT INTO friend_requests (fromid, toid) VALUES (3, 1);

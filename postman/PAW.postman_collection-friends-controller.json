@@ -214,7 +214,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:2020/api/friends/friendship/3",
+									"raw": "http://localhost:2020/api/friends/friendships/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -223,8 +223,8 @@
 									"path": [
 										"api",
 										"friends",
-										"friendship",
-										"3"
+										"friendships",
+										"1"
 									]
 								}
 							},

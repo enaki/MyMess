@@ -45,7 +45,6 @@ class RequestFriendRepository: GenericRepository<FriendRequest>(), IRequestFrien
     override fun delete(id: String): Boolean =
             this._jdbcTemplate.update(
                     "DELETE FROM ${this.tableName} WHERE friendrequestid=?",
-                    this._rowMapper,
                     id.toLong()
             ) != 0
 
@@ -60,7 +59,6 @@ class RequestFriendRepository: GenericRepository<FriendRequest>(), IRequestFrien
     override fun deleteFriendRequestByUsersId(senderId: String, receiverId: String): Boolean =
             this._jdbcTemplate.update(
                     "DELETE FROM ${this.tableName} WHERE fromid=? AND toid=?",
-                    this._rowMapper,
                     senderId.toLong(),
                     receiverId.toLong()
             ) != 0

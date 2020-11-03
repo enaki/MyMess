@@ -31,7 +31,6 @@ class FriendRepository: IFriendRepository<Friendship>, GenericRepository<Friends
 
     override fun delete(id: String): Boolean =
             this._jdbcTemplate.update("DELETE FROM ${this.tableName} WHERE friendshipid = ?",
-                    this._rowMapper,
                     id.toLong()
             ) != 0
 
@@ -68,7 +67,6 @@ class FriendRepository: IFriendRepository<Friendship>, GenericRepository<Friends
 
     override fun deleteFriendByUsersId(userId: String, targetId: String): Boolean =
             this._jdbcTemplate.update("DELETE FROM ${this.tableName} WHERE (uid1=? AND uid2=?) OR (uid1=? AND uid2=?)",
-                    this._rowMapper,
                     userId.toLong(),
                     targetId.toLong(),
                     targetId.toLong(),
