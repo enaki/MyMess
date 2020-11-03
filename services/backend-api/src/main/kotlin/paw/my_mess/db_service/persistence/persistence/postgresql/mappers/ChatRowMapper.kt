@@ -6,7 +6,6 @@ import java.sql.ResultSet
 
 class ChatRowMapper : RowMapper<Chat> {
     override fun mapRow(resultSet: ResultSet, rowNumber: Int): Chat? {
-        return Chat(resultSet.getString("chatId"),
-                resultSet.getString("uid"))
+        return Chat(resultSet.getString("chatId"))
     }
 }

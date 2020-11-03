@@ -7,7 +7,7 @@ import java.sql.ResultSet
 
 class MessageRowMapper : RowMapper<Message> {
     override fun mapRow(resultSet: ResultSet, rowNumber: Int): Message? {
-        return Message(resultSet.getString("id"),
+        return Message(resultSet.getString("messageId"),
                 resultSet.getString("chatId"),
                 resultSet.getString("ownerId"),
                 resultSet.getString("text"),

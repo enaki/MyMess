@@ -18,8 +18,8 @@ fun Friendship.ToBusinessFriendship(): BusinessFriendship { return BusinessFrien
 fun BusinessFriendRequest.ToFriendRequest(): FriendRequest { return FriendRequest(friendRequestId, fromId, toId) }
 fun FriendRequest.ToBusinessFriendRequest(): BusinessFriendRequest { return BusinessFriendRequest(friendRequestId, fromId, toId) }
 
-fun BusinessChat.ToChat(): Chat { return Chat(chatId, uid) }
-fun Chat.ToBusinessChat(): BusinessChat { return BusinessChat(chatId, uid) }
+fun BusinessUserChat.ToUserChat(): UserChat { return UserChat(chatId, uid) }
+fun UserChat.ToBusinessUserChat(): BusinessUserChat { return BusinessUserChat(chatId,uid) }
 
 fun BusinessBlockedUser.ToBlockedUser(): BlockedUser { return BlockedUser(blockedUserId, uid, targetId) }
 fun BlockedUser.ToBusinessBlockedUser(): BusinessBlockedUser { return BusinessBlockedUser(blockedUserId, uid, targetId) }
