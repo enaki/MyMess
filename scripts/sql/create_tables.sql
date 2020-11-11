@@ -40,7 +40,8 @@ CREATE TABLE blocked_users(
 	uid INT,
 	targetId INT,
 	CONSTRAINT uid_blocked_users_fk  FOREIGN KEY(uid) REFERENCES users(uid),
-	CONSTRAINT targetId_blocked_users_fk  FOREIGN KEY(targetId) REFERENCES users(uid)
+	CONSTRAINT targetId_blocked_users_fk  FOREIGN KEY(targetId) REFERENCES users(uid),
+	UNIQUE (uid, targetId)
 );
 
 CREATE TABLE friends(
@@ -48,7 +49,8 @@ CREATE TABLE friends(
 	uid1 INT,
 	uid2 INT,
 	CONSTRAINT uid1_blocked_users_fk  FOREIGN KEY(uid1) REFERENCES users(uid),
-	CONSTRAINT uid2_blocked_users_fk  FOREIGN KEY(uid2) REFERENCES users(uid)
+	CONSTRAINT uid2_blocked_users_fk  FOREIGN KEY(uid2) REFERENCES users(uid),
+	UNIQUE (uid1, uid2)
 );
 
 CREATE TABLE friend_requests(
@@ -56,5 +58,6 @@ CREATE TABLE friend_requests(
 	fromId INT,
 	toId INT,
 	CONSTRAINT uid_blocked_users_fk  FOREIGN KEY(fromId) REFERENCES users(uid),
-	CONSTRAINT targetId_blocked_users_fk  FOREIGN KEY(toId) REFERENCES users(uid)
+	CONSTRAINT targetId_blocked_users_fk  FOREIGN KEY(toId) REFERENCES users(uid),
+	UNIQUE (fromId, toId)
 );

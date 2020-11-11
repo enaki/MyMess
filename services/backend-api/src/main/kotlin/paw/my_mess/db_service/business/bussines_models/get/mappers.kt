@@ -22,4 +22,4 @@ fun BusinessChat.ToChat(): Chat { return Chat(chatId, uid) }
 fun Chat.ToBusinessChat(): BusinessChat { return BusinessChat(chatId, uid) }
 
 fun BusinessBlockedUser.ToBlockedUser(): BlockedUser { return BlockedUser(blockedUserId, uid, targetId) }
-fun BlockedUser.ToBusinessBlockedUser(): BusinessBlockedUser { return BusinessBlockedUser(blockedUserId, uid, targetId) }
+fun BlockedUser.ToBusinessBlockedUser(): BusinessBlockedUser { return BusinessBlockedUser(blockedUsersId, uid, targetId) }
