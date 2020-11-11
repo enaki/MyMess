@@ -15,6 +15,15 @@ class FriendRepository: IFriendRepository<Friendship>, GenericRepository<Friends
     }
 
     override fun add(item: Friendship): String? {
+        val friendSearch = this._jdbcTemplate.query(
+                "SELECT * FROM ${this.tableName} WHERE (uid1=? AND uid2=?) OR (uid2=? AND uid1=?)",
+                this._rowMapper,
+                item.uid1.toLong(),
+                item.uid2.toLong(),
+                item.uid2.toLong(),
+                item.uid1.toLong()
+        )
+        if (friendSearch.isNotEmpty()) throw Throwable("Pair of friendship with user values (${item.uid1}, ${item.uid2}) already existent in the database")
         this._jdbcTemplate.update(
                 "INSERT INTO ${this.tableName} (uid1, uid2) VALUES (?, ?)",
                 item.uid1.toLong(),

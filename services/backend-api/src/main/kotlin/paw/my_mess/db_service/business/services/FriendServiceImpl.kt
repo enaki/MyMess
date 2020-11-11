@@ -13,6 +13,7 @@ import paw.my_mess.db_service.persistence.persistence.interfaces.IBlockedUserRep
 import paw.my_mess.db_service.persistence.persistence.interfaces.IFriendRepository
 import paw.my_mess.db_service.persistence.persistence.interfaces.IRequestFriendRepository
 import paw.my_mess.db_service.persistence.persistence.interfaces.IUserRepository
+import java.lang.Exception
 import java.sql.SQLDataException
 
 @Service
@@ -37,8 +38,33 @@ class FriendServiceImpl: FriendService {
                 ?: throw NoSuchElementException("User $userId2 not found.")
     }
 
+    private fun checkIdenticalUserIds(uid1: String, uid2: String, message: String="User with id $uid1 can't make this operation with himself."){
+        if (uid1 == uid2){
+            throw Throwable(message)
+        }
+    }
+
+    override fun getAllFriendships(): Response<List<BusinessFriendship>> {
+        return Response(successful_operation = true,
+                code = 200,
+                data = _friendRepository.getAll().map { it.ToBusinessFriendship() })
+    }
+
+    override fun getAllFriendRequests(): Response<List<BusinessFriendRequest>> {
+        return Response(successful_operation = true,
+                code = 200,
+                data = _friendRequestRepository.getAll().map { it.ToBusinessFriendRequest() })
+    }
+
+    override fun getAllBlockedFriends(): Response<List<BusinessBlockedUser>> {
+        return Response(successful_operation = true,
+                code = 200,
+                data = _blockedUserRepository.getAll().map { it.ToBusinessBlockedUser() })
+    }
+
     override fun sendFriendRequest(senderId: String, targetId: String): Response<Any?> {
         return try {
+            checkIdenticalUserIds(senderId, targetId, message = "User with id $senderId can't send a friend request to himself.")
             checkUsersId(senderId, targetId)
 
             val response = this._friendRequestRepository.add(
@@ -76,6 +102,7 @@ class FriendServiceImpl: FriendService {
 
     override fun refuseFriendRequest(senderId: String, targetId: String): Response<Any?> {
         return try {
+            checkIdenticalUserIds(senderId, targetId, message = "User with id $senderId does not have a friend request with himself.")
             checkUsersId(senderId, targetId)
 
             val response = this._friendRequestRepository.deleteFriendRequestByUsersId(
@@ -119,6 +146,7 @@ class FriendServiceImpl: FriendService {
 
     override fun acceptFriendRequest(senderId: String, targetId: String): Response<Any?> {
         return try {
+            checkIdenticalUserIds(senderId, targetId, message = "User with id $senderId does not have a friend request with himself.")
             checkUsersId(senderId, targetId)
 
             val response = this._friendRequestRepository.deleteFriendRequestByUsersId(
@@ -179,6 +207,7 @@ class FriendServiceImpl: FriendService {
     //TODO ??? stergerea prieteniei dintre cele doua id-uri si adaugarea unei relatii de block in tabela ???
     override fun blockFriend(userId: String, targetId: String): Response<Any?> {
         return try {
+            checkIdenticalUserIds(userId, targetId, message = "User with id $userId can not block himself.")
             checkUsersId(userId, targetId)
             val response = this._blockedUserRepository.add(
                     BlockedUser(
@@ -215,6 +244,7 @@ class FriendServiceImpl: FriendService {
     //TODO ??? stergerea inregistrarii din blocked users si introducerea relatiei de prietenie intre id-uri ???
     override fun unblockFriend(userId: String, targetId: String): Response<Any?> {
         return try {
+            checkIdenticalUserIds(userId, targetId, message = "User with id $userId can not unblock himself.")
             checkUsersId(userId, targetId)
 
             val response = this._blockedUserRepository.deleteBlockedUserByIds(userId, targetId)
@@ -363,6 +393,36 @@ class FriendServiceImpl: FriendService {
                     data = null,
                     error = error.message ?: "null",
                     message = "Data not found in database."
+            )
+        }
+        catch (error: NoSuchElementException){
+            Response(
+                    successful_operation = false,
+                    code = 404,
+                    data = null,
+                    error = error.message ?: "null",
+                    message = "Invalid id."
+            )
+        }
+        catch (error: Throwable){
+            Response(
+                    successful_operation = false,
+                    code = 400,
+                    data = null,
+                    error = error.message ?: "null"
+            )
+        }
+    }
+
+    override fun getFriendRequests(userId: String): Response<List<BusinessFriendRequest>> {
+        return try {
+            checkUsersId(userId)
+
+            val response = this._friendRequestRepository.getFriendRequestsOfUserId(userId)
+            Response(
+                    successful_operation = true,
+                    code = 200,
+                    data = response.map { it.ToBusinessFriendRequest() }
             )
         }
         catch (error: NoSuchElementException){

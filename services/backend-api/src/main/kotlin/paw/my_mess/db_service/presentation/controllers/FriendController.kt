@@ -15,11 +15,57 @@ class FriendController {
     @Autowired
     private lateinit var _friendService: FriendService
 
+    @RequestMapping(value = ["/friendships"], method = [RequestMethod.GET])
+    fun getAllFriendships(): ResponseEntity<Any>{
+        val response = _friendService.getAllFriendships()
+        return if (response.successful_operation)
+            ResponseEntity.status(response.code).body(response.data)
+        else
+            ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
+    }
+
+    @RequestMapping(value = ["/friend-requests"], method = [RequestMethod.GET])
+    fun getAllFriendRequests(): ResponseEntity<Any>{
+        val response = _friendService.getAllFriendRequests()
+        return if (response.successful_operation)
+            ResponseEntity.status(response.code).body(response.data)
+        else
+            ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
+    }
+
+    @RequestMapping(value = ["/blocked"], method = [RequestMethod.GET])
+    fun getAllBlockedFriends(): ResponseEntity<Any>{
+        val response = _friendService.getAllBlockedFriends()
+        return if (response.successful_operation)
+            ResponseEntity.status(response.code).body(response.data)
+        else
+            ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
+    }
+
     @RequestMapping(value = ["/friendships/{id}"], method = [RequestMethod.GET])
     fun getFriendships(
             @PathVariable("id") id: String
     ): ResponseEntity<Any?>{
         val response = this._friendService.getFriendship(id)
+        return if (response.successful_operation){
+            ResponseEntity.status(response.code).body(response.data)
+        }
+        else{
+            ResponseEntity.status(response.code).body(
+                    MyError(
+                            response.code,
+                            response.error,
+                            response.message
+                    )
+            )
+        }
+    }
+
+    @RequestMapping(value = ["/friend-requests/{id}"], method = [RequestMethod.GET])
+    fun getFriendRequests(
+            @PathVariable("id") id: String
+    ): ResponseEntity<Any?>{
+        val response = this._friendService.getFriendRequests(id)
         return if (response.successful_operation){
             ResponseEntity.status(response.code).body(response.data)
         }
@@ -73,7 +119,7 @@ class FriendController {
         }
     }
 
-    @RequestMapping(value= ["/refuserequest/{receiver}"], method = [RequestMethod.DELETE])
+    @RequestMapping(value= ["/refuse-request/{receiver}"], method = [RequestMethod.DELETE])
     fun refuseFriendRequest(
             @PathVariable("receiver") receiver: String,
             @RequestParam("sender") sender: String
@@ -93,7 +139,7 @@ class FriendController {
         }
     }
 
-    @RequestMapping(value= ["/acceptrequest/{receiver}"], method = [RequestMethod.POST])
+    @RequestMapping(value= ["/accept-request/{receiver}"], method = [RequestMethod.POST])
     fun acceptFriendRequest(
             @PathVariable("receiver") receiver: String,
             @RequestParam("sender") sender: String

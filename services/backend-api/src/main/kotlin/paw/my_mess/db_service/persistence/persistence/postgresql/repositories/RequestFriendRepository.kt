@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository
 import paw.my_mess.db_service.persistence.entities.FriendRequest
 import paw.my_mess.db_service.persistence.persistence.interfaces.IRequestFriendRepository
 import paw.my_mess.db_service.persistence.persistence.postgresql.mappers.RequestFriendRowMapper
+import java.sql.SQLDataException
 
 @Repository
 class RequestFriendRepository: GenericRepository<FriendRequest>(), IRequestFriendRepository<FriendRequest> {
@@ -19,6 +20,15 @@ class RequestFriendRepository: GenericRepository<FriendRequest>(), IRequestFrien
         )
 
     override fun add(item: FriendRequest): String? {
+        val friendRequestSearch = this._jdbcTemplate.query(
+                "SELECT * FROM ${this.tableName} WHERE (fromid=? AND toid=?) OR (fromid=? AND toid=?)",
+                this._rowMapper,
+                item.fromId.toLong(),
+                item.toId.toLong(),
+                item.toId.toLong(),
+                item.fromId.toLong()
+        )
+        if (friendRequestSearch.isNotEmpty()) throw Throwable("Pair of friend request values (${item.fromId}, ${item.toId}) already existent in the database")
         this._jdbcTemplate.update(
                 "INSERT INTO ${this.tableName} (fromid, toid) VALUES (?, ?)",
                 item.fromId.toLong(),
@@ -63,4 +73,12 @@ class RequestFriendRepository: GenericRepository<FriendRequest>(), IRequestFrien
                     receiverId.toLong()
             ) != 0
 
+    override fun getFriendRequestsOfUserId(userId: String): List<FriendRequest>{
+        val tmp = this._jdbcTemplate.query(
+                "SELECT * FROM ${this.tableName} WHERE toId=?",
+                this._rowMapper,
+                userId.toLong()
+        )
+        return tmp
+    }
 }

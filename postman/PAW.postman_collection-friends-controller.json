@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ba3947ca-3e74-4f6e-862c-af89711449ad",
+		"_postman_id": "e6433356-864e-4129-9d4f-1c78e82b8643",
 		"name": "PAW",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -16,6 +16,10 @@
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "http://localhost:2020/api/users/1",
 									"protocol": "http",
@@ -37,6 +41,10 @@
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "http://localhost:2020/api/users",
 									"protocol": "http",
@@ -57,6 +65,10 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "http://localhost:2020/api/users/1",
 									"protocol": "http",
@@ -80,12 +92,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": \"richard1\",\r\n    \"passwordHash\": \"richard\",\r\n    \"email\": \"richard@gmail.com\",\r\n    \"birthdate\": \"1998-12-12\",\r\n    \"gender\": \"male\",\r\n    \"city\": \"Iasi\",\r\n    \"country\": \"Romania\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
+									"raw": "{\r\n    \"username\": \"richard1\",\r\n    \"passwordHash\": \"richard\",\r\n    \"email\": \"richard@gmail.com\",\r\n    \"birthdate\": \"1998-12-12\",\r\n    \"gender\": \"male\",\r\n    \"city\": \"Iasi\",\r\n    \"country\": \"Romania\"\r\n}"
 								},
 								"url": {
 									"raw": "http://localhost:2020/api/users/3",
@@ -110,12 +117,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": \"richard\",\r\n    \"passwordHash\": \"richard\",\r\n    \"email\": \"richard@gmail.com\",\r\n    \"birthdate\": \"1998-12-12\",\r\n    \"gender\": \"male\",\r\n    \"city\": \"Iasi\",\r\n    \"country\": \"Romania\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
+									"raw": "{\r\n    \"username\": \"richard\",\r\n    \"passwordHash\": \"richard\",\r\n    \"email\": \"richard@gmail.com\",\r\n    \"birthdate\": \"1998-12-12\",\r\n    \"gender\": \"male\",\r\n    \"city\": \"Iasi\",\r\n    \"country\": \"Romania\"\r\n}"
 								},
 								"url": {
 									"raw": "http://localhost:2020/api/users",
@@ -133,7 +135,6 @@
 							"response": []
 						}
 					],
-					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
 				},
 				{
@@ -144,6 +145,10 @@
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "http://localhost:2020/api/user-profiles",
 									"protocol": "http",
@@ -164,6 +169,10 @@
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "http://localhost:2020/api/user-profiles/1",
 									"protocol": "http",
@@ -181,62 +190,22 @@
 							"response": []
 						}
 					],
-					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Friends",
+					"name": "FriendRequests",
 					"item": [
-						{
-							"name": "Get Friends By Id",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:2020/api/friends/44",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "2020",
-									"path": [
-										"api",
-										"friends",
-										"44"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Friendship By Id",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:2020/api/friends/friendships/1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "2020",
-									"path": [
-										"api",
-										"friends",
-										"friendships",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
 						{
 							"name": "Send Friend Request",
 							"request": {
 								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
-									"raw": "http://localhost:2020/api/friends/request/3?target=1",
+									"raw": "http://localhost:2020/api/friends/request/5?target=4",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -246,40 +215,12 @@
 										"api",
 										"friends",
 										"request",
-										"3"
+										"5"
 									],
 									"query": [
 										{
 											"key": "target",
-											"value": "1"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Refuse Friend Request",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:2020/api/friends/refuse-request/3?sender=1",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "2020",
-									"path": [
-										"api",
-										"friends",
-										"refuse-request",
-										"3"
-									],
-									"query": [
-										{
-											"key": "sender",
-											"value": "1"
+											"value": "4"
 										}
 									]
 								}
@@ -291,8 +232,12 @@
 							"request": {
 								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
-									"raw": "http://localhost:2020/api/friends/accept-request/1?sender=1",
+									"raw": "http://localhost:2020/api/friends/accept-request/5?sender=3",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -302,12 +247,12 @@
 										"api",
 										"friends",
 										"accept-request",
-										"1"
+										"5"
 									],
 									"query": [
 										{
 											"key": "sender",
-											"value": "1"
+											"value": "3"
 										}
 									]
 								}
@@ -315,10 +260,216 @@
 							"response": []
 						},
 						{
+							"name": "Refuse Friend Request",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:2020/api/friends/refuse-request/4?sender=5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"friends",
+										"refuse-request",
+										"4"
+									],
+									"query": [
+										{
+											"key": "sender",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Friend Requests Of User Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:2020/api/friends/friend-requests/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"friends",
+										"friend-requests",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Friend Requests",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:2020/api/friends/friend-requests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"friends",
+										"friend-requests"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Friends",
+					"item": [
+						{
+							"name": "Get Friends By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:2020/api/friends/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"friends",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Friendship By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:2020/api/friends/friendships/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"friends",
+										"friendships",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove friend",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:2020/api/friends/1?removeId=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"friends",
+										"1"
+									],
+									"query": [
+										{
+											"key": "removeId",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Friendships",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:2020/api/friends/friendships",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"friends",
+										"friendships"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "FriendBlocking",
+					"item": [
+						{
 							"name": "Block Friend",
 							"request": {
 								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "http://localhost:2020/api/friends/block/1?blockedId=1",
 									"protocol": "http",
@@ -347,6 +498,10 @@
 							"request": {
 								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "http://localhost:2020/api/friends/unblock/1?unblockedId=1",
 									"protocol": "http",
@@ -371,10 +526,14 @@
 							"response": []
 						},
 						{
-							"name": "Get blocked friends",
+							"name": "Get blocked users",
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "http://localhost:2020/api/friends/blocked/1",
 									"protocol": "http",
@@ -393,12 +552,16 @@
 							"response": []
 						},
 						{
-							"name": "Remove friend",
+							"name": "Get All Blocked users",
 							"request": {
-								"method": "DELETE",
+								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
-									"raw": "http://localhost:2020/api/friends/1?removeId=2",
+									"raw": "http://localhost:2020/api/friends/blocked",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -407,25 +570,16 @@
 									"path": [
 										"api",
 										"friends",
-										"1"
-									],
-									"query": [
-										{
-											"key": "removeId",
-											"value": "2"
-										}
+										"blocked"
 									]
 								}
 							},
 							"response": []
 						}
 					],
-					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
