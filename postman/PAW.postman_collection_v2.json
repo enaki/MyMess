@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "269a0dbd-71f7-47a0-996f-319d1f4fb98c",
+		"name": "PAW",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Backend-api",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Get Users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User By Id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/users/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"richard\",\r\n    \"passwordHash\": \"richard\",\r\n    \"email\": \"richard@gmail.com\",\r\n    \"birthdate\": \"1998-12-12\",\r\n    \"gender\": \"male\",\r\n    \"city\": \"Iasi\",\r\n    \"country\": \"Romania\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2020/api/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"richard1\",\r\n    \"passwordHash\": \"richard\",\r\n    \"email\": \"richard@gmail.com\",\r\n    \"birthdate\": \"1998-12-12\",\r\n    \"gender\": \"male\",\r\n    \"city\": \"Iasi\",\r\n    \"country\": \"Romania\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2020/api/users/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"users",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User By Id Copy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/users/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "UserProfiles",
+					"item": [
+						{
+							"name": "Get Users Profiles",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/user-profiles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"user-profiles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/user-profiles/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"user-profiles",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Messages",
+					"item": [
+						{
+							"name": "Get Messages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/messages",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Chat Messages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/chat/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"chat",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Reply Message",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/chat/reply/2?messageId=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"chat",
+										"reply",
+										"2"
+									],
+									"query": [
+										{
+											"key": "messageId",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add message",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"chatId\": 1,\n    \"ownerId\": 2,\n    \"text\": \"ajutor\",\n    \"imagePath\": \"null\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:2020/api/messages/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"messages",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Message",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/chat/2?messageId=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"chat",
+										"2"
+									],
+									"query": [
+										{
+											"key": "messageId",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
