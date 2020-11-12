@@ -35,7 +35,7 @@ CREATE TABLE messages(
 	ownerId INT,
 	text TEXT,
 	imagePath TEXT,
-	date DATE,
+	date TIMESTAMP,
 	CONSTRAINT chatId_messages_fk  FOREIGN KEY(chatId) REFERENCES chats(chatId),
 	CONSTRAINT ownerId_messages_fk  FOREIGN KEY(ownerId) REFERENCES users(uid)
 );

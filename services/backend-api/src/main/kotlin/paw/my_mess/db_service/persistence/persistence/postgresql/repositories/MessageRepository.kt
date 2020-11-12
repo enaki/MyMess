@@ -44,4 +44,8 @@ class MessageRepository : GenericRepository<Message>(), IMessageRepository<Messa
     override fun delete(id: String): Boolean {
         return _jdbcTemplate.update("DELETE FROM messages WHERE messageId=?", id.toLong()) != 0
     }
+
+    override fun delete(chatId: String, id: String): Boolean {
+        return _jdbcTemplate.update("DELETE FROM messages WHERE messageId=? AND chatId=?", id.toLong(), chatId.toLong()) != 0
+    }
 }

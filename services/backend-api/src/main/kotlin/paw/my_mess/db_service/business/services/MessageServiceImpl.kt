@@ -14,8 +14,7 @@ import paw.my_mess.db_service.persistence.entities.UserChat
 import paw.my_mess.db_service.persistence.persistence.interfaces.IChatRepository
 import paw.my_mess.db_service.persistence.persistence.interfaces.IMessageRepository
 import paw.my_mess.db_service.persistence.persistence.interfaces.IUserChatRepository
-import java.sql.Date
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Service
 class MessageServiceImpl : MessageService {
@@ -44,7 +43,7 @@ class MessageServiceImpl : MessageService {
             if (chat == null) {
                 return Response(successful_operation = false, data = Unit, code = 400, error = "Invalid chatId or ownerId")
             }
-            val date = Date.valueOf(LocalDate.now())
+            val date = LocalDateTime.now()
             val uid = _messageRepository.add(Message(messageId = "", chatId = message.chatId, ownerId = message.ownerId, text = message.text, imagePath = message.imagePath, date = date))
             if (uid == null) {
                 return Response(successful_operation = false, data = Unit, code = 400, error = "Can't create message")
@@ -57,6 +56,10 @@ class MessageServiceImpl : MessageService {
 
     override fun getChatMessages(chatID: String): Response<List<BusinessMessage>> {
         return try {
+            val chat = _chatRepository.get(chatID)
+            if (chat == null) {
+                return Response(successful_operation = false, data = null, code = 404, message = "Chat Not Found")
+            }
             val msgList = _messageRepository.getMessagesByChatId(chatID)
             Response(successful_operation = true, data = msgList.map { it.ToBusinessMessage() }, code = 200)
         } catch (e: Exception) {
@@ -66,7 +69,7 @@ class MessageServiceImpl : MessageService {
 
     override fun deleteMessage(chatID: String, messageID: String): Response<Any?> {
         try {
-            val result = _messageRepository.delete(messageID)
+            val result = _messageRepository.delete(chatID, messageID)
             if (!result) {
                 return Response(successful_operation = false, data = Unit, code = 404, message = "Message Not Found")
             }
