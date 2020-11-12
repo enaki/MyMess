@@ -11,8 +11,8 @@ config = {
 }
 
 DROP_TABLES_SCRIPT_PATH = "../sql/drop_tables.sql"
-CREATE_TABLES_SCRIPT_PATH = "../sql/create_tables_v2.sql"
-POPULATE_TABLES_SCRIPT_PATH = "../sql/populate_tables_v2.sql"
+CREATE_TABLES_SCRIPT_PATH = "../sql/create_tables.sql"
+POPULATE_TABLES_SCRIPT_PATH = "../sql/populate_tables.sql"
 
 
 def execute_script(script_path, message=""):

@@ -19,18 +19,24 @@ CREATE TABLE user_profiles(
 );
 
 CREATE TABLE chats(
-	chatId INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	chatId INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+);
+
+CREATE TABLE user_chats(
+	chatId INT,
 	uid INT,
-	CONSTRAINT uid_chats_fk  FOREIGN KEY(uid) REFERENCES users(uid)
+	CONSTRAINT uid_chats_fk  FOREIGN KEY(uid) REFERENCES users(uid),
+	CONSTRAINT chatId_chats_fk  FOREIGN KEY(chatId) REFERENCES chats(chatId)
 );
 
 CREATE TABLE messages(
 	messageId INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	chatId INT,
 	ownerId INT,
+	replyToMessageId INT,
 	text TEXT,
 	imagePath TEXT,
-	date DATE,
+	date TIMESTAMP,
 	CONSTRAINT chatId_messages_fk  FOREIGN KEY(chatId) REFERENCES chats(chatId),
 	CONSTRAINT ownerId_messages_fk  FOREIGN KEY(ownerId) REFERENCES users(uid)
 );
@@ -40,8 +46,7 @@ CREATE TABLE blocked_users(
 	uid INT,
 	targetId INT,
 	CONSTRAINT uid_blocked_users_fk  FOREIGN KEY(uid) REFERENCES users(uid),
-	CONSTRAINT targetId_blocked_users_fk  FOREIGN KEY(targetId) REFERENCES users(uid),
-	UNIQUE (uid, targetId)
+	CONSTRAINT targetId_blocked_users_fk  FOREIGN KEY(targetId) REFERENCES users(uid)
 );
 
 CREATE TABLE friends(
@@ -49,8 +54,7 @@ CREATE TABLE friends(
 	uid1 INT,
 	uid2 INT,
 	CONSTRAINT uid1_blocked_users_fk  FOREIGN KEY(uid1) REFERENCES users(uid),
-	CONSTRAINT uid2_blocked_users_fk  FOREIGN KEY(uid2) REFERENCES users(uid),
-	UNIQUE (uid1, uid2)
+	CONSTRAINT uid2_blocked_users_fk  FOREIGN KEY(uid2) REFERENCES users(uid)
 );
 
 CREATE TABLE friend_requests(
@@ -58,6 +62,5 @@ CREATE TABLE friend_requests(
 	fromId INT,
 	toId INT,
 	CONSTRAINT uid_blocked_users_fk  FOREIGN KEY(fromId) REFERENCES users(uid),
-	CONSTRAINT targetId_blocked_users_fk  FOREIGN KEY(toId) REFERENCES users(uid),
-	UNIQUE (fromId, toId)
+	CONSTRAINT targetId_blocked_users_fk  FOREIGN KEY(toId) REFERENCES users(uid)
 );

@@ -7,7 +7,6 @@ import paw.my_mess.db_service.persistence.persistence.postgresql.mappers.Friends
 
 @Repository
 class FriendRepository: IFriendRepository<Friendship>, GenericRepository<Friendship>() {
-
     private val tableName = "friends"
 
     init {

@@ -7,30 +7,31 @@ import paw.my_mess.db_service.persistence.persistence.postgresql.mappers.UserPro
 
 @Service
 class UserProfileRepository: GenericRepository<UserProfile>(), IUserProfileRepository<UserProfile> {
+    private val tableName = "user_profiles"
     init {
         _rowMapper = UserProfileRowMapper()
     }
 
     override fun getAll(): List<UserProfile> {
-        return _jdbcTemplate.query("SELECT * FROM user_profiles", _rowMapper)
+        return _jdbcTemplate.query("SELECT * FROM ${tableName}", _rowMapper)
     }
 
     override fun add(item: UserProfile): String? {
-        _jdbcTemplate.update("""INSERT INTO user_profiles (uid, status, birthdate, gender, dateRegistered, city, country) VALUES (?, ?, ?, ?, ?, ?, ?)""", item.uid.toLong(), item.status, item.birthdate, item.gender, item.dateRegistered, item.city, item.country)
+        _jdbcTemplate.update("""INSERT INTO ${tableName} (uid, status, birthdate, gender, dateRegistered, city, country) VALUES (?, ?, ?, ?, ?, ?, ?)""", item.uid.toLong(), item.status, item.birthdate, item.gender, item.dateRegistered, item.city, item.country)
         return item.uid
     }
 
     override fun get(id: String): UserProfile? {
-        val userList = _jdbcTemplate.query("SELECT * FROM user_profiles WHERE uid = ? ", _rowMapper, id.toLong())
+        val userList = _jdbcTemplate.query("SELECT * FROM ${tableName} WHERE uid = ? ", _rowMapper, id.toLong())
         return if (userList.isEmpty()) null else userList.get(0)
     }
 
     override fun delete(id: String): Boolean {
-        return _jdbcTemplate.update("DELETE FROM user_profiles WHERE uid=?", id.toLong()) != 0
+        return _jdbcTemplate.update("DELETE FROM ${tableName} WHERE uid=?", id.toLong()) != 0
     }
 
     override fun update(id: String, item: UserProfile): Boolean {
-        val code = _jdbcTemplate.update("""UPDATE user_profiles SET status=?, birthdate=?, gender=?, dateRegistered=?, city=?, country=? WHERE uid=?""",
+        val code = _jdbcTemplate.update("""UPDATE ${tableName} SET status=?, birthdate=?, gender=?, dateRegistered=?, city=?, country=? WHERE uid=?""",
                 item.status, item.birthdate, item.gender, item.dateRegistered, item.city, item.country, id.toLong())
         return code != 0
     }
