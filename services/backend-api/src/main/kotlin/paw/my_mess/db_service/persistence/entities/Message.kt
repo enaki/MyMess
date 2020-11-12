@@ -6,6 +6,7 @@ data class Message(
         var messageId: String,
         var chatId: String,
         var ownerId: String,
+        var replyToMessageId: String?,
         var text: String?,
         var imagePath: String?,
         var date: LocalDateTime

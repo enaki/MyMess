@@ -11,4 +11,5 @@ interface MessageService {
     fun getChatMessages(chatID: String): Response<List<BusinessMessage>>
     fun deleteMessage(chatID: String, messageID: String): Response<Any?>
     fun replyMessage(chatID: String, messageID: String): Response<Any?>
+    fun getMessageById(messageId: String): Response<Any?>
 }

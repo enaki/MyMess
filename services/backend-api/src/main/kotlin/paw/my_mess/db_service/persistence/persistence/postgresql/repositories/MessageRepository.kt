@@ -26,11 +26,11 @@ class MessageRepository : GenericRepository<Message>(), IMessageRepository<Messa
     }
 
     override fun add(item: Message): String? {
-        var query = "INSERT INTO messages (chatId, ownerId, text, imagePath, date) VALUES (?, ?, ?, ?, ?)"
-        _jdbcTemplate.update(query, item.chatId.toLong(), item.ownerId.toLong(), item.text, item.imagePath, item.date)
+        var query = "INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date) VALUES (?, ?, ?, ?, ?, ?)"
+        _jdbcTemplate.update(query, item.chatId.toLong(), item.ownerId.toLong(), item.replyToMessageId?.toLong(), item.text, item.imagePath, item.date)
 
-        query = "SELECT * from messages WHERE chatId=? AND ownerId=? AND text=? AND imagePath=? AND date=?"
-        val msgList = _jdbcTemplate.query(query, _rowMapper, item.chatId.toLong(), item.ownerId.toLong(), item.text, item.imagePath, item.date)
+        query = "SELECT * from messages WHERE chatId=? AND ownerId=? AND text=? AND date=?"
+        val msgList = _jdbcTemplate.query(query, _rowMapper, item.chatId.toLong(), item.ownerId.toLong(), item.text, item.date)
 
         return if (msgList.isEmpty()) null else msgList[0].messageId
     }

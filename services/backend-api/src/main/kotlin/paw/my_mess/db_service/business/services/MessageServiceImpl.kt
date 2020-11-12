@@ -37,6 +37,18 @@ class MessageServiceImpl : MessageService {
         }
     }
 
+    override fun getMessageById(messageId: String): Response<Any?> {
+        return try {
+            val message = _messageRepository.get(messageId)
+            if (message == null) {
+                return Response(successful_operation = false, data = Unit, code = 400, error = "Message not found")
+            }
+            return Response(successful_operation = true, data = message.ToBusinessMessage(), code = 201)
+        } catch (e: Exception) {
+            Response(successful_operation = false, data = null, code = 400, error = e.toString())
+        }
+    }
+
     override fun createMessage(message: BusinessCreateMessage): Response<Any?> {
         try {
             val chat = _userChatRepository.getChat(message.chatId, message.ownerId)
@@ -44,7 +56,7 @@ class MessageServiceImpl : MessageService {
                 return Response(successful_operation = false, data = Unit, code = 400, error = "Invalid chatId or ownerId")
             }
             val date = LocalDateTime.now()
-            val uid = _messageRepository.add(Message(messageId = "", chatId = message.chatId, ownerId = message.ownerId, text = message.text, imagePath = message.imagePath, date = date))
+            val uid = _messageRepository.add(Message(messageId = "", chatId = message.chatId, ownerId = message.ownerId, replyToMessageId = message.replyToMessageId, text = message.text, imagePath = message.imagePath, date = date))
             if (uid == null) {
                 return Response(successful_operation = false, data = Unit, code = 400, error = "Can't create message")
             }

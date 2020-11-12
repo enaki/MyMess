@@ -33,6 +33,7 @@ CREATE TABLE messages(
 	messageId INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	chatId INT,
 	ownerId INT,
+	replyToMessageId INT,
 	text TEXT,
 	imagePath TEXT,
 	date TIMESTAMP,

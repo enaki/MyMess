@@ -26,6 +26,15 @@ class MessageController {
             ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
     }
 
+    @RequestMapping(value = ["/messages/{messageId}"], method = [RequestMethod.GET])
+    fun getMessageById(@PathVariable("messageId") messageId: String): ResponseEntity<Any?> {
+        val response = _messageService.getMessageById(messageId)
+        return if (response.successful_operation)
+            ResponseEntity.status(response.code).body(response.data)
+        else
+            ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
+    }
+
     @RequestMapping(value = ["/messages"], method = [RequestMethod.POST])
     fun createMessage(@RequestBody message: BusinessCreateMessage): ResponseEntity<Any?> {
         val response = _messageService.createMessage(message)

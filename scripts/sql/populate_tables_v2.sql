@@ -27,17 +27,17 @@ INSERT INTO user_chats (chatId, uid) VALUES (2, (SELECT uid FROM users WHERE use
 INSERT INTO user_chats (chatId, uid) VALUES (2, (SELECT uid FROM users WHERE username='naruto'));
 
 /* POPULATE MESSAGES TABLES */
-INSERT INTO messages (chatId, ownerId, text, imagePath, date) 
-	VALUES (1, (SELECT uid FROM users WHERE username='ana'), 'salut. ce faci?', 'null', TO_DATE('2020-10-01', 'YYYY-MM-DD'));
+INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date) 
+	VALUES (1, (SELECT uid FROM users WHERE username='ana'), null, 'salut. ce faci?', null, TO_DATE('2020-10-01', 'YYYY-MM-DD'));
 	
-INSERT INTO messages (chatId, ownerId, text, imagePath, date) 
-	VALUES (1, (SELECT uid FROM users WHERE username='ionel'), 'salut. bine, tu?', 'null', TO_DATE('2020-10-01', 'YYYY-MM-DD'));
+INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date) 
+	VALUES (1, (SELECT uid FROM users WHERE username='ionel'), null, 'salut. bine, tu?', null, TO_DATE('2020-10-01', 'YYYY-MM-DD'));
 	
-INSERT INTO messages (chatId, ownerId, text, imagePath, date)
-	VALUES (2, (SELECT uid FROM users WHERE username='ana'), 'hello', 'null', TO_DATE('2020-10-02', 'YYYY-MM-DD'));
+INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date)
+	VALUES (2, (SELECT uid FROM users WHERE username='ana'), null, 'hello', null, TO_DATE('2020-10-02', 'YYYY-MM-DD'));
 	
-INSERT INTO messages (chatId, ownerId, text, imagePath, date) 
-	VALUES (2, (SELECT uid FROM users WHERE username='naruto'), 'hi', 'null', TO_DATE('2020-10-03', 'YYYY-MM-DD'));
+INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date) 
+	VALUES (2, (SELECT uid FROM users WHERE username='naruto'), null, 'hi', null, TO_DATE('2020-10-03', 'YYYY-MM-DD'));
 
 /* POPULATE BLOCKED USERS TABLES */
 

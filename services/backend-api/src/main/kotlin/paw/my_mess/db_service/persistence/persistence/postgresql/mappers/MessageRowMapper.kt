@@ -11,6 +11,7 @@ class MessageRowMapper : RowMapper<Message> {
         return Message(resultSet.getString("messageId"),
                 resultSet.getString("chatId"),
                 resultSet.getString("ownerId"),
+                resultSet.getString("replyToMessageId"),
                 resultSet.getString("text"),
                 resultSet.getString("imagePath"),
                 resultSet.getObject("date", LocalDateTime::class.java)
