@@ -1,0 +1,61 @@
+a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5em;
+}
+#container{
+    display: flex;
+    margin-left: -10px;
+    margin-right: -8px;
+    margin-top: -10px;
+    height: 10vh;
+    background-color: #0183ff;
+    min-height: 80px;
+}
+.item, .itemCentered, .itemRight{
+    flex: 1;
+}
+.itemCentered{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.itemRight{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.itemRight div{
+    margin-right: 10px;
+    font-size: 1.2em;
+    color: white;
+}
+img{
+    height: 100%;
+    width: 40%;
+}
+
+#inbox{
+    color: white;
+}
+
+.notification {
+    color: white;
+    text-decoration: none;
+    padding: 15px 26px;
+    position: relative;
+    display: inline-block;
+    text-align: ce;
+    border-radius: 2px;
+  }
+  
+  .notification .badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    padding: 5px 10px;
+    font-size: 1em;
+    border-radius: 50%;
+    background: red;
+    color: white;
+  }

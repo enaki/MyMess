@@ -1,0 +1,81 @@
+#loginContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    width: 100%;
+    min-height: 500px;
+}
+
+form {
+    background-color: #5cabfa;
+    border-radius: 20px;
+    width: 70%;
+    height: 70vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 10vh;
+    min-height: 400px;
+}
+
+label {
+    color: #246EB9;
+    font-size: 25px;
+}
+
+input, select {
+    display: block;
+    color: #FDFFFC;
+    min-height: 40px;
+    height: 5vh;
+    width: 70%;
+    margin-bottom: 10px;
+    background-color: #4CB944;
+    border-radius: 10px;
+}
+
+input[type=submit] {
+    width: 100px;
+    min-height: 40px;
+    color: #FDFFFC;
+    flex: 1;
+}
+
+a {
+    display: block;
+    color: #4CB944;
+}
+
+.registerPanel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+#registerContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+}
+
+#registerRow {
+    width: 100%;
+    display: flex;
+    flex: 11;
+    flex-direction: row;
+}
+
+nav a {
+    background-color: #5cabfa;
+    color: white;
+    padding: 20px;
+    width: 7%;
+    border-radius: 20px;
+}
