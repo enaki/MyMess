@@ -40,7 +40,20 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
           Validators.maxLength(150)
         ]
       ],
+      username: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(150)
+        ]
+      ],
       birthdate: [
+        '',
+        [
+          Validators.required
+        ]
+      ],
+      country: [
         '',
         [
           Validators.required
