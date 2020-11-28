@@ -1,0 +1,17 @@
+.authentication-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  box-shadow: 0 0 8px rgba(0, 23, 87, 0.08);
+}
+
+:host {
+  height: calc(100%);
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
