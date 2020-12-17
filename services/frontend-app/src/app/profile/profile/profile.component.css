@@ -1,0 +1,18 @@
+.chat-container{
+    margin: 0;
+}
+.lower-chat-container{
+    display: flex;
+    align-items: center;
+}
+
+.chat-box{
+    flex-grow: 1;
+}
+
+textarea {
+    resize: none;
+}
+.mat-content{
+    margin:10px;
+}
