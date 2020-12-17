@@ -1,0 +1,53 @@
+<img src="assets/images/login.svg"  alt="login" width="300" height="300"/>
+<div class="authentication-container">
+  <p class="authentication-title">Log in</p>
+  <form [formGroup]="formGroup" class="authentication-form">
+    <div class="form-container">
+      <div class="authentication-item">
+        <label>
+          Email
+        </label>
+        <input formControlName="email" type="email" />
+      </div>
+      <div class="authentication-item">
+        <label>
+          Username
+        </label>
+        <input formControlName="username" type="text" />
+      </div>
+      <div class="authentication-item">
+        <label>
+          Password
+        </label>
+        <input formControlName="password" type="password" />
+      </div>
+      <div class="authentication-item">
+        <label>
+          Confirm password
+        </label>
+        <input formControlName="confirmPassword" type="password" />
+      </div>
+      <div class="authentication-item">
+        <label>
+          Name
+        </label>
+        <input formControlName="name" type="text" />
+      </div>
+      <div class="authentication-item">
+        <label>
+          Birthday
+        </label>
+        <input formControlName="birthday" type="text" />
+      </div>
+      <div class="authentication-item">
+        <label>
+          Country
+        </label>
+        <input formControlName="country" type="text" />
+      </div>
+    </div>
+    <button type="button" (click)="null">
+      <span>Log in</span>
+    </button>
+  </form>
+</div>

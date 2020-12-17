@@ -1,0 +1,33 @@
+  <p>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <button mat-raised-button color="warn" (click)="goToHomePage()" >
+            MyMess
+        </button>
+        <span class="example-spacer"></span>
+        <button mat-raised-button color="warn" (click)="goToInboxPage()" >
+            <mat-icon>chat</mat-icon>Inbox
+        </button>
+        <span class="example-spacer"></span>
+        <button mat-raised-button color="warn" (click)="goToNotificationPage()">
+            <mat-icon>notifications-none</mat-icon>Notifications
+        </button>
+        <span class="example-spacer"></span>
+        <button mat-raised-button color="warn" (click)="goToFriendsPage()">
+            <mat-icon>group</mat-icon>Friends
+        </button>
+        <span class="example-spacer"></span>
+        <button mat-raised-button color="warn" (click)="goToProfilePage()">
+          <mat-icon>person-outline</mat-icon>Profile
+        </button>
+        <button *ngIf="isUserLoggedIn(); else login" mat-raised-button color="warn"  (click)="logout()">
+            <mat-icon>logout</mat-icon>Log out
+        </button>
+        <ng-template #login>
+          <button mat-raised-button color="warn"  (click)="goToLoginPage()">
+            <mat-icon>login</mat-icon>Log In
+          </button>
+        </ng-template>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </p>

@@ -8,7 +8,7 @@ fun BusinessUserProfile.ToUserProfile(): UserProfile { return UserProfile(uid, s
 fun UserProfile.ToBusinessUserProfile(): BusinessUserProfile { return BusinessUserProfile(uid, status, birthdate, gender, dateRegistered, city, country ) }
 
 fun BusinessUser.ToUser(): User { return User(uid, username, passwordHash, email, avatarPath) }
-fun User.ToBusinessUser(): BusinessUser { return BusinessUser(uid, username, passwordHash, email, avatarPath) }
+fun User.ToBusinessUser(): BusinessUser { return BusinessUser(uid, userName, passwordHash, email, avatarPath) }
 
 fun BusinessMessage.ToMessage(): Message { return Message(messageId, chatId, ownerId, replyToMessageId, text, imagePath, date) }
 fun Message.ToBusinessMessage(): BusinessMessage { return BusinessMessage(messageId, chatId, ownerId, replyToMessageId, text, imagePath, date) }

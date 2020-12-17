@@ -1,0 +1,14 @@
+button{
+  flex:1;
+  border-radius: 0;
+}
+mat-toolbar-row{
+  margin: 0;
+  padding: 0;
+}
+mat-toolbar-row{
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}

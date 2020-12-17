@@ -51,7 +51,7 @@ class UserServiceImpl: UserService {
 
     override fun createUser(user: BusinessCreateUser): Response<Any?> {
         try{
-            val uid = _userRepository.add(User(uid="", username = user.username, passwordHash = user.passwordHash, email = user.email, avatarPath = ""))
+            val uid = _userRepository.add(User(uid="", userName = user.username, passwordHash = user.passwordHash, email = user.email, avatarPath = ""))
             if (uid == null){
                 return Response(successful_operation = false, data= Unit, code = 400, error="Can't create user")
             }
@@ -106,7 +106,7 @@ class UserServiceImpl: UserService {
             }
 
             // updatam userul
-            val tempUsername = user.username ?: user_from_db.username
+            val tempUsername = user.username ?: user_from_db.userName
             val tempPasswordhash = user.passwordHash ?: user_from_db.passwordHash
             val tempEmail = user.email ?: user_from_db.email
             val tempAvatarpath = user.avatarPath ?: user_from_db.avatarPath
