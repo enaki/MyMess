@@ -1,4 +1,4 @@
-package paw.my_mess.db_service.presentation.security.jwt
+package paw.my_mess.db_service.business.security.jwt
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jws
@@ -28,9 +28,10 @@ class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(jwtProperties!!.secretKey.toByteArray())
     }
 
-    fun createToken(username: String?, roles: List<String?>?): String {
+    fun createToken(uid: String?, username: String?, roles: List<String?>?): String {
         val claims: Claims = Jwts.claims().setSubject(username)
-        claims.put("roles", roles)
+        claims["uid"] = uid
+        claims["roles"] = roles
         val now = Date()
         val validity: Date = Date(now.time + jwtProperties!!.validityInMs)
         return Jwts.builder() //

@@ -2,47 +2,40 @@ package paw.my_mess.db_service.presentation.controllers
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.AuthenticationException
-import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.web.bind.annotation.*
 import paw.my_mess.db_service.business.bussines_models.get.AuthenticationRequest
-import paw.my_mess.db_service.persistence.persistence.postgresql.repositories.UserRepository
-import paw.my_mess.db_service.presentation.security.jwt.JwtTokenProvider
+import paw.my_mess.db_service.business.error_handling.MyError
+import paw.my_mess.db_service.business.interfaces.AuthService
+import java.util.stream.Collectors
 
 @RestController
 @RequestMapping("/auth")
 class AuthenticationController {
     @Autowired
-    lateinit var authenticationManager: AuthenticationManager
+    private lateinit var _authService: AuthService
 
-    @Autowired
-    lateinit var jwtTokenProvider: JwtTokenProvider
 
-    @Autowired
-    lateinit var users: UserRepository
+    @PostMapping("/signIn")
+    fun signIn(@RequestBody data: AuthenticationRequest): ResponseEntity<*>? {
+        val response = _authService.signIn(data.username, data.password)
+        return if (response.successful_operation)
+            ResponseEntity.status(response.code).body(response.data)
+        else
+            ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
+    }
 
-    @PostMapping("/signin")
-    fun signin(@RequestBody data: AuthenticationRequest): ResponseEntity<*>? {
-        return try {
-            val username: String = data.username!!
-            val userPasswordAuthToken = UsernamePasswordAuthenticationToken(username, data.password)
-            authenticationManager.authenticate(userPasswordAuthToken)
-            val foundUser = users.findByUsername(username)
-                    ?: throw UsernameNotFoundException("Username " + username + "not found")
-            val token: String = jwtTokenProvider!!.createToken(username, foundUser.getRoles())
-            val model: MutableMap<Any, Any> = HashMap()
-            model["username"] = username
-            model["token"] = token
-            ResponseEntity.ok<Map<Any, Any>>(model)
-        } catch (e: AuthenticationException) {
-            throw BadCredentialsException("Invalid username/password supplied")
-        }
+    @GetMapping("/me")
+    fun currentUser(@AuthenticationPrincipal userDetails: UserDetails): ResponseEntity<*>? {
+        val model: MutableMap<Any, Any> = HashMap()
+        model["username"] = userDetails.username
+        model["roles"] = userDetails.authorities
+                .stream()
+                .map { a: GrantedAuthority -> a.authority }
+                .collect(Collectors.toList())
+        return ResponseEntity.ok<Map<Any, Any>>(model)
     }
 
 }
