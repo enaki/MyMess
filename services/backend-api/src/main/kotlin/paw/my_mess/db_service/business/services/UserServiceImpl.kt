@@ -63,7 +63,7 @@ class UserServiceImpl: UserService {
         catch(e: org.springframework.dao.DuplicateKeyException){
             return Response(successful_operation = false, data= Unit, code = 400, error = "User with username ${user.username} is existent")
         }
-        catch(e:  java.text.ParseException){
+        catch(e: java.text.ParseException){
             return Response(successful_operation = false, data= Unit, code = 400, error = "Invalid Birthdate")
         }
         catch(e: Exception){
@@ -86,7 +86,7 @@ class UserServiceImpl: UserService {
             if (user == null){
                 return Response(successful_operation = false, data=user, code = 404, message = "User Profile Not Found")
             }
-            return Response(successful_operation = true, data=user!!.ToBusinessUserProfile(), code = 200)
+            return Response(successful_operation = true, data= user.ToBusinessUserProfile(), code = 200)
         }
         catch(e: NumberFormatException){
             return Response(successful_operation = false, data=null, code = 400, error=e.toString(), message = "Invalid Id For User")

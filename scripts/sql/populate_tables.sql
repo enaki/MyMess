@@ -1,10 +1,3 @@
-/* POPULATE USERS TABLES */
-INSERT INTO users (username, passwordHash, email, avatarPath) VALUES ('ionel', 'ionel', 'ionel@gmail.com', 'null');
-INSERT INTO users (username, passwordHash, email, avatarPath) VALUES ('ana', 'ana', 'ana@gmail.com', 'null');
-INSERT INTO users (username, passwordHash, email, avatarPath) VALUES ('naruto', 'naruto', 'naruto@gmail.com', 'null');
-INSERT INTO users (username, passwordHash, email, avatarPath) VALUES ('alfred', 'alfred', 'alfred@gmail.com', 'null');
-INSERT INTO users (username, passwordHash, email, avatarPath) VALUES ('alehandro', 'alehandro', 'alehandro@gmail.com', 'null');
-
 /* POPULATE USER PROFILES TABLES */
 INSERT INTO user_profiles (uid, status, birthdate, gender, dateRegistered, city, country) 
 	VALUES ((SELECT uid FROM users WHERE username='ionel'), 

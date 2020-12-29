@@ -1,4 +1,4 @@
-package paw.my_mess.db_service.presentation.security
+package paw.my_mess.db_service.business.security
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
@@ -12,7 +12,7 @@ class CustomUserDetailsService: UserDetailsService {
     private lateinit var users: UserRepository
 
     override fun loadUserByUsername(username: String?): UserDetails {
-        val user = username?.let { users.findByUsername(it) } ?: throw Exception("Username: " + username + " not found")
+        val user = username?.let { users.findByUsername(it) } ?: throw Exception("Username: $username not found")
         return user
     }
 
