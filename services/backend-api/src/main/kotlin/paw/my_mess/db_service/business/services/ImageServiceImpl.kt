@@ -1,9 +1,12 @@
 package paw.my_mess.db_service.business.services
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.UrlResource
 import org.springframework.stereotype.Service
 import paw.my_mess.db_service.business.error_handling.Response
 import paw.my_mess.db_service.business.interfaces.ImageService
+import paw.my_mess.db_service.persistence.entities.User
+import paw.my_mess.db_service.persistence.persistence.interfaces.IUserRepository
 import java.awt.Image
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
@@ -13,6 +16,10 @@ import javax.imageio.ImageReader
 
 @Service
 class ImageServiceImpl : ImageService {
+
+    @Autowired
+    private lateinit var _userRepository: IUserRepository<User>
+
     override fun getImage(name: String): Response<UrlResource> {
 
         val urlResource = UrlResource("file:images/$name")
@@ -24,8 +31,10 @@ class ImageServiceImpl : ImageService {
         }
     }
 
-    fun writeFile(uid: String, icon: ByteArray): String? {
+    override fun createFile(uid: String, icon: ByteArray): Response<Any?> {
         try {
+            val user = _userRepository.get(uid)
+                    ?: return Response(successful_operation = false, code = 404, data = null, error = "user not found", message = "");
             //cream imaginea
             val bis = ByteArrayInputStream(icon)
             val readers: Iterator<*> = ImageIO.getImageReadersByFormatName("png")
@@ -50,10 +59,12 @@ class ImageServiceImpl : ImageService {
             val imageFile = File("images/$fileLocation")
             imageFile.createNewFile()
             ImageIO.write(bufferedImage, "png", imageFile)
-            return fileLocation
+            user.avatarPath = fileLocation
+            _userRepository.update(uid, user)
+            return Response(successful_operation = true, code = 200, data = "success")
         } catch (e: Exception) {
             println(e.message)
-            return null
+            return Response(successful_operation = false, code = 404, data = null, error = "user not found", message = "")
         }
     }
 }
