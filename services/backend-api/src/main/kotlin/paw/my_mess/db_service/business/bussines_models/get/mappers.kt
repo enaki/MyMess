@@ -1,26 +1,41 @@
 package paw.my_mess.db_service.business.bussines_models.get
 
 import BusinessUserChat
+import org.springframework.core.io.ClassPathResource
 import paw.my_mess.db_service.persistence.entities.*
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.File
+import java.io.FileInputStream
 
 
-fun BusinessUserProfile.ToUserProfile(): UserProfile { return UserProfile(uid, status, birthdate, gender, dataRegistered, city, country ) }
 fun UserProfile.ToBusinessUserProfile(): BusinessUserProfile { return BusinessUserProfile(uid, status, birthdate, gender, dateRegistered, city, country ) }
 
-fun BusinessUser.ToUser(): User { return User(uid, username, passwordHash, email, avatarPath) }
-fun User.ToBusinessUser(): BusinessUser { return BusinessUser(uid, userName, passwordHash, email, avatarPath) }
+fun User.ToBusinessUser(): BusinessUser {
+    val bos = ByteArrayOutputStream()
+    val buf = ByteArray(1024)
+    val file = ClassPathResource("images/$avatarPath")
+    val fis = file.inputStream
+    try {
+        var readNum: Int = 0
+        while (fis.read(buf).also { readNum = it } != -1) {
 
-fun BusinessMessage.ToMessage(): Message { return Message(messageId, chatId, ownerId, replyToMessageId, text, imagePath, date) }
+            //Writes to this byte array output stream
+            bos.write(buf, 0, readNum)
+        }
+    } catch (ex: IOException) {
+        //deschide path prestabilit
+    }
+
+    val bytes = bos.toByteArray()
+    return BusinessUser(uid, userName, passwordHash, email, bytes) }
+
 fun Message.ToBusinessMessage(): BusinessMessage { return BusinessMessage(messageId, chatId, ownerId, replyToMessageId, text, imagePath, date) }
 
-fun BusinessFriendship.ToFriendship(): Friendship { return Friendship(friendShipId, uid1, uid2) }
 fun Friendship.ToBusinessFriendship(): BusinessFriendship { return BusinessFriendship(friendShipId, uid1, uid2) }
 
-fun BusinessFriendRequest.ToFriendRequest(): FriendRequest { return FriendRequest(friendRequestId, fromId, toId) }
 fun FriendRequest.ToBusinessFriendRequest(): BusinessFriendRequest { return BusinessFriendRequest(friendRequestId, fromId, toId) }
 
-fun BusinessUserChat.ToUserChat(): UserChat { return UserChat(chatId, uid) }
 fun UserChat.ToBusinessUserChat(): BusinessUserChat { return BusinessUserChat(chatId,uid) }
 
-fun BusinessBlockedUser.ToBlockedUser(): BlockedUser { return BlockedUser(blockedUserId, uid, targetId) }
 fun BlockedUser.ToBusinessBlockedUser(): BusinessBlockedUser { return BusinessBlockedUser(blockedUsersId, uid, targetId) }

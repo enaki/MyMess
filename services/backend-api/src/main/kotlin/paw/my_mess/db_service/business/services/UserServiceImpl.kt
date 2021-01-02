@@ -27,6 +27,9 @@ class UserServiceImpl: UserService {
     override fun getAllUsers(): Response<List<BusinessUser>?> {
         try{
             val userList = _userRepository.getAll()
+            for(user in userList){
+
+            }
             return Response(successful_operation = true, data=userList.map { it.ToBusinessUser() }, code = 200)
         } catch(e: Exception){
             return Response(successful_operation = false, data= null, code = 400, error = e.toString())
@@ -39,7 +42,7 @@ class UserServiceImpl: UserService {
             if (user == null){
                 return Response(successful_operation = false, data=user, code = 404, message = "User Not Found")
             }
-            return Response(successful_operation = true, data=user!!.ToBusinessUser(), code = 200)
+            return Response(successful_operation = true, data= user.ToBusinessUser(), code = 200)
         }
         catch(e: NumberFormatException){
             return Response(successful_operation = false, data=null, code = 400, error=e.toString(), message = "Invalid Id For User")
