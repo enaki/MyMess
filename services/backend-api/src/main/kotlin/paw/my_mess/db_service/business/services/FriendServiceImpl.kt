@@ -13,7 +13,6 @@ import paw.my_mess.db_service.persistence.persistence.interfaces.IBlockedUserRep
 import paw.my_mess.db_service.persistence.persistence.interfaces.IFriendRepository
 import paw.my_mess.db_service.persistence.persistence.interfaces.IRequestFriendRepository
 import paw.my_mess.db_service.persistence.persistence.interfaces.IUserRepository
-import java.lang.Exception
 import java.sql.SQLDataException
 
 @Service

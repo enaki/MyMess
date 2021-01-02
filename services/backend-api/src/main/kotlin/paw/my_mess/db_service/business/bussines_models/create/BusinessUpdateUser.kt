@@ -9,5 +9,5 @@ data class BusinessUpdateUser (
         var status: String?,
         var city: String?,
         var country: String?,
-        var avatarPath: String?
+        var avatarIcon: ByteArray?
 )
