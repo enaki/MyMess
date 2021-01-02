@@ -1,6 +1,8 @@
 button{
   flex:1;
   border-radius: 0;
+  color: white;
+  background-color: rgb(62, 6, 11);
 }
 mat-toolbar-row{
   margin: 0;

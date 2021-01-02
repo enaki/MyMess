@@ -5,23 +5,40 @@
 .bg-chat {
   background-color: #21D4FD;
   background-image: linear-gradient(19deg, #e82402 0%, #000010 100%);
+}
 
+:host {
+  height: calc(90%);
+  width: calc(100%);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
 }
 
 textarea {
   resize: none !important;
 }
 
-.chat {
+.chat-search {
   margin-top: 5px;
   margin-bottom: 5px;
-  height: 750px;
+  display: flex;
+  width: 20%;
+  height: 100%;
+}
+
+.chat {
+  flex: 1;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  height: 100%;
+  flex-grow: 1;
 }
 
 .card {
-  height: 100%;
   border-radius: 15px ;
-  background-color: rgba(0, 0, 0, 0.4) ;
+  background-color: rgba(22, 4, 4, 0.8);
 }
 
 .contacts_body {
@@ -31,7 +48,6 @@ textarea {
 }
 
 .msg_card_body {
-  height: 500px;
   overflow-y: auto;
 }
 
@@ -45,15 +61,10 @@ textarea {
   border-top: 0 ;
 }
 
-.container {
-  align-content: center;
-}
-
 .search {
   border-radius: 15px 0 0 15px ;
-  background-color: rgba(0, 0, 0, 0.3) ;
+  background-color: rgba(255, 255, 255, 0.3);
   border: 0 ;
-  color: white ;
 }
 
 .search:focus {
@@ -104,7 +115,7 @@ textarea {
 }
 
 .contacts li {
-  width: 100% ;
+  width: 100%;
   padding: 5px 10px;
   margin-bottom: 15px ;
 }
@@ -207,18 +218,18 @@ textarea {
 .msg_time {
   position: absolute;
   left: 0;
-  bottom: -15px;
-  color: #ff5900 !important;
-  font-size: 10px;
+  bottom: -20px;
+  color: #ff5900;
+  font-size: 12px;
   width: 100px;
 }
 
 .msg_time_send {
   position: absolute;
   right: 0;
-  bottom: -15px;
-  color: #0022ff !important;
-  font-size: 10px;
+  bottom: -20px;
+  color: #00ffcd;
+  font-size: 12px;
   width: 100px;
 }
 
