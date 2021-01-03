@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+// MDB Angular Free
 
 @Component({
   selector: 'app-inbox',

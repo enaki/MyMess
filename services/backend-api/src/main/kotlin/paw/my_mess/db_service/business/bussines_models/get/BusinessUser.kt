@@ -5,7 +5,7 @@ data class BusinessUser (
         var username: String,
         var passwordHash: String,
         var email: String,
-        var avatarPath: String
+        var avatarLink: String
 )
 
 

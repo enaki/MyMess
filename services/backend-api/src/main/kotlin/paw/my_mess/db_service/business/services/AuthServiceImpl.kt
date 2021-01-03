@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service
 import paw.my_mess.db_service.business.bussines_models.get.AuthenticationResponse
 import paw.my_mess.db_service.business.error_handling.Response
 import paw.my_mess.db_service.business.interfaces.AuthService
-import paw.my_mess.db_service.persistence.persistence.postgresql.repositories.UserRepository
 import paw.my_mess.db_service.business.security.jwt.JwtTokenProvider
+import paw.my_mess.db_service.persistence.persistence.postgresql.repositories.UserRepository
 
 @Service
 class AuthServiceImpl: AuthService {
