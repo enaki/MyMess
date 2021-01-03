@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository
 import paw.my_mess.db_service.persistence.entities.FriendRequest
 import paw.my_mess.db_service.persistence.persistence.interfaces.IRequestFriendRepository
 import paw.my_mess.db_service.persistence.persistence.postgresql.mappers.RequestFriendRowMapper
-import java.sql.SQLDataException
 
 @Repository
 class RequestFriendRepository: GenericRepository<FriendRequest>(), IRequestFriendRepository<FriendRequest> {

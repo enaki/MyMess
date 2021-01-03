@@ -4,9 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import paw.my_mess.db_service.business.bussines_models.create.BusinessCreateMessage
-import paw.my_mess.db_service.business.bussines_models.create.BusinessCreateUser
-import paw.my_mess.db_service.business.bussines_models.create.BusinessUpdateUser
-import paw.my_mess.db_service.business.bussines_models.get.BusinessMessage
 import paw.my_mess.db_service.business.error_handling.MyError
 import paw.my_mess.db_service.business.interfaces.MessageService
 
