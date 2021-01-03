@@ -9,6 +9,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {SharedModule} from './shared/shared.module';
 
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 @NgModule({
   declarations: [
     AppComponent
@@ -17,6 +18,7 @@ import {SharedModule} from './shared/shared.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MDBBootstrapModule.forRoot(),
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,

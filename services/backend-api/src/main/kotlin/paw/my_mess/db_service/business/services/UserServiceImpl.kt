@@ -106,10 +106,7 @@ class UserServiceImpl : UserService {
             val tempUsername = user.username ?: user_from_db.userName
             val tempPasswordhash = user.passwordHash ?: user_from_db.passwordHash
             val tempEmail = user.email ?: user_from_db.email
-
-            //val imageName = ImageServiceImpl.writeFile(uid, user.avatarIcon!!)
-
-            val tempAvatarpath = "salut" ?: user_from_db.avatarPath
+            val tempAvatarpath = user.avatarPath ?: user_from_db.avatarPath
             val userToUpdate = User(uid, tempUsername, tempPasswordhash, tempEmail, tempAvatarpath)
             _userRepository.update(uid, userToUpdate)
 
