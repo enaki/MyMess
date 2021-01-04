@@ -3,30 +3,30 @@
     "username": "ionel",
     "password": "ionel",
     "email": "ionel@gmail.com",
-    "avatarPath": "null"
+    "avatarPath": "ionel.png"
   },
   {
     "username": "ana",
     "password": "ana",
     "email": "ana@gmail.com",
-    "avatarPath": "null"
+    "avatarPath": "ana.png"
   },
   {
     "username": "naruto",
     "password": "naruto",
     "email": "naruto@gmail.com",
-    "avatarPath": "null"
+    "avatarPath": "naruto.png"
   },
   {
     "username": "alfred",
     "password": "alfred",
     "email": "alfred@gmail.com",
-    "avatarPath": "null"
+    "avatarPath": "alfred.png"
   },
   {
     "username": "alehandro",
     "password": "alehandro",
     "email": "alehandro@gmail.com",
-    "avatarPath": "null"
+    "avatarPath": "alehandro.png"
   }
 ]

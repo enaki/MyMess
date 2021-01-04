@@ -25,6 +25,9 @@ class UserServiceImpl : UserService {
     @Autowired
     private lateinit var _userProfileRepository: IUserProfileRepository<UserProfile>
 
+    @Autowired
+    private lateinit var _imageService: ImageServiceImpl
+
     override fun getAllUsers(): Response<List<BusinessUser>?> {
         try {
             val userList = _userRepository.getAll()
@@ -106,7 +109,12 @@ class UserServiceImpl : UserService {
             val tempUsername = user.username ?: user_from_db.userName
             val tempPasswordhash = user.passwordHash ?: user_from_db.passwordHash
             val tempEmail = user.email ?: user_from_db.email
-            val tempAvatarpath = user.avatarPath ?: user_from_db.avatarPath
+
+            val path = _imageService.createFile(uid,user.avatarIcon!!)
+            if(path != null && user_from_db.avatarPath != "null")
+                _imageService.deleteFile(user_from_db.avatarPath)
+
+            val tempAvatarpath = path ?: user_from_db.avatarPath
             val userToUpdate = User(uid, tempUsername, tempPasswordhash, tempEmail, tempAvatarpath)
             _userRepository.update(uid, userToUpdate)
 

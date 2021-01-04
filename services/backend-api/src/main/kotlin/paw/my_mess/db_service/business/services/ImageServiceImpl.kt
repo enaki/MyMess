@@ -31,10 +31,8 @@ class ImageServiceImpl : ImageService {
         }
     }
 
-    override fun createFile(uid: String, icon: ByteArray): Response<Any?> {
+    override fun createFile(uid: String, icon: ByteArray) : String? {
         try {
-            val user = _userRepository.get(uid)
-                    ?: return Response(successful_operation = false, code = 404, data = null, error = "user not found", message = "");
             //cream imaginea
             val bis = ByteArrayInputStream(icon)
             val readers: Iterator<*> = ImageIO.getImageReadersByFormatName("png")
@@ -59,11 +57,25 @@ class ImageServiceImpl : ImageService {
             val imageFile = File("images/$fileLocation")
             imageFile.createNewFile()
             ImageIO.write(bufferedImage, "png", imageFile)
-            user.avatarPath = fileLocation
+            return fileLocation
+        } catch (e: Exception) {
+            println(e.message)
+            return null
+        }
+    }
+
+    override fun deleteFile(path: String) {
+        File("images/$path").delete()
+    }
+
+    override fun updateUserAvatar(uid: String, avatarPath: String): Response<Any?> {
+        try {
+            val user = _userRepository.get(uid)
+                    ?: return Response(successful_operation = false, code = 404, data = null, error = "user not found", message = "");
+            user.avatarPath = avatarPath
             _userRepository.update(uid, user)
             return Response(successful_operation = true, code = 200, data = "success")
         } catch (e: Exception) {
-            println(e.message)
             return Response(successful_operation = false, code = 404, data = null, error = "user not found", message = "")
         }
     }
