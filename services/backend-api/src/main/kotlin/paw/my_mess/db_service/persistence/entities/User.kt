@@ -13,6 +13,8 @@ data class User(
         @Id var uid: String = "",
         var userName: String,
         var passwordHash: String,
+        var firstname: String,
+        var lastname: String,
         var email: String,
         var avatarPath: String
 ) :UserDetails {

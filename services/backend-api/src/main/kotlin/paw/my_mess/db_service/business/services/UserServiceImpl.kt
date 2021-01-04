@@ -56,7 +56,7 @@ class UserServiceImpl : UserService {
 
     override fun createUser(user: BusinessCreateUser): Response<Any?> {
         try {
-            val uid = _userRepository.add(User(uid = "", userName = user.username, passwordHash = user.passwordHash, email = user.email, avatarPath = ""))
+            val uid = _userRepository.add(User(uid = "", userName = user.username, firstname = user.firstName, lastname = user.lastName, passwordHash = user.passwordHash, email = user.email, avatarPath = ""))
             if (uid == null) {
                 return Response(successful_operation = false, data = Unit, code = 400, error = "Can't create user")
             }
@@ -109,13 +109,15 @@ class UserServiceImpl : UserService {
             val tempUsername = user.username ?: user_from_db.userName
             val tempPasswordhash = user.passwordHash ?: user_from_db.passwordHash
             val tempEmail = user.email ?: user_from_db.email
+            val tempFirstname = user.firstName ?: user_from_db.firstname
+            val tempLastname = user.lastName ?: user_from_db.lastname
 
             val path = _imageService.createFile(uid,user.avatarIcon!!)
             if(path != null && user_from_db.avatarPath != "null")
                 _imageService.deleteFile(user_from_db.avatarPath)
 
             val tempAvatarpath = path ?: user_from_db.avatarPath
-            val userToUpdate = User(uid, tempUsername, tempPasswordhash, tempEmail, tempAvatarpath)
+            val userToUpdate = User(uid, tempUsername, tempPasswordhash, tempFirstname, tempLastname, tempEmail, tempAvatarpath)
             _userRepository.update(uid, userToUpdate)
 
             // updatam user profile-ul

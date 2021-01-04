@@ -282,15 +282,16 @@ class FriendServiceImpl: FriendService {
         }
     }
 
-    override fun getFriends(userId: String): Response<List<BusinessFriendship>> {
+    override fun getFriends(userId: String, toList: Boolean): Response<Any?> {
         return try {
             checkUsersId(userId)
 
             val response = this._friendRepository.getFriendsByUserId(userId)
+            val data = response.map { it.ToBusinessFriendship() }
             Response(
                     successful_operation = true,
                     code = 200,
-                    data = response.map { it.ToBusinessFriendship() }
+                    data = if (!toList) data else data.toFriendShipList(userId)
             )
         }
         catch (error: NoSuchElementException){

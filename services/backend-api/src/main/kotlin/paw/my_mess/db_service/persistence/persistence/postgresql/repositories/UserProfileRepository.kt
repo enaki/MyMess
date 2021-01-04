@@ -1,11 +1,12 @@
 package paw.my_mess.db_service.persistence.persistence.postgresql.repositories
 
+import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import paw.my_mess.db_service.persistence.entities.UserProfile
 import paw.my_mess.db_service.persistence.persistence.interfaces.IUserProfileRepository
 import paw.my_mess.db_service.persistence.persistence.postgresql.mappers.UserProfileRowMapper
 
-@Service
+@Repository
 class UserProfileRepository: GenericRepository<UserProfile>(), IUserProfileRepository<UserProfile> {
     private val tableName = "user_profiles"
     init {

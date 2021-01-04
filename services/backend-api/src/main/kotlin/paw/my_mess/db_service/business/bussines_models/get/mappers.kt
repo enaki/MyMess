@@ -8,7 +8,7 @@ fun UserProfile.ToBusinessUserProfile(): BusinessUserProfile { return BusinessUs
 
 fun User.ToBusinessUser(): BusinessUser {
 
-    return BusinessUser(uid, userName, passwordHash, email, "http://localhost:2020/api/images/$avatarPath") }
+    return BusinessUser(uid, userName, firstname, lastname, email, "http://localhost:2020/api/images/$avatarPath") }
 
 fun Message.ToBusinessMessage(): BusinessMessage { return BusinessMessage(messageId, chatId, ownerId, replyToMessageId, text, imagePath, date) }
 
@@ -19,3 +19,8 @@ fun FriendRequest.ToBusinessFriendRequest(): BusinessFriendRequest { return Busi
 fun UserChat.ToBusinessUserChat(): BusinessUserChat { return BusinessUserChat(chatId,uid) }
 
 fun BlockedUser.ToBusinessBlockedUser(): BusinessBlockedUser { return BusinessBlockedUser(blockedUsersId, uid, targetId) }
+
+fun List<BusinessFriendship>.toFriendShipList(uid: String): BusinessFriendshipList{
+    val list = this.map { if (uid == it.uid1) it.uid2 else it.uid1 }
+    return BusinessFriendshipList(uid, list)
+}
