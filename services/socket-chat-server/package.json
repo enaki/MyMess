@@ -5,6 +5,8 @@
   "main": "App.js",
   "dependencies": {
     "express": "^4.15.2",
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.1",
     "socket.io": "^3.0.0"
   },
   "devDependencies": {
