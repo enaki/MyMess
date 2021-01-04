@@ -1,0 +1,19 @@
+{
+  "name": "socket-chat-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "App.js",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  },
+  "scripts": {
+    "start": "node App.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
