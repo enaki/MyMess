@@ -1,11 +1,12 @@
 package paw.my_mess.db_service.persistence.persistence.postgresql.repositories
 
+import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import paw.my_mess.db_service.persistence.entities.Message
 import paw.my_mess.db_service.persistence.persistence.interfaces.IMessageRepository
 import paw.my_mess.db_service.persistence.persistence.postgresql.mappers.MessageRowMapper
 
-@Service
+@Repository
 class MessageRepository : GenericRepository<Message>(), IMessageRepository<Message> {
     private val tableName = "messages"
     init {

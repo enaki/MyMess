@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {UserService} from '../../shared/services';
+import {FriendService} from '../../shared/services';
+import {Router} from '@angular/router';
+import {FriendListModel} from '../../shared/models/friend-list.model';
 // MDB Angular Free
 
 @Component({
@@ -40,9 +45,21 @@ export class InboxComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private friendService: FriendService
+  ) {
+    const user = this.userService.getUserDetails();
+    if (user == null) {
+      // this.router.navigate(['auth']);
+    }
+  }
 
   ngOnInit(): void {
+    this.friendService.getFriendsIds('3').subscribe((data: FriendListModel) => {
+      console.log(data);
+    });
   }
 
 }
