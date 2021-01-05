@@ -77,10 +77,10 @@ class MessageServiceImpl : MessageService {
         }
     }
 
-    override fun getChatId(uid1: String, uid2: String): Response<String?> {
+    override fun getChatId(uid1: String, uid2: String): Response<BusinessId?> {
         val id = _userChatRepository.getChatID(uid1, uid2)
                 ?: return Response(successful_operation = false, data = null, code = 404, message = "Chat Not Found")
-        return Response(successful_operation = true, data = id, code = 200)
+        return Response(successful_operation = true, data = BusinessId(id), code = 200)
     }
 
     override fun deleteMessage(chatID: String, messageID: String): Response<Any?> {

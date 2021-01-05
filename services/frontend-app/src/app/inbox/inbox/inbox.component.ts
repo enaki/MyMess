@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {UserService} from '../../shared/services';
 import {FriendService} from '../../shared/services';
 import {Router} from '@angular/router';
 import {FriendListModel} from '../../shared/models/friend-list.model';
 import {BasicUserModel} from '../../shared/models/basic-user.model';
-
-// MDB Angular Free
+import {InboxService} from '../services/inbox.service';
+import {IdModel} from '../../shared/models/id.model';
+import {MessageModel} from '../models/message.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-inbox',
@@ -15,13 +16,18 @@ import {BasicUserModel} from '../../shared/models/basic-user.model';
 })
 export class InboxComponent implements OnInit {
   contacts: BasicUserModel[];
-  currentSelected: number;
+  selectedUser: BasicUserModel;
+  messages = {};
+  moment;
+  inputText: string;
 
   constructor(
     private router: Router,
     private userService: UserService,
-    private friendService: FriendService
+    private friendService: FriendService,
+    private inboxService: InboxService
   ) {
+    this.moment = moment;
     const user = this.userService.getUserDetails();
     if (user == null) {
       // this.router.navigate(['auth']);
@@ -32,15 +38,46 @@ export class InboxComponent implements OnInit {
     this.friendService.getFriendsIds('3').subscribe((data: FriendListModel) => {
       this.contacts = [];
       for (const friendId of data.friendList) {
+
         this.friendService.getFriendInfo(friendId).subscribe((basicUserModel: BasicUserModel) => {
-          console.log(basicUserModel);
+          // console.log(basicUserModel);
           this.contacts.push(basicUserModel);
+          this.selectedUser = this.contacts[0];
+          this.inboxService.getChatId('2', '3').subscribe((idModel: IdModel) => {
+            this.inboxService.getMessages(idModel.id).subscribe((messageList: MessageModel[]) => {
+              this.messages[basicUserModel.uid] = messageList;
+            });
+          });
         });
       }
     });
   }
 
   changeChat(id: string): void {
-    this.currentSelected = parseInt(id);
+    if (this.selectedUser.uid !== id) {
+      this.inputText = '';
+      for (let i = 0; i < this.contacts.length; ++i) {
+        if (this.contacts[i].uid === id) {
+          this.selectedUser = this.contacts[i];
+          break;
+        }
+      }
+      this.inboxService.getChatId('2', '3').subscribe((idModel: IdModel) => {
+        this.inboxService.getMessages(idModel.id).subscribe((messageList: MessageModel[]) => {
+
+        });
+      });
+    }
+  }
+
+  sendMessage(): void {
+    if (this.inputText !== undefined && this.inputText.length > 0) {
+      // to do de trimis mesajul
+      this.inputText = '';
+    }
+  }
+
+  onInputChange(text: string): void {
+    this.inputText = text;
   }
 }

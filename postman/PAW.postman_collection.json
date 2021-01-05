@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c161f12d-4f78-4a7c-b681-edb974923899",
+		"_postman_id": "d32b364d-5270-41aa-bc21-6543138d57e1",
 		"name": "PAW",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -249,6 +249,36 @@
 									"query": [
 										{
 											"key": "messageId",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Chat ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/chat?uid1=1&uid2=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"chat"
+									],
+									"query": [
+										{
+											"key": "uid1",
+											"value": "1"
+										},
+										{
+											"key": "uid2",
 											"value": "3"
 										}
 									]
