@@ -3,30 +3,40 @@
     "username": "ionel",
     "password": "ionel",
     "email": "ionel@gmail.com",
-    "avatarPath": "null"
+    "firstname": "Ionut",
+    "lastname": "Marcel",
+    "avatarPath": "ionel.png"
   },
   {
     "username": "ana",
     "password": "ana",
+    "firstname": "Ana",
+    "lastname": "Are Mere",
     "email": "ana@gmail.com",
-    "avatarPath": "null"
+    "avatarPath": "ana.png"
   },
   {
     "username": "naruto",
     "password": "naruto",
+    "firstname": "Naruto",
+    "lastname": "Uzumaki",
     "email": "naruto@gmail.com",
-    "avatarPath": "null"
+    "avatarPath": "naruto.png"
   },
   {
     "username": "alfred",
     "password": "alfred",
+    "firstname": "Alfred",
+    "lastname": "Ariciul Detectiv",
     "email": "alfred@gmail.com",
-    "avatarPath": "null"
+    "avatarPath": "alfred.png"
   },
   {
     "username": "alehandro",
     "password": "alehandro",
+    "firstname": "Alehandro",
+    "lastname": "El Doritos",
     "email": "alehandro@gmail.com",
-    "avatarPath": "null"
+    "avatarPath": "alehandro.png"
   }
 ]

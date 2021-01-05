@@ -69,14 +69,18 @@ class MessageServiceImpl : MessageService {
     override fun getChatMessages(chatID: String): Response<List<BusinessMessage>> {
         return try {
             val chat = _chatRepository.get(chatID)
-            if (chat == null) {
-                return Response(successful_operation = false, data = null, code = 404, message = "Chat Not Found")
-            }
+                    ?: return Response(successful_operation = false, data = null, code = 404, message = "Chat Not Found")
             val msgList = _messageRepository.getMessagesByChatId(chatID)
             Response(successful_operation = true, data = msgList.map { it.ToBusinessMessage() }, code = 200)
         } catch (e: Exception) {
             Response(successful_operation = false, data = null, code = 400, error = e.toString())
         }
+    }
+
+    override fun getChatId(uid1: String, uid2: String): Response<BusinessId?> {
+        val id = _userChatRepository.getChatID(uid1, uid2)
+                ?: return Response(successful_operation = false, data = null, code = 404, message = "Chat Not Found")
+        return Response(successful_operation = true, data = BusinessId(id), code = 200)
     }
 
     override fun deleteMessage(chatID: String, messageID: String): Response<Any?> {

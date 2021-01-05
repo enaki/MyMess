@@ -6,6 +6,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
+import paw.my_mess.db_service.persistence.entities.User
+import paw.my_mess.db_service.persistence.entities.UserProfile
+import paw.my_mess.db_service.persistence.persistence.interfaces.IUserProfileRepository
+import paw.my_mess.db_service.persistence.persistence.interfaces.IUserRepository
 import java.util.*
 import javax.annotation.PostConstruct
 import javax.servlet.http.HttpServletRequest
@@ -15,6 +19,11 @@ import javax.servlet.http.HttpServletRequest
 class JwtTokenProvider {
     @Autowired
     var jwtProperties: JwtProperties? = null
+
+    @Autowired
+    private lateinit var _userProfileRepository: IUserProfileRepository<UserProfile>
+    @Autowired
+    private lateinit var _userRepository: IUserRepository<User>
 
     @Autowired
     private val userDetailsService: UserDetailsService? = null
@@ -27,6 +36,25 @@ class JwtTokenProvider {
     fun createToken(uid: String?, username: String?, roles: List<String?>?): String {
         val claims: Claims = Jwts.claims().setSubject(username)
         claims["uid"] = uid
+        if (uid != null){
+            val user = _userRepository.get(uid)
+            if (user != null){
+                claims["username"] = user.userName
+                claims["firstname"] = user.firstname
+                claims["lastname"] = user.lastname
+                claims["email"] = user.email
+                claims["avatarPath"] = user.avatarPath
+            }
+            val userProfile = _userProfileRepository.get(uid)
+            if (userProfile != null) {
+                claims["dateRegistered"] = userProfile.dateRegistered
+                claims["gender"] = userProfile.gender
+                claims["birthdate"] = userProfile.birthdate
+                claims["country"] = userProfile.country
+                claims["city"] = userProfile.city
+                claims["status"] = userProfile.status
+            }
+        }
         claims["roles"] = roles
         val now = Date()
         val validity: Date = Date(now.time + jwtProperties!!.validityInMs)

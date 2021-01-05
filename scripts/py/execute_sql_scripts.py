@@ -26,8 +26,9 @@ def insert_users(users, message="data"):
     cur = conn.cursor()
 
     for user in users:
-        users_sql_script = """INSERT INTO users (username, passwordHash, email, avatarPath) VALUES ('{}', '{}', '{}', '{}') """.format(
-            user["username"], hashlib.sha256(user["password"].encode('utf-8')).hexdigest(), user["email"], user["avatarPath"]
+        users_sql_script = """INSERT INTO users (username, passwordHash, email, firstname, lastname, avatarPath) VALUES ('{}', '{}', '{}', '{}', '{}', '{}') """.format(
+            user["username"], hashlib.sha256(user["password"].encode('utf-8')).hexdigest(), user["email"],
+            user["firstname"], user["lastname"], user["avatarPath"]
         )
         cur.execute(users_sql_script)
 

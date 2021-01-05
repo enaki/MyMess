@@ -9,6 +9,8 @@ class UserRowMapper: RowMapper<User> {
         return User(resultSet.getString("uid"),
                 resultSet.getString("username"),
                 resultSet.getString("passwordHash"),
+                resultSet.getString("firstname"),
+                resultSet.getString("lastname"),
                 resultSet.getString("email"),
                 resultSet.getString("avatarPath")
         )
