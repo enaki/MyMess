@@ -13,6 +13,8 @@ data class User(
         @Id var uid: String = "",
         var userName: String,
         var passwordHash: String,
+        var firstname: String,
+        var lastname: String,
         var email: String,
         var avatarPath: String
 ) :UserDetails {
@@ -21,7 +23,7 @@ data class User(
     }
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return mutableListOf(SimpleGrantedAuthority("USER_ROLE"))
+        return mutableListOf(SimpleGrantedAuthority("ROLE_USER"))
     }
 
     override fun getPassword(): String {

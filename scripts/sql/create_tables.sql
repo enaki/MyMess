@@ -3,6 +3,8 @@ CREATE TABLE users(
 	uid INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	username TEXT UNIQUE,
 	passwordHash TEXT CHECK (LENGTH(passwordHash) >= 3),
+	firstname TEXT NOT NULL,
+	lastname TEXT NOT NULL,
 	email TEXT,
 	avatarPath TEXT
 );

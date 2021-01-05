@@ -45,6 +45,7 @@ class FriendController {
     fun getFriendships(@PathVariable("id") id: String): ResponseEntity<Any?>{
         val response = this._friendService.getFriendship(id)
         return if (response.successful_operation){
+
             ResponseEntity.status(response.code).body(response.data)
         }
         else{
@@ -56,6 +57,7 @@ class FriendController {
     fun getFriendRequests(@PathVariable("id") id: String): ResponseEntity<Any?>{
         val response = this._friendService.getFriendRequests(id)
         return if (response.successful_operation){
+
             ResponseEntity.status(response.code).body(response.data)
         }
         else{
@@ -64,8 +66,9 @@ class FriendController {
     }
 
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
-    fun getFriends(@PathVariable("id") id: String): ResponseEntity<Any?>{
-        val response = this._friendService.getFriends(id)
+    fun getFriends(@RequestParam("toList", required = false) toList: String?,
+                   @PathVariable("id") id: String): ResponseEntity<Any?>{
+        val response = this._friendService.getFriends(id, toList = toList != null && (toList == "true" || toList == "1"))
         return if (response.successful_operation){
             ResponseEntity.status(response.code).body(response.data)
         }

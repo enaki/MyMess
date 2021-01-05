@@ -4,9 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import paw.my_mess.db_service.business.bussines_models.create.BusinessCreateMessage
-import paw.my_mess.db_service.business.bussines_models.create.BusinessCreateUser
-import paw.my_mess.db_service.business.bussines_models.create.BusinessUpdateUser
-import paw.my_mess.db_service.business.bussines_models.get.BusinessMessage
 import paw.my_mess.db_service.business.error_handling.MyError
 import paw.my_mess.db_service.business.interfaces.MessageService
 
@@ -47,6 +44,15 @@ class MessageController {
     @RequestMapping(value = ["/chat/{chatId}"], method = [RequestMethod.GET])
     fun getChatMessages(@PathVariable("chatId") chatId: String): ResponseEntity<Any?> {
         val response = _messageService.getChatMessages(chatId)
+        return if (response.successful_operation)
+            ResponseEntity.status(response.code).body(response.data)
+        else
+            ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
+    }
+
+    @RequestMapping(value = ["/chat"], method = [RequestMethod.GET])
+    fun getChatId(@RequestParam uid1: String, @RequestParam uid2: String): ResponseEntity<Any?> {
+        val response = _messageService.getChatId(uid1, uid2)
         return if (response.successful_operation)
             ResponseEntity.status(response.code).body(response.data)
         else

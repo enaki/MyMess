@@ -1,4 +1,4 @@
-package paw.my_mess.db_service.presentation.security.jwt
+package paw.my_mess.db_service.business.security.jwt
 
 import lombok.extern.slf4j.Slf4j
 import org.springframework.security.core.AuthenticationException

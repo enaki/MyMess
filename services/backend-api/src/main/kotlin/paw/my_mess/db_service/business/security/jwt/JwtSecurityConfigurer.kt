@@ -1,4 +1,4 @@
-package paw.my_mess.db_service.presentation.security.jwt
+package paw.my_mess.db_service.business.security.jwt
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.builders.HttpSecurity

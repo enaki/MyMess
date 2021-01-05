@@ -1,15 +1,15 @@
-package paw.my_mess.db_service.presentation.security.jwt
+package paw.my_mess.db_service.business.security.jwt
 
-import io.jsonwebtoken.Claims
-import io.jsonwebtoken.Jws
-import io.jsonwebtoken.JwtException
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
+import paw.my_mess.db_service.persistence.entities.User
+import paw.my_mess.db_service.persistence.entities.UserProfile
+import paw.my_mess.db_service.persistence.persistence.interfaces.IUserProfileRepository
+import paw.my_mess.db_service.persistence.persistence.interfaces.IUserRepository
 import java.util.*
 import javax.annotation.PostConstruct
 import javax.servlet.http.HttpServletRequest
@@ -21,6 +21,11 @@ class JwtTokenProvider {
     var jwtProperties: JwtProperties? = null
 
     @Autowired
+    private lateinit var _userProfileRepository: IUserProfileRepository<UserProfile>
+    @Autowired
+    private lateinit var _userRepository: IUserRepository<User>
+
+    @Autowired
     private val userDetailsService: UserDetailsService? = null
     private var secretKey: String? = null
     @PostConstruct
@@ -28,9 +33,29 @@ class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(jwtProperties!!.secretKey.toByteArray())
     }
 
-    fun createToken(username: String?, roles: List<String?>?): String {
+    fun createToken(uid: String?, username: String?, roles: List<String?>?): String {
         val claims: Claims = Jwts.claims().setSubject(username)
-        claims.put("roles", roles)
+        claims["uid"] = uid
+        if (uid != null){
+            val user = _userRepository.get(uid)
+            if (user != null){
+                claims["username"] = user.userName
+                claims["firstname"] = user.firstname
+                claims["lastname"] = user.lastname
+                claims["email"] = user.email
+                claims["avatarPath"] = user.avatarPath
+            }
+            val userProfile = _userProfileRepository.get(uid)
+            if (userProfile != null) {
+                claims["dateRegistered"] = userProfile.dateRegistered
+                claims["gender"] = userProfile.gender
+                claims["birthdate"] = userProfile.birthdate
+                claims["country"] = userProfile.country
+                claims["city"] = userProfile.city
+                claims["status"] = userProfile.status
+            }
+        }
+        claims["roles"] = roles
         val now = Date()
         val validity: Date = Date(now.time + jwtProperties!!.validityInMs)
         return Jwts.builder() //
