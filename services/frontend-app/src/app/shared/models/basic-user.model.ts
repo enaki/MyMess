@@ -1,8 +1,8 @@
 export type BasicUserModel = {
   uid: string;
-  username: string;
-  firstname: string;
-  lastname: string;
+  userName: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  avatarPath: string;
+  avatarLink: string;
 };

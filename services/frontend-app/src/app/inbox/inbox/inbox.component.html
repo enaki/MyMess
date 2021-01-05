@@ -12,15 +12,17 @@
         </div>
         <div class="card-body contacts_body">
           <div class="contacts">
-            <li *ngFor="let contact of contacts;">
+            <li *ngFor="let contact of contacts;"
+                [ngClass]="{active: contact.uid == currentSelected}"
+                (click)="changeChat(contact.uid)">
               <div class="d-flex bd-highlight">
                 <div class="img_cont">
-                  <img src="{{contact.image}}" class="rounded-circle user_img">
-                  <span class="{{contact.icon}}"></span>
+                  <img src="{{contact.avatarLink}}" class="rounded-circle user_img">
+                  <span class="online_icon"></span>
                 </div>
                 <div class="user_info">
-                  <span>{{contact.name}}</span>
-                  <p>{{contact.status}}</p>
+                  <span>{{contact.firstName}} {{contact.lastName}}</span>
+                  <p>"Online"</p>
                 </div>
               </div>
             </li>

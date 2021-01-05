@@ -50,6 +50,15 @@ class MessageController {
             ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
     }
 
+    @RequestMapping(value = ["/chat"], method = [RequestMethod.GET])
+    fun getChatId(@RequestParam uid1: String, @RequestParam uid2: String): ResponseEntity<Any?> {
+        val response = _messageService.getChatId(uid1, uid2)
+        return if (response.successful_operation)
+            ResponseEntity.status(response.code).body(response.data)
+        else
+            ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
+    }
+
     @RequestMapping(value = ["/chat/{chatId}"], method = [RequestMethod.DELETE])
     fun deleteMessage(@PathVariable("chatId") chatId: String, @RequestParam("messageId") id: String): ResponseEntity<Any?> {
         val response = _messageService.deleteMessage(chatId, id)
