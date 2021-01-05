@@ -17,7 +17,7 @@ class UserRepository: GenericRepository<User>(), IUserRepository<User> {
     }
 
     override fun add(item: User): String? {
-        _jdbcTemplate.update("""INSERT INTO ${tableName} (username, passwordHash, firstname, lastname, email, avatarPath) VALUES (?, ?, ?, ?)""", item.userName, item.passwordHash, item.firstname, item.lastname, item.email, item.avatarPath)
+        _jdbcTemplate.update("""INSERT INTO ${tableName} (username, passwordHash, firstname, lastname, email, avatarPath) VALUES (?, ?, ?, ?, ?, ?)""", item.userName, item.passwordHash, item.firstname, item.lastname, item.email, item.avatarPath)
         val userList =  _jdbcTemplate.query("SELECT * from users WHERE username=?", _rowMapper, item.userName)
         return if (userList.isEmpty()) null else userList.get(0).uid
     }
