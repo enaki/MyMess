@@ -63,3 +63,29 @@ button{
   font-weight: bold;
   color: azure;
 }
+
+.not-registered  {
+  width: 30%;
+  font-family: "Open Sans", serif;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2%;
+}
+
+.register-checkbox {
+  margin-right: 2%;
+}
+
+.error-alert {
+  background-color: pink;
+  color: red;
+  border-radius: 8px;
+  display: flexbox;
+  padding: 10px;
+}
+
+.input-text{
+  width: 250px;
+}
