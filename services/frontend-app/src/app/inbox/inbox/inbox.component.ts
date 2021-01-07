@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, AfterViewChecked} from '@angular/core';
 import {UserService} from '../../shared/services';
 import {FriendService} from '../../shared/services';
 import {Router} from '@angular/router';
@@ -14,7 +14,7 @@ import * as moment from 'moment';
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css']
 })
-export class InboxComponent implements OnInit {
+export class InboxComponent implements OnInit, AfterViewChecked {
   contacts: BasicUserModel[];
   selectedUser: BasicUserModel;
   messages = {};
@@ -77,6 +77,10 @@ export class InboxComponent implements OnInit {
   }
 
   sendMessage(): void {
+    while (this.inputText[0] === '\n') {
+      this.inputText = this.inputText.substring(1);
+    }
+    console.log(this.inputText);
     if (this.inputText !== undefined && this.inputText.length > 0) {
       // to do de trimis mesajul
       const a = {
@@ -90,6 +94,15 @@ export class InboxComponent implements OnInit {
       };
       this.messages[this.selectedUser.uid].push(a);
       this.inputText = '';
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  ngAfterViewChecked() {
+    try {
+      const container = document.getElementById('message_box');
+      container.scrollTop = container.scrollHeight;
+    } catch (e) {
     }
   }
 
