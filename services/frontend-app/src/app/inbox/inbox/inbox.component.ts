@@ -7,6 +7,7 @@ import {BasicUserModel} from '../../shared/models/basic-user.model';
 import {InboxService} from '../services/inbox.service';
 import {IdModel} from '../../shared/models/id.model';
 import {MessageModel} from '../models/message.model';
+import { Socket } from 'ngx-socket-io';
 import * as moment from 'moment';
 
 @Component({
@@ -27,7 +28,8 @@ export class InboxComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private friendService: FriendService,
-    private inboxService: InboxService
+    private inboxService: InboxService,
+    private socket: Socket
   ) {
     this.moment = moment;
     const user = this.userService.getUserDetails();
@@ -69,6 +71,13 @@ export class InboxComponent implements OnInit {
       }
       this.inboxService.getChatId(this.basicUserDetails.uid, this.selectedUser.uid).subscribe((idModel: IdModel) => {
         this.chatId = idModel.id;
+        const connection = {
+          uid: this.basicUserDetails.uid,
+          friendId: this.selectedUser.uid,
+        };
+
+        // this.socket.emit('establish-connection', connection);
+
         this.inboxService.getMessages(idModel.id).subscribe((messageList: MessageModel[]) => {
 
         });
@@ -79,7 +88,7 @@ export class InboxComponent implements OnInit {
   sendMessage(): void {
     if (this.inputText !== undefined && this.inputText.length > 0) {
       // to do de trimis mesajul
-      const a = {
+      const message = {
         messageId: 0,
         chatId: this.chatId,
         ownerId: this.basicUserDetails.uid,
@@ -88,8 +97,10 @@ export class InboxComponent implements OnInit {
         imagePath: null,
         date: this.moment.today
       };
-      this.messages[this.selectedUser.uid].push(a);
+      this.messages[this.selectedUser.uid].push(message);
       this.inputText = '';
+
+      // this.socket.emit('message', JSON.stringify(message));
     }
   }
 

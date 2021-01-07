@@ -1,11 +1,15 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+app.use(cors())
+app.enable('trust proxy');
+
 const path = require('path');
 const server = require('http').createServer(app);
 const io = require('socket.io');
 const moment = require('moment');
 const fetch = require('node-fetch');
-import dotenv from 'dotenv';
+const dotenv = require('dotenv');
 
 const envFound = dotenv.config();
 if (envFound.error) {
@@ -13,10 +17,18 @@ if (envFound.error) {
 }
 const port = parseInt(process.env.PORT || 3000);
 
-const serverSocket = io(server);
+//nu merge nici asa
+// const serverSocket = io(server, { origins: '*:*'});
+const serverSocket = io(server, {
+    cors: {
+        origin: "http://localhost:4200",
+        methods: ["GET", "POST"]
+    }
+});
 
 // Routing
 app.use(express.static(path.join(__dirname, 'public')));
+// Add headers
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
@@ -30,11 +42,6 @@ const messageFields = ["chatId", "ownerId", "text", "imagePath"]
 
 serverSocket.on('connection', socket => {
     console.log("Socket joined " + socket.id);
-    fetch('http://localhost:2020/api/messages')
-        .then(res => res.json()) // expecting a json response
-        .then(json => {
-            console.log(json);
-        });
 
     socket.on('establish-connection', data => {
         console.log("Socket, " + socket.id + " set user " + data.name);
