@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import {UserModel} from '../models/user.model';
+import {BasicUserModel} from '../models/basic-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class UserService {
 
   constructor() {
     this.tokenSubject = new BehaviorSubject<string>('');
-    const token = localStorage.getItem('userToken');
+    const token = sessionStorage.getItem('userToken');
     console.log('UserService Constructor: ' + token);
     if (token != null){
       this.setToken(token);
@@ -31,7 +32,7 @@ export class UserService {
 
   public setToken(token: string): void {
     if (token != null){
-      localStorage.setItem('userToken', token);
+      sessionStorage.setItem('userToken', token);
       const tokenData = jwt_decode(token) as any;
       console.log(tokenData);
       const user: UserModel = {
@@ -49,10 +50,10 @@ export class UserService {
         status: tokenData.status,
         roles: tokenData.roles
       };
-      localStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('user', JSON.stringify(user));
       this.tokenSubject.next(token);
     } else {
-      this.localStorageCleaning();
+      this.sessionStorageCleaning();
     }
   }
 
@@ -61,14 +62,32 @@ export class UserService {
   }
 
   public getUserDetails(): UserModel{
-    const data = localStorage.getItem('user');
+    const data = sessionStorage.getItem('user');
     return (data == null) ? null : JSON.parse(data);
   }
 
-  public localStorageCleaning(): void {
+  public getBasicUserDetails(): BasicUserModel{
+    const data = sessionStorage.getItem('user');
+    if (data == null){
+      return null;
+    }
+    else{
+      const parsedData: UserModel = JSON.parse(data);
+      return {
+        uid: parsedData.uid,
+        userName: parsedData.username,
+        firstName: parsedData.firstname,
+        lastName: parsedData.lastname,
+        email: parsedData.email,
+        avatarLink: parsedData.avatarPath
+      };
+    }
+  }
+
+  public sessionStorageCleaning(): void {
     this.tokenSubject.next(null);
     console.log('Local Storage cleaned successfully');
-    localStorage.clear();
+    sessionStorage.clear();
   }
 
   public getHttpOptions(): any{

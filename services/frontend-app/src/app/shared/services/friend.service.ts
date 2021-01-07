@@ -8,8 +8,8 @@ import {BasicUserModel} from '../models/basic-user.model';
   providedIn: 'root'
 })
 export class FriendService {
-  public friendsEndpoint = 'http://localhost:2020/api/friends';
-  public userEndpoint = 'http://localhost:2020/api/users';
+  public friendsEndpoint = '/api/friends';
+  public userEndpoint = '/api/users';
 
   constructor(private readonly http: HttpClient) {
   }

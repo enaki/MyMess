@@ -8,7 +8,7 @@ import {IdModel} from '../../shared/models/id.model';
   providedIn: 'root'
 })
 export class InboxService {
-  public chatEndpoint = 'http://localhost:2020/api/chat';
+  public chatEndpoint = '/api/chat';
 
   constructor(private readonly http: HttpClient) {
   }
