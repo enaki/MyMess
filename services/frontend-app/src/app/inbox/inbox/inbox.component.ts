@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewChecked} from '@angular/core';
+import {Component, OnInit, AfterViewChecked, OnDestroy} from '@angular/core';
 import {UserService} from '../../shared/services';
 import {FriendService} from '../../shared/services';
 import {Router} from '@angular/router';
@@ -17,7 +17,7 @@ const SOCKET_ENDPOINT = 'localhost:2021';
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css']
 })
-export class InboxComponent implements OnInit, AfterViewChecked {
+export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
   contacts: BasicUserModel[];
   selectedUser: BasicUserModel;
   messages = {};
@@ -46,19 +46,24 @@ export class InboxComponent implements OnInit, AfterViewChecked {
 
   setupSocketDisconnect(): void {
     this.socket.disconnect();
+    this.socket.close();
   }
 
   ngOnInit(): void {
     this.setupSocketConnection();
+    this.socketHandler();
+
     this.basicUserDetails = this.userService.getBasicUserDetails();
-    this.friendService.getFriendsIds(this.basicUserDetails.uid).subscribe((data: FriendListModel) => {
+    console.log(this.basicUserDetails);
+    this.friendService.getFriendsIds(this.basicUserDetails.uid).toPromise().then((data: FriendListModel) => {
       this.contacts = [];
       for (const friendId of data.friendList) {
         let firstFriend = false;
-        this.friendService.getFriendInfo(friendId).subscribe((basicUserModel: BasicUserModel) => {
+        this.friendService.getFriendInfo(friendId).toPromise().then((basicUserModel: BasicUserModel) => {
           // console.log(basicUserModel);
           this.contacts.push(basicUserModel);
           if (!firstFriend){
+            console.log('[ngOnInit] Establish connection with friend');
             this.selectedUser = this.contacts[0];
             this.establishConnectionWithFriend();
             firstFriend = true;
@@ -69,7 +74,7 @@ export class InboxComponent implements OnInit, AfterViewChecked {
   }
 
   establishConnectionWithFriend(): void{
-    this.inboxService.getChatId(this.basicUserDetails.uid, this.selectedUser.uid).subscribe((idModel: IdModel) => {
+    this.inboxService.getChatId(this.basicUserDetails.uid, this.selectedUser.uid).toPromise().then((idModel: IdModel) => {
       this.chatId = idModel.id;
       const connection = {
         uid: this.basicUserDetails.uid,
@@ -77,9 +82,8 @@ export class InboxComponent implements OnInit, AfterViewChecked {
         username: this.basicUserDetails.username,
         friendName: this.selectedUser.username,
       };
-      this.socketHandler();
       this.socket.emit('establish-connection', connection);
-      this.inboxService.getMessages(idModel.id).subscribe((messageList: MessageModel[]) => {
+      this.inboxService.getMessages(idModel.id).toPromise().then((messageList: MessageModel[]) => {
         this.messages[this.selectedUser.uid] = messageList;
       });
     });
@@ -87,9 +91,9 @@ export class InboxComponent implements OnInit, AfterViewChecked {
 
   changeChat(id: string): void {
     console.log('Change chat');
-    this.setupSocketDisconnect();
-    this.setupSocketConnection();
-    console.log(this.basicUserDetails);
+    // this.setupSocketDisconnect();
+    // this.setupSocketConnection();
+    // console.log(this.basicUserDetails);
     if (this.selectedUser.uid !== id) {
       this.inputText = '';
       for (let i = 0; i < this.contacts.length; ++i) {
@@ -107,8 +111,11 @@ export class InboxComponent implements OnInit, AfterViewChecked {
         console.log(data);
     });
     this.socket.on('receive-chat-message', (message: any) => {
+      console.log('Received a message from ' + message.ownerId);
       console.log(message);
-      this.messages[this.selectedUser.uid].push(message);
+      if (message.ownerId === this.selectedUser.uid){
+        this.messages[this.selectedUser.uid].push(message);
+      }
     });
   }
 
@@ -131,7 +138,6 @@ export class InboxComponent implements OnInit, AfterViewChecked {
       this.messages[this.selectedUser.uid].push(message);
       this.inputText = '';
       this.socket.emit('send-chat-message', message);
-
     }
   }
 
@@ -146,5 +152,9 @@ export class InboxComponent implements OnInit, AfterViewChecked {
 
   onInputChange(text: string): void {
     this.inputText = text;
+  }
+
+  ngOnDestroy(): void {
+    this.setupSocketDisconnect();
   }
 }
