@@ -11,6 +11,10 @@ import {SharedModule} from './shared/shared.module';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {AuthorizationInterceptor} from './interceptor/autorization.interceptor';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent

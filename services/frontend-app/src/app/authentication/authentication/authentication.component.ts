@@ -186,6 +186,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   public isInvalid(form: AbstractControl): boolean {
     return form.invalid && form.touched && form.dirty;
   }
+
 }
 
 function cleanErrorList(): void {

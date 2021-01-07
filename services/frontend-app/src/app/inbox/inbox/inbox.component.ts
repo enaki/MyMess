@@ -38,7 +38,7 @@ export class InboxComponent implements OnInit {
 
   ngOnInit(): void {
     this.basicUserDetails = this.userService.getBasicUserDetails();
-    this.friendService.getFriendsIds('3').subscribe((data: FriendListModel) => {
+    this.friendService.getFriendsIds(this.basicUserDetails.uid).subscribe((data: FriendListModel) => {
       this.contacts = [];
       for (const friendId of data.friendList) {
 
@@ -46,7 +46,7 @@ export class InboxComponent implements OnInit {
           // console.log(basicUserModel);
           this.contacts.push(basicUserModel);
           this.selectedUser = this.contacts[0];
-          this.inboxService.getChatId('2', '3').subscribe((idModel: IdModel) => {
+          this.inboxService.getChatId(this.basicUserDetails.uid, this.selectedUser.uid).subscribe((idModel: IdModel) => {
             this.chatId = idModel.id;
             this.inboxService.getMessages(idModel.id).subscribe((messageList: MessageModel[]) => {
               this.messages[basicUserModel.uid] = messageList;
@@ -67,7 +67,7 @@ export class InboxComponent implements OnInit {
           break;
         }
       }
-      this.inboxService.getChatId('2', '3').subscribe((idModel: IdModel) => {
+      this.inboxService.getChatId(this.basicUserDetails.uid, this.selectedUser.uid).subscribe((idModel: IdModel) => {
         this.chatId = idModel.id;
         this.inboxService.getMessages(idModel.id).subscribe((messageList: MessageModel[]) => {
 
@@ -82,13 +82,13 @@ export class InboxComponent implements OnInit {
       const a = {
         messageId: 0,
         chatId: this.chatId,
-        ownerId: '2',
+        ownerId: this.basicUserDetails.uid,
         replyToMessageId: null,
         text: this.inputText,
         imagePath: null,
         date: this.moment.today
       };
-      console.log(a);
+      this.messages[this.selectedUser.uid].push(a);
       this.inputText = '';
     }
   }
