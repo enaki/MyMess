@@ -10,7 +10,8 @@ import {IdModel} from '../../shared/models/id.model';
 export class InboxService {
   public chatEndpoint = '/api/chat';
 
-  constructor(private readonly http: HttpClient) {
+  constructor(private readonly http: HttpClient
+  ) {
   }
 
   public getMessages(chatId: string): Observable<MessageModel[]> {

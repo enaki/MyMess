@@ -34,12 +34,11 @@ export class UserService {
     if (token != null){
       sessionStorage.setItem('userToken', token);
       const tokenData = jwt_decode(token) as any;
-      console.log(tokenData);
       const user: UserModel = {
         uid: tokenData.uid,
-        username: tokenData.userName,
-        firstname: tokenData.firstName,
-        lastname: tokenData.lastName,
+        username: tokenData.username,
+        firstname: tokenData.firstname,
+        lastname: tokenData.lastname,
         email: tokenData.email,
         avatarPath: tokenData.avatarPath,
         dataRegistered: tokenData.dataRegistered,
@@ -72,10 +71,11 @@ export class UserService {
       return null;
     }
     else{
+      console.log(data);
       const parsedData: UserModel = JSON.parse(data);
       return {
         uid: parsedData.uid,
-        userName: parsedData.username,
+        username: parsedData.username,
         firstName: parsedData.firstname,
         lastName: parsedData.lastname,
         email: parsedData.email,

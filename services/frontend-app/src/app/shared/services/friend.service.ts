@@ -7,6 +7,7 @@ import {BasicUserModel} from '../models/basic-user.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class FriendService {
   public friendsEndpoint = '/api/friends';
   public userEndpoint = '/api/users';
