@@ -25,7 +25,9 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
   messages = {};
   moment;
   inputText: string;
+  searchText: string;
   chatId: string;
+  typingFriends = [];
   basicUserDetails: BasicUserModel;
   socket;
 
@@ -40,6 +42,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     if (user == null) {
       this.router.navigate(['login']);
     }
+    this.searchText = '';
   }
 
   setupSocketConnection(): void {
@@ -70,7 +73,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
             basicUserModel.status = -1;
             this.contacts.push(basicUserModel);
             this.pairUidContactIdx[basicUserModel.uid] = this.contacts.length - 1;
-            if (!firstFriend){
+            if (!firstFriend) {
               console.log('[ngOnInit] Establish connection with friend');
               this.selectedUser = this.contacts[0];
               this.establishConnectionWithFriend();
@@ -79,15 +82,15 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
           });
         });
         Promise.all(friendInfoPromises).then(() => {
-          console.log('[ngOnInit] All friendInfo Promises solved');
-          this.socket.emit('friend-ids', this.contactsIds);
-        }
-      );
+            console.log('[ngOnInit] All friendInfo Promises solved');
+            this.socket.emit('friend-ids', this.contactsIds);
+          }
+        );
       }
     });
   }
 
-  establishConnectionWithFriend(): void{
+  establishConnectionWithFriend(): void {
     this.inboxService.getChatId(this.basicUserDetails.uid, this.selectedUser.uid).toPromise().then((idModel: IdModel) => {
       this.chatId = idModel.id;
       const connection = {
@@ -120,25 +123,35 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
   }
 
-  socketHandler(): void{
+  socketHandler(): void {
     this.socket.on('user-connected', (data: any) => {
-        console.log('User ' + data.uid + ' just connected.');
-        const indexContact = this.pairUidContactIdx[data.uid];
-        if (indexContact !== undefined){
-          this.contacts[indexContact].status = 0;
-        }
+      console.log('User ' + data.uid + ' just connected.');
+      const indexContact = this.pairUidContactIdx[data.uid];
+      if (indexContact !== undefined) {
+        this.contacts[indexContact].status = 0;
+      }
+    });
+    this.socket.on('receive-is-typing', (data: any) => {
+      this.typingFriends.push(data);
+    });
+    this.socket.on('receive-stop-typing', (data: any) => {
+      const index = this.typingFriends.indexOf(data);
+      if (index > -1) {
+        this.typingFriends.splice(index, 1);
+      }
+
     });
     this.socket.on('user-disconnected', (data: any) => {
       console.log('User ' + data.uid + ' just disconnected.');
       const indexContact = this.pairUidContactIdx[data.uid];
-      if (indexContact !== undefined){
+      if (indexContact !== undefined) {
         this.contacts[indexContact].status = moment().unix();
       }
     });
     this.socket.on('take-friends-status', (data: any) => {
       console.log(data);
       console.log(this.contacts);
-      for (const key in data){
+      for (const key in data) {
         if (data.hasOwnProperty(key)) {
           const contactIndex = this.pairUidContactIdx[key];
           console.log(key + ' - ' + data[key] + ' - ' + contactIndex);
@@ -149,7 +162,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.socket.on('receive-chat-message', (message: any) => {
       console.log('Received a message from ' + message.ownerId);
       console.log(message);
-      if (message.ownerId === this.selectedUser.uid){
+      if (message.ownerId === this.selectedUser.uid) {
         this.messages[this.selectedUser.uid].push(message);
       }
     });
@@ -186,8 +199,12 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
   }
 
-  onInputChange(text: string): void {
-    this.inputText = text;
+  notifyIsTyping(): void {
+    this.socket.emit('notify-is-typing', {id: this.basicUserDetails.uid, friendId: this.selectedUser.uid});
+  }
+
+  notifyStopTyping(): void {
+    this.socket.emit('notify-stop-typing', {id: this.basicUserDetails.uid, friendId: this.selectedUser.uid});
   }
 
   ngOnDestroy(): void {

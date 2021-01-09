@@ -4,7 +4,7 @@
       <div class="card mb-sm-3 mb-md-0 contacts_card w-100">
         <div class="card-header">
           <div class="input-group">
-            <input type="text" placeholder="Search..." name="" class="form-control search">
+            <input type="text" placeholder="Search..." name="" class="form-control search" [(ngModel)]="searchText">
             <div class="input-group-prepend">
               <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
             </div>
@@ -14,8 +14,10 @@
           <div class="contacts">
             <li *ngFor="let contact of contacts;"
                 [ngClass]="{active: contact.uid === selectedUser.uid}"
-                (click)="changeChat(contact.uid)">
-              <div class="d-flex bd-highlight">
+                (click)="changeChat(contact.uid)"
+            >
+              <div class="d-flex bd-highlight"
+                   *ngIf="(contact.firstName + contact.lastName).toLowerCase().includes(searchText.toLowerCase())">
                 <div class="img_cont">
                   <img src="{{contact.avatarLink}}" class="rounded-circle user_img">
                   <span class="online_icon" [ngClass]="{offline: contact.status != 0}"></span>
@@ -23,7 +25,8 @@
                 <div class="user_info">
                   <span>{{contact.firstName}} {{contact.lastName}}</span>
                   <p *ngIf="contact.status !== undefined && contact.status == 0">"Online"</p>
-                  <p *ngIf="contact.status !== undefined && contact.status > 0">Left {{moment.unix(contact.status).fromNow()}}</p>
+                  <p *ngIf="contact.status !== undefined && contact.status > 0">
+                    Left {{moment.unix(contact.status).fromNow()}}</p>
                 </div>
               </div>
             </li>
@@ -90,14 +93,22 @@
               </div>
             </div>
           </div>
-
+          <div *ngIf="typingFriends.includes(selectedUser.uid)" class="d-flex justify-content-start align-items-end mb-4">
+            <div class="img_cont_msg">
+              <img src="{{selectedUser.avatarLink}}"
+                   class="rounded-circle user_img_msg">
+            </div>
+            <div class="typing_container">
+              typing...
+            </div>
+          </div>
           <div class="card-footer">
             <div class="input-group">
               <div class="input-group-append">
                 <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
               </div>
               <textarea [(ngModel)]="inputText" name="" class="form-control type_msg" placeholder="Type your message..."
-                        (keyup.enter)="sendMessage()"></textarea>
+                        (keyup.enter)="sendMessage()" (focus)="notifyIsTyping()" (focusout)="notifyStopTyping()"></textarea>
               <div class="input-group-append">
                 <span class="input-group-text send_btn" (click)="sendMessage()"><i
                   class="fas fa-location-arrow"></i></span>
