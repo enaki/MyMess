@@ -57,7 +57,9 @@ serverSocket.on('connection', socket => {
         for (let idx in data.friendList){
             let friendId = data.friendList[idx];
             if (friendId in actives){
-                friendActives[friendId] = actives[friendId]
+                friendActives[friendId] = actives[friendId];
+                //const friendSocketId = allUsers[friendId]["socketId"];
+                //serverSocket.to(friendSocketId).emit("friend-is-active", friendActives);
             }
         }
         serverSocket.to(socket.id).emit("take-friends-status", friendActives);

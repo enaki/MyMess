@@ -77,6 +77,11 @@ textarea {
   outline: 0;
 }
 
+.font_1{
+  color: #ffffff;
+  font-size: 60px;
+}
+
 .type_msg {
   background-color: rgba(0, 0, 0, 0.3);
   border: 0;

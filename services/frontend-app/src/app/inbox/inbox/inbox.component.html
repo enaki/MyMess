@@ -23,7 +23,7 @@
                 <div class="user_info">
                   <span>{{contact.firstName}} {{contact.lastName}}</span>
                   <p *ngIf="contact.status !== undefined && contact.status == 0">"Online"</p>
-                  <p *ngIf="contact.status !== undefined && contact.status > 0">{{moment.unix(contact.status).fromNow()}}</p>
+                  <p *ngIf="contact.status !== undefined && contact.status > 0">Left {{moment.unix(contact.status).fromNow()}}</p>
                 </div>
               </div>
             </li>
@@ -32,15 +32,16 @@
         <div class="card-footer"></div>
       </div>
     </div>
-    <div class="chat col-8 col-sm-12 col-md-12 col-lg-8 col-xl-8" *ngIf="selectedUser !== undefined">
+    <div class="chat col-8 col-sm-12 col-md-12 col-lg-8 col-xl-8">
       <div class="card w-100">
         <div class="card-header msg_head">
           <div class="d-flex bd-highlight">
-            <div class="img_cont">
+
+            <div *ngIf="selectedUser !== undefined" class="img_cont">
               <img src="{{selectedUser.avatarLink}}" class="rounded-circle user_img">
               <span class="online_icon" [ngClass]="{offline: selectedUser.status != 0}"></span>
             </div>
-            <div class="user_info">
+            <div *ngIf="selectedUser !== undefined" class="user_info">
               <span>{{selectedUser.firstName}} {{selectedUser.lastName}}</span>
               <p
                 *ngIf="messages !== undefined && messages[selectedUser.uid] !== undefined">
@@ -62,8 +63,11 @@
             </ul>
           </div>
         </div>
-        <div class="card-body msg_card_body" id="message_box">
-          <div *ngFor="let message of messages[selectedUser.uid];">
+        <div *ngIf="selectedUser === undefined" class="card-body msg_card_body">
+          <div class="flex-center h-100 font_1">Go make some friends</div>
+        </div>
+        <div *ngIf="selectedUser !== undefined" class="card-body msg_card_body" id="message_box">
+          <div *ngFor="let message of messages[selectedUser.uid]">
             <div *ngIf="selectedUser.uid == message.ownerId" class="d-flex justify-content-start align-items-end mb-4">
               <div class="img_cont_msg">
                 <img src="{{selectedUser.avatarLink}}"

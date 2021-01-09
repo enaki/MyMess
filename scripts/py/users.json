@@ -158,5 +158,13 @@
     "firstname": "Vasile",
     "lastname": "Enachi",
 	"avatarPath": "vasile.png"
-}
+},
+{
+    "username": "alex",
+    "password": "alex",
+    "firstname": "Alex",
+    "lastname": "Ilioi",
+    "email": "alex@gmail.com",
+    "avatarPath": "alex.png"
+  }
 ]

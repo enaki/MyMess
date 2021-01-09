@@ -123,6 +123,17 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
   socketHandler(): void{
     this.socket.on('user-connected', (data: any) => {
         console.log('User ' + data.uid + ' just connected.');
+        const indexContact = this.pairUidContactIdx[data.uid];
+        if (indexContact !== undefined){
+          this.contacts[indexContact].status = 0;
+        }
+    });
+    this.socket.on('user-disconnected', (data: any) => {
+      console.log('User ' + data.uid + ' just disconnected.');
+      const indexContact = this.pairUidContactIdx[data.uid];
+      if (indexContact !== undefined){
+        this.contacts[indexContact].status = moment().unix();
+      }
     });
     this.socket.on('take-friends-status', (data: any) => {
       console.log(data);
