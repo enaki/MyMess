@@ -5,4 +5,5 @@ export type BasicUserModel = {
   lastName: string;
   email: string;
   avatarLink: string;
+  status: number;
 };

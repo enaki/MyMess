@@ -40,7 +40,7 @@ serverSocket.on('connection', socket => {
 
     socket.on('establish-connection', data => {
         console.log(getMoment() + "Socket: <" + socket.id + "> set for user <" + data.username + "> and his friend <" + data.friendName + ">");
-        actives[data.uid] = "on";
+        actives[data.uid] = 0;
         allUsers[data.uid] = {
             "socketId": socket.id,
             "friendId": data["friendId"],
@@ -48,6 +48,19 @@ serverSocket.on('connection', socket => {
         };
         socketsUidPair[socket.id] = data.uid;
         socket.broadcast.emit('user-connected', {"uid": data.uid})
+    });
+
+    socket.on('friend-ids', data => {
+        console.log(getMoment() + "Socket: <" + socket.id + "> Received friendList from " + data.uid + ">");
+        console.log(data.friendList);
+        let friendActives = {};
+        for (let idx in data.friendList){
+            let friendId = data.friendList[idx];
+            if (friendId in actives){
+                friendActives[friendId] = actives[friendId]
+            }
+        }
+        serverSocket.to(socket.id).emit("take-friends-status", friendActives);
     });
 
     socket.on('send-chat-message', data => {

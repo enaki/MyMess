@@ -79,7 +79,8 @@ export class UserService {
         firstName: parsedData.firstname,
         lastName: parsedData.lastname,
         email: parsedData.email,
-        avatarLink: parsedData.avatarPath
+        avatarLink: parsedData.avatarPath,
+        status: -1,
       };
     }
   }

@@ -18,11 +18,12 @@
               <div class="d-flex bd-highlight">
                 <div class="img_cont">
                   <img src="{{contact.avatarLink}}" class="rounded-circle user_img">
-                  <span class="online_icon"></span>
+                  <span class="online_icon" [ngClass]="{offline: contact.status != 0}"></span>
                 </div>
                 <div class="user_info">
                   <span>{{contact.firstName}} {{contact.lastName}}</span>
-                  <p>"Online"</p>
+                  <p *ngIf="contact.status !== undefined && contact.status == 0">"Online"</p>
+                  <p *ngIf="contact.status !== undefined && contact.status > 0">{{moment.unix(contact.status).fromNow()}}</p>
                 </div>
               </div>
             </li>
@@ -37,7 +38,7 @@
           <div class="d-flex bd-highlight">
             <div class="img_cont">
               <img src="{{selectedUser.avatarLink}}" class="rounded-circle user_img">
-              <span class="online_icon"></span>
+              <span class="online_icon" [ngClass]="{offline: selectedUser.status != 0}"></span>
             </div>
             <div class="user_info">
               <span>{{selectedUser.firstName}} {{selectedUser.lastName}}</span>
