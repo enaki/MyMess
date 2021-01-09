@@ -50,6 +50,22 @@ serverSocket.on('connection', socket => {
         socket.broadcast.emit('user-connected', {"uid": data.uid})
     });
 
+    socket.on('notify-is-typing', data => {
+        console.log(getMoment() + "Socket: <" + socket.id + "> set for user <" + data.username + "> and his friend <" + data.friendName + ">");
+        if (allUsers[data.friendId] !== undefined){
+            const socketFriendId = allUsers[data.friendId]["socketId"];
+            serverSocket.to(socketFriendId).emit("receive-is-typing", data.id);
+        }
+    });
+
+    socket.on('notify-stop-typing', data => {
+        console.log(getMoment() + "Socket: <" + socket.id + "> set for user <" + data.username + "> and his friend <" + data.friendName + ">");
+        if (allUsers[data.friendId] !== undefined){
+            const socketFriendId = allUsers[data.friendId]["socketId"];
+            serverSocket.to(socketFriendId).emit("receive-stop-typing", data.id);
+        }
+    });
+
     socket.on('friend-ids', data => {
         console.log(getMoment() + "Socket: <" + socket.id + "> Received friendList from " + data.uid + ">");
         console.log(data.friendList);
