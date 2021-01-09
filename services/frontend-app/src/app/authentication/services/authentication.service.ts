@@ -23,7 +23,7 @@ export class AuthenticationService {
 
   public register(data: RegisterModel): Observable<HttpResponse<unknown>>{
     return this.httpClient.post(
-        'http://localhost:2020/api/users',
+        '/api/users',
         data,
         {observe: 'response'}
     );

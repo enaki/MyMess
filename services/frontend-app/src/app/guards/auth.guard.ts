@@ -17,7 +17,6 @@ export class AuthGuard implements CanActivate {
     boolean |
     UrlTree {
     const userToken = sessionStorage.getItem('userToken');
-    /*
     if (userToken === undefined) {
       this.router.navigate(['authentication']).then(r => {console.log('User redirected'); });
       return false;
@@ -26,7 +25,6 @@ export class AuthGuard implements CanActivate {
       this.router.navigate(['authentication']).then(r => {console.log('User redirected'); });
       return false;
     }
-    */
     return true;
   }
 

@@ -11,6 +11,7 @@ import {SharedModule} from './shared/shared.module';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {AuthorizationInterceptor} from './interceptor/autorization.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent
