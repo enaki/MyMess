@@ -33,6 +33,7 @@ const getMoment = () => "[" + moment().format('YYYY-MM-DD hh:mm:ss') + "] - ";
 const actives = {}
 const allUsers = {}
 const socketsUidPair = {}
+const unseenFrom = {}
 
 const messageFields = ["chatId", "ownerId", "text", "imagePath"]
 serverSocket.on('connection', socket => {
@@ -47,7 +48,9 @@ serverSocket.on('connection', socket => {
             "username": data.username
         };
         socketsUidPair[socket.id] = data.uid;
-        socket.broadcast.emit('user-connected', {"uid": data.uid})
+        if (unseenFrom[data.uid] !== undefined)
+            serverSocket.to(socket.id).emit("message-notifications", unseenFrom[data.uid]);
+            socket.broadcast.emit('user-connected', {"uid": data.uid})
     });
 
     socket.on('notify-is-typing', data => {
@@ -68,7 +71,7 @@ serverSocket.on('connection', socket => {
 
     socket.on('friend-ids', data => {
         console.log(getMoment() + "Socket: <" + socket.id + "> Received friendList from " + data.uid + ">");
-        console.log(data.friendList);
+        // console.log(data.friendList);
         let friendActives = {};
         for (let idx in data.friendList){
             let friendId = data.friendList[idx];
@@ -107,6 +110,11 @@ serverSocket.on('connection', socket => {
                         const socketFriendId = allUsers[friendId]["socketId"];
                         data["date"] = moment.now();
                         serverSocket.to(socketFriendId).emit("receive-chat-message", data);
+                    } else {
+                        if (unseenFrom[friendId] === undefined){
+                            unseenFrom[friendId] = [];
+                        }
+                        unseenFrom[friendId].push(uid);
                     }
 
                 });

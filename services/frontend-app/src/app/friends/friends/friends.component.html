@@ -17,7 +17,7 @@
     <div class="container">
       <div class="card-columns">
         <div *ngFor="let friend of friends;">
-          <div class="card  text-center shadow-sm p-3 mb-5 bg-white rounded" style="max-width: 18rem;"
+          <div class="card text-center shadow-sm p-3 mb-5 bg-white rounded my-card"
                *ngIf="(friend.firstName).toLowerCase().includes(searchText.toLowerCase()) ||
                (friend.lastName).toLowerCase().includes(searchText.toLowerCase()) ||
                 (friend.username).toLowerCase().includes(searchText.toLowerCase())">
@@ -26,12 +26,12 @@
             <div class="card-body">
               <h3 class="card-title">{{friend.firstName}} {{friend.lastName}}</h3>
               <p class="card-text">@{{friend.username}}</p>
-              <button name="view" class="btn btn-outline-dark btn-sm" (click)="redirectToProfile(friend.uid)">View
+              <button name="view" class="btn btn-success btn-sm" (click)="redirectToProfile(friend.uid)">View
               </button>
-              <button name="block" class="btn btn-outline-dark btn-sm"
+              <button name="block" class="btn btn-warning btn-sm"
                       (click)="blockFriend(friend.firstName, friend.uid)">Block
               </button>
-              <button name="delete" class="btn btn-outline-dark btn-sm"
+              <button name="delete" class="btn btn-danger btn-sm"
                       (click)="deleteFriend(friend.firstName, friend.uid)">Remove
               </button>
             </div>

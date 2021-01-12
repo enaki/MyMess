@@ -7,6 +7,7 @@ import {LoginModel} from '../models/login.model';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../services/authentication.service';
 import {UserService} from '../../shared/services';
+import {SocketService} from '../../shared/services/socket.service';
 
 @Component({
   selector: 'app-authentication',
@@ -19,7 +20,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
     private readonly authenticationService: AuthenticationService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly socketService: SocketService
   ) {
     this.subs = new Array<Subscription>();
     this.formGroup = this.formBuilder.group({
@@ -175,6 +177,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                   this.userService.setToken(data.body.token);
                   sessionStorage.setItem('userToken', data.body.token);
                   sessionStorage.setItem('identity', JSON.stringify(data.body));
+                  this.socketService.setupSocketConnection();
                   this.router.navigate(['inbox']);
                 }
               }, AuthenticationComponent.handleError
