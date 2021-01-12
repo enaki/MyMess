@@ -26,6 +26,15 @@ class UserController {
             ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
     }
 
+    @GetMapping(value= ["/users/unknown/{id}"])
+    fun getUnknownUsers(@PathVariable("id") id: String): ResponseEntity<Any?>{
+        val response = _userService.getStrangePeopleByUid(id)
+        return if (response.successful_operation)
+            ResponseEntity.status(response.code).body(response.data)
+        else
+            ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
+    }
+
     @RequestMapping(value = ["/users/{id}"], method = [RequestMethod.GET])
     @ResponseBody
     fun getUser(@PathVariable("id") id: String): ResponseEntity<Any?>{

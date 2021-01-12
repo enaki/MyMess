@@ -9,6 +9,7 @@ import paw.my_mess.db_service.business.error_handling.Response
 interface UserService {
     fun getAllUsers(): Response<List<BusinessUser>?>
     fun getUserById(uid: String): Response<BusinessUser?>
+    fun getStrangePeopleByUid(uid: String): Response<List<BusinessUser>?>
     fun createUser(user: BusinessCreateUser): Response<Any?>
     fun getAllUserProfiles(): Response<List<BusinessUserProfile>?>
     fun getUserProfileById(uid: String): Response<BusinessUserProfile?>

@@ -344,15 +344,15 @@ class FriendServiceImpl: FriendService {
         }
     }
 
-    override fun getBlockedFriends(userId: String): Response<List<BusinessBlockedUser>> {
+    override fun getBlockedFriends(userId: String, toList: Boolean): Response<Any?> {
         return try {
             checkUsersId(userId)
             val response = this._blockedUserRepository.getBlockedUsersByUserId(userId)
-
+            val data = response.map { it.ToBusinessBlockedUser()}
             Response(
                     successful_operation = true,
                     code = 200,
-                    data = response.map { it.ToBusinessBlockedUser() }
+                    data = if (!toList) data else data.toBlockedUsersList(userId)
             )
         }
         catch (error: NoSuchElementException){
