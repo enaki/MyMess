@@ -1,6 +1,6 @@
 .authentication-container {
   width: 50%;
-  max-height: 700px;
+  max-height: 100%;
   padding: 2em;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
   font-size: 30px;
   font-family: "Open Sans", serif;
   margin-top: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 :host {
@@ -33,31 +33,29 @@
   justify-content:center;
   max-height: 450px;
   width: 700px;
-  margin-bottom: 2em;
 }
 
 .authentication-form{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1em;
+  margin: 5px;
 }
 
 .authentication-item{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  margin: 1em;
+  margin: 3%;
 }
 
-button{
+.authenticate-button{
   background-color: rgb(255, 77, 77);
   border: 0;
   outline: 0;
   cursor: pointer;
-  width: 20%;
+  width: 15%;
   height: 40px;
-  margin-bottom: 20px;
   border-radius: 8px;
   font-family: "Open Sans", serif;
   font-weight: bold;
@@ -82,10 +80,27 @@ button{
   background-color: pink;
   color: red;
   border-radius: 8px;
-  display: flexbox;
+  display: flex;
   padding: 10px;
 }
 
 .input-text{
   width: 250px;
+  border: 1px solid gray;
+  border-left: none;
+  height: 34px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.input-icon{
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  padding: 16px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border: 1px solid gray;
+  border-right: none;
+  height: 10px;
 }

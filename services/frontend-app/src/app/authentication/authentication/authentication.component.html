@@ -1,110 +1,153 @@
 <img src="assets/images/login.svg"  alt="login" width="300" height="300"/>
 <div class="authentication-container">
-  <p class="authentication-title">{{ isSetRegistered ? "Register" : "Log in" }}</p>
-  <form [formGroup]="formGroup" class="authentication-form"
-        [class]="
-          isSetRegistered
-            ? 'authentication-content register-content'
-            : 'authentication-content'
-        "
-  >
-    <div class="form-container">
-      <div class="authentication-item">
-        <label>
-          Username
-        </label>
-        <input class="input-text" formControlName="username" type="text" />
-      </div>
-      <div class="authentication-item">
-        <label>
-          Password
-        </label>
-        <input class="input-text" formControlName="password" type="password" (keyup.enter)="authenticate()"/>
-        <div *ngIf="isInvalid(formGroup.get('password'))" class="error-alert">
-          Password is invalid
-        </div>
-      </div>
-
-      <ng-container *ngIf="isSetRegistered">
-        <div class="authentication-item">
-          <label>
-            Confirm password
-          </label>
-          <input class="input-text" formControlName="confirmPassword" type="password" />
-        </div>
-        <div class="authentication-item">
-          <label>
-            Email
-          </label>
-          <input class="input-text" formControlName="email" type="email" />
-          <div *ngIf="isInvalid(formGroup.get('email'))" class="error-alert">
-            Email is invalid
-          </div>
-        </div>
-        <div class="authentication-item">
-          <label>
-            Firstname
-          </label>
-          <input class="input-text" formControlName="firstname" type="text" />
-          <div *ngIf="isInvalid(formGroup.get('firstname'))" class="error-alert">
-            Firstname is invalid
-          </div>
-        </div>
-        <div class="authentication-item">
-          <label>
-            Lastname
-          </label>
-          <input class="input-text" formControlName="lastname" type="text" />
-          <div *ngIf="isInvalid(formGroup.get('lastname'))" class="error-alert">
-            Lastname is invalid
-          </div>
-        </div>
-        <div class="authentication-item">
-          <label>
-            Birthday
-          </label>
-          <input class="input-text" formControlName="birthdate" type="text" />
-          <div *ngIf="isInvalid(formGroup.get('birthdate'))" class="error-alert">
-            Birthdate is invalid
-          </div>
-        </div>
-        <div class="authentication-item">
-          <label>
-            Gender
-          </label>
-          <input class="input-text" formControlName="gender" type="text" />
-          <div *ngIf="isInvalid(formGroup.get('gender'))" class="error-alert">
-            Gender is invalid
-          </div>
-        </div>
-        <div class="authentication-item">
-          <label>
-            Country
-          </label>
-          <input class="input-text" formControlName="country" type="text" />
-          <div *ngIf="isInvalid(formGroup.get('country'))" class="error-alert">
-            Country is invalid
-          </div>
-        </div>
-        <div class="authentication-item">
-          <label>
-            City
-          </label>
-          <input class="input-text" formControlName="city" type="text" />
-          <div *ngIf="isInvalid(formGroup.get('city'))" class="error-alert">
-            City is invalid
-          </div>
-        </div>
-      </ng-container>
-    </div>
-
+    <p class="authentication-title">{{ isSetRegistered ? "Register" : "Log in" }}</p>
+    <ng-container *ngIf="isSetRegistered; else login">
+        <form [formGroup]="registerFormGroup" class="authentication-form">
+            <div class="form-container">
+                <div class="authentication-item">
+                    <div class="input-icon">
+                        <i class="fa fa-user text-muted"></i>
+                    </div>
+                    <input id="usernameRegister" type="text" name="username" placeholder="Username"
+                           class="input-text" formControlName="username" required>
+                </div>
+                <div *ngIf="isInvalid(registerFormGroup.get('username'))" class="error-alert">
+                    Username is invalid
+                </div>
+                <div class="authentication-item">
+                    <div class="input-icon">
+                        <i class="fa fa-lock text-muted"></i>
+                    </div>
+                    <input id="passwordRegister" type="password" name="password" placeholder="Password"
+                           class="input-text" formControlName="passwordHash" required>
+                </div>
+                <div *ngIf="isInvalid(registerFormGroup.get('passwordHash'))" class="error-alert">
+                    Password is invalid
+                </div>
+                <div class="authentication-item">
+                    <div class="input-icon">
+                        <i class="fa fa-lock text-muted"></i>
+                    </div>
+                    <input id="passwordConfirmation" type="password" name="passwordConfirmation"
+                           placeholder="Confirm Password" class="input-text"
+                           formControlName="confirmPassword" required>
+                </div>
+                <div *ngIf="correspondingPasswords()" class="error-alert">
+                    Password is invalid
+                </div>
+                <div class="authentication-item">
+                    <div class="input-icon">
+                        <i class="fas fa-envelope-square"></i>
+                    </div>
+                    <input id="email" type="email" name="email" placeholder="Email"
+                           class="input-text" formControlName="email" required>
+                </div>
+                <div *ngIf="isInvalid(registerFormGroup.get('email'))" class="error-alert">
+                    Email is invalid
+                </div>
+                <div class="authentication-item">
+                    <div class="input-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <input id="firstName" type="text" name="firstname" placeholder="First Name"
+                           class="input-text" formControlName="firstName" required>
+                </div>
+                <div *ngIf="isInvalid(registerFormGroup.get('firstName'))" class="error-alert">
+                    Firstname is invalid
+                </div>
+                <div class="authentication-item">
+                    <div class="input-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <input id="lastName" type="text" name="lastname" placeholder="Last Name"
+                           class="input-text" formControlName="lastName" required>
+                </div>
+                <div *ngIf="isInvalid(registerFormGroup.get('lastName'))" class="error-alert">
+                    Firstname is invalid
+                </div>
+                <div class="authentication-item">
+                    <div class="input-icon">
+                            <i class="fas fa-table"></i>
+                    </div>
+                    <input id="birthday" type="text" name="birthday" placeholder="Birthday"
+                           class="input-text" onfocus="(this.type='date')"
+                           onfocusout="(this.type='text')" formControlName="birthdate" required>
+                </div>
+                <div *ngIf="isInvalid(registerFormGroup.get('birthdate'))" class="error-alert">
+                    Birthdate is invalid
+                </div>
+                <div class="authentication-item">
+                    <div class="input-icon">
+                        <i class="fas fa-venus-mars"></i>
+                    </div>
+                    <select class="input-text" name="gender" id="gender" formControlName="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div *ngIf="isInvalid(registerFormGroup.get('gender'))" class="error-alert">
+                    Gender is invalid
+                </div>
+                <div class="authentication-item">
+                    <div class="input-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <select class="input-text" name="country" id="country" formControlName="country">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div *ngIf="isInvalid(registerFormGroup.get('country'))" class="error-alert">
+                    Country is invalid
+                </div>
+                <div class="authentication-item">
+                    <div class="input-icon">
+                        <i class="far fa-building"></i>
+                    </div>
+                    <select class="input-text" name="city" id="city" formControlName="city">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div *ngIf="isInvalid(registerFormGroup.get('city'))" class="error-alert">
+                    City is invalid
+                </div>
+            </div>
+        </form>
+    </ng-container>
+    <ng-template #login>
+        <form [formGroup]="loginFormGroup" class="authentication-form authentication-content">
+            <div class="form-container">
+                <div class="authentication-item">
+                    <div class="input-icon">
+                        <i class="fa fa-user text-muted"></i>
+                    </div>
+                    <input id="username" type="text" name="username" placeholder="Username"
+                           class="input-text" formControlName="username" required>
+                </div>
+                <div *ngIf="isInvalid(loginFormGroup.get('username'))" class="error-alert">
+                    Username is invalid
+                </div>
+                <div class="authentication-item">
+                    <div class="input-icon">
+                        <i class="fa fa-lock text-muted"></i>
+                    </div>
+                    <input id="password" type="password" name="password" placeholder="Password"
+                           class="input-text" formControlName="password" (keyup.enter)="authenticate()" required>
+                </div>
+                <div *ngIf="isInvalid(loginFormGroup.get('password'))" class="error-alert">
+                    Password is invalid
+                </div>
+            </div>
+        </form>
+    </ng-template>
     <span class="not-registered">
-      <input class="register-checkbox" type="checkbox" (click)="setRegister()" />
-      <span>{{ isSetRegistered ? "Go back to log in" : "\I am not registered yet" }}</span>
-    </span>
+            <input class="register-checkbox" type="checkbox" (click)="setRegister()" />
+            <span>{{ isSetRegistered ? "Go back to log in" : "\I am not registered yet" }}</span>
+        </span>
     <div id="error-list"></div>
-    <button type="button" (click)="authenticate()">
-      <span>{{ isSetRegistered ? "Register" : "Login" }}</span>
+    <button class="authenticate-button" type="button" (click)="authenticate()">
+        <span>{{ isSetRegistered ? "Register" : "Login" }}</span>
     </button>
-  </form>
 </div>
+

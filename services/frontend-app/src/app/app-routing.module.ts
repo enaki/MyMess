@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {AuthGuard} from './guards/auth.guard';
 
 /**
  * Const routes declares the path and the corresponding components.
@@ -7,39 +8,48 @@ import { Routes, RouterModule } from '@angular/router';
  */
 const routes: Routes = [
   {
-    path: 'login',
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'authentication',
+  },
+  {
+    path: 'authentication',
     loadChildren: () =>
-      import('./authentication/authentication.module').then(
-        (m) => m.AuthenticationModule
-      ),
+        import('./authentication/authentication.module').then(
+            (m) => m.AuthenticationModule
+        ),
   },
   {
     path: 'friends',
     loadChildren: () =>
-      import('./friends/friends.module').then(
-        (m) => m.FriendsModule
-      ),
+        import('./friends/friends.module').then(
+            (m) => m.FriendsModule
+        ),
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',
     loadChildren: () =>
-      import('./profile/profile.module').then(
-        (m) => m.ProfileModule
-      ),
+        import('./profile/profile.module').then(
+            (m) => m.ProfileModule
+        ),
+    canActivate: [AuthGuard]
   },
   {
     path: 'inbox',
     loadChildren: () =>
-      import('./inbox/inbox.module').then(
-        (m) => m.InboxModule
-      ),
+        import('./inbox/inbox.module').then(
+            (m) => m.InboxModule
+        ),
+    canActivate: [AuthGuard]
   },
   {
     path: 'notifications',
     loadChildren: () =>
-      import('./notifications/notifications.module').then(
-        (m) => m.NotificationsModule
-      ),
+        import('./notifications/notifications.module').then(
+            (m) => m.NotificationsModule
+        ),
+    canActivate: [AuthGuard]
   },
 ];
 
