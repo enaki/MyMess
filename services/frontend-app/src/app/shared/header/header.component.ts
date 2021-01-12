@@ -46,6 +46,7 @@ export class HeaderComponent {
 
   // TODO - trebuie implementata o metoda de login cu ajutorul jwt
   public logout(): void{
-
+    this.userService.sessionStorageCleaning();
+    this.headerService.navigateToLogin();
   }
 }

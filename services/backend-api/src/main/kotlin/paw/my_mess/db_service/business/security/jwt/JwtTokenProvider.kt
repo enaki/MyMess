@@ -43,7 +43,7 @@ class JwtTokenProvider {
                 claims["firstname"] = user.firstname
                 claims["lastname"] = user.lastname
                 claims["email"] = user.email
-                claims["avatarPath"] = user.avatarPath
+                claims["avatarPath"] = "http://localhost:2020/api/images/" + user.avatarPath
             }
             val userProfile = _userProfileRepository.get(uid)
             if (userProfile != null) {

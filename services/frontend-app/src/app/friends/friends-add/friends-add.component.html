@@ -1,0 +1,35 @@
+<div flex class="mat-content">
+  <mat-card>
+    <div class="container p-5">
+      <div class=" form-inline d-flex justify-content-center">
+        <input class="form-control form-control mr-3 w-50" type="text" placeholder="Search" aria-label="Search"
+               [(ngModel)]="searchText"> <i class="fas fa-search" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="card-columns">
+        <div *ngFor="let person of people;">
+          <div class="card  text-center shadow-sm p-3 mb-5 bg-white rounded" style="max-width: 18rem;"
+               *ngIf="(person.firstName).toLowerCase().includes(searchText.toLowerCase()) ||
+               (person.lastName).toLowerCase().includes(searchText.toLowerCase()) ||
+                (person.username).toLowerCase().includes(searchText.toLowerCase())">
+            <img class="card-img-top " src="{{person.avatarLink}}" alt="Profile image"
+                 (click)="redirectToProfile(person.uid)">
+            <div class="card-body">
+              <h3 class="card-title">{{person.firstName}} {{person.lastName}}</h3>
+              <p class="card-text">@{{person.username}}</p>
+              <button name="view" class="btn btn-outline-dark btn-sm" (click)="redirectToProfile(person.uid)">View
+              </button>
+              <button name="delete" class="btn btn-outline-dark btn-sm"
+                      (click)="sendRequest(person.uid)"><i class="fa fa-user-plus"></i>&nbsp;Add
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+

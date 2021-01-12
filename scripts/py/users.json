@@ -8,12 +8,12 @@
     "avatarPath": "ionel.png"
   },
   {
-    "username": "ana",
-    "password": "ana",
-    "firstname": "Ana",
-    "lastname": "Are Mere",
-    "email": "ana@gmail.com",
-    "avatarPath": "ana.png"
+    "username": "mikasa",
+    "password": "mikasa",
+    "firstname": "Mikasa",
+    "lastname": "Ackerman",
+    "email": "mikasa@gmail.com",
+    "avatarPath": "mikasa.png"
   },
   {
     "username": "naruto",
@@ -38,5 +38,133 @@
     "lastname": "El Doritos",
     "email": "alehandro@gmail.com",
     "avatarPath": "alehandro.png"
+  },
+  {
+    "username": "ancuta",
+    "password": "ancuta",
+    "email": "ancuta@gmail.com",
+    "firstname": "Ancuta",
+    "lastname": "Panainte",
+	"avatarPath": "ancuta.png"
+},
+{
+    "username": "ezio",
+    "password": "ezio",
+    "email": "ezio@gmail.com",
+    "firstname": "Ezio",
+    "lastname": "Auditore",
+	"avatarPath": "ezio.png"
+},
+{
+    "username": "andrei",
+    "password": "andrei",
+    "email": "andrei@gmail.com",
+    "firstname": "Andrei",
+    "lastname": "Popescu",
+	"avatarPath": "andrei.png"
+},
+{
+    "username": "doge",
+    "password": "doge",
+    "email": "doge@gmail.com",
+    "firstname": "Doge",
+    "lastname": "Doge",
+	"avatarPath": "doge.png"
+},
+{
+    "username": "dumbledore",
+    "password": "dumbledore",
+    "email": "dumbledore@gmail.com",
+    "firstname": "Dumbledore",
+    "lastname": "Albus",
+	"avatarPath": "dumbledore.png"
+},
+{
+    "username": "edward",
+    "password": "edward",
+    "email": "edward@gmail.com",
+    "firstname": "Edward",
+    "lastname": "Elric",
+	"avatarPath": "edward.png"
+},
+{
+    "username": "frodo",
+    "password": "frodo",
+    "email": "frodo@gmail.com",
+    "firstname": "Frodo",
+    "lastname": "Bagins",
+	"avatarPath": "frodo.png"
+},
+{
+    "username": "gabi",
+    "password": "gabi",
+    "email": "gabi@gmail.com",
+    "firstname": "Gabi",
+    "lastname": "Strilciuc",
+	"avatarPath": "gabi.png"
+},
+{
+    "username": "jerry",
+    "password": "jerry",
+    "email": "jerry@gmail.com",
+    "firstname": "Jerry",
+    "lastname": "Tom",
+	"avatarPath": "jerry.png"
+},
+{
+    "username": "l",
+    "password": "l",
+    "email": "l@gmail.com",
+    "firstname": "L",
+    "lastname": "L",
+	"avatarPath": "l.png"
+},
+{
+    "username": "lelouch",
+    "password": "lelouch",
+    "email": "lelouch@gmail.com",
+    "firstname": "Lelouch",
+    "lastname": "Britania",
+	"avatarPath": "lelouch.png"
+},
+{
+    "username": "mihai",
+    "password": "mihai",
+    "email": "mihai@gmail.com",
+    "firstname": "Mihai",
+    "lastname": "Jackson",
+	"avatarPath": "mihai.png"
+},
+{
+    "username": "taiga",
+    "password": "taiga",
+    "email": "taiga@gmail.com",
+    "firstname": "Taiga",
+    "lastname": "Furukawa",
+	"avatarPath": "taiga.png"
+},
+{
+    "username": "tom",
+    "password": "tom",
+    "email": "tom@gmail.com",
+    "firstname": "Tom",
+    "lastname": "Jerry",
+	"avatarPath": "tom.png"
+},
+{
+    "username": "vasile",
+    "password": "vasile",
+    "email": "vasile@gmail.com",
+    "firstname": "Vasile",
+    "lastname": "Enachi",
+	"avatarPath": "vasile.png"
+},
+{
+    "username": "alex",
+    "password": "alex",
+    "firstname": "Alex",
+    "lastname": "Ilioi",
+    "email": "alex@gmail.com",
+    "avatarPath": "alex.png"
   }
 ]

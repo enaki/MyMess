@@ -6,6 +6,7 @@ import {RegisterModel} from '../models/register.model';
 import {LoginModel} from '../models/login.model';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../services/authentication.service';
+import {UserService} from '../../shared/services';
 
 @Component({
   selector: 'app-authentication',
@@ -17,7 +18,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
-    private readonly authenticationService: AuthenticationService
+    private readonly authenticationService: AuthenticationService,
+    private readonly userService: UserService
   ) {
     this.subs = new Array<Subscription>();
     this.formGroup = this.formBuilder.group({
@@ -170,6 +172,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
               .login(data)
               .subscribe((data: HttpResponse<any>) => {
                 if (data.status === 200) {
+                  this.userService.setToken(data.body.token);
                   sessionStorage.setItem('userToken', data.body.token);
                   sessionStorage.setItem('identity', JSON.stringify(data.body));
                   this.router.navigate(['inbox']);
@@ -183,6 +186,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   public isInvalid(form: AbstractControl): boolean {
     return form.invalid && form.touched && form.dirty;
   }
+
 }
 
 function cleanErrorList(): void {

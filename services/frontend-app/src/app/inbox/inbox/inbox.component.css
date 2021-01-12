@@ -37,75 +37,85 @@ textarea {
 }
 
 .card {
-  border-radius: 15px ;
+  border-radius: 15px;
   background-color: rgba(22, 4, 4, 0.8);
 }
 
 .contacts_body {
-  padding: 0.75rem 0 ;
+  padding: 0.75rem 0;
   overflow-y: auto;
   white-space: nowrap;
 }
 
 .msg_card_body {
   overflow-y: auto;
+  margin-bottom: 10%;
 }
 
 .card-header {
-  border-radius: 15px 15px 0 0 ;
-  border-bottom: 0 ;
+  border-radius: 15px 15px 0 0;
+  border-bottom: 0;
 }
 
 .card-footer {
-  border-radius: 0 0 15px 15px ;
-  border-top: 0 ;
+  border-radius: 0 0 15px 15px;
+  border-top: 0;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
 }
 
 .search {
-  border-radius: 15px 0 0 15px ;
+  border-radius: 15px 0 0 15px;
   background-color: rgba(255, 255, 255, 0.3);
-  border: 0 ;
+  border: 0;
 }
 
 .search:focus {
-  box-shadow: none ;
-  outline: 0 ;
+  box-shadow: none;
+  outline: 0;
+}
+
+.font_1{
+  color: #ffffff;
+  font-size: 60px;
 }
 
 .type_msg {
-  background-color: rgba(0, 0, 0, 0.3) ;
-  border: 0 ;
-  color: white ;
-  height: 60px ;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0;
+  color: white;
+  height: 60px;
   overflow-y: auto;
 }
 
 .type_msg:focus {
-  box-shadow: none ;
-  outline: 0 ;
+  box-shadow: none;
+  outline: 0;
 }
 
 .attach_btn {
-  border-radius: 15px 0 0 15px ;
-  background-color: rgba(0, 0, 0, 0.3) ;
-  border: 0 ;
-  color: white ;
+  border-radius: 15px 0 0 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0;
+  color: white;
   cursor: pointer;
 }
 
 .send_btn {
-  border-radius: 0 15px 15px 0 ;
-  background-color: rgba(0, 0, 0, 0.3) ;
-  border: 0 ;
-  color: white ;
+  border-radius: 0 15px 15px 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0;
+  color: white;
   cursor: pointer;
 }
 
 .search_btn {
-  border-radius: 0 15px 15px 0 ;
-  background-color: rgba(0, 0, 0, 0.3) ;
-  border: 0 ;
-  color: white ;
+  border-radius: 0 15px 15px 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 0;
+  color: white;
   cursor: pointer;
 }
 
@@ -117,7 +127,7 @@ textarea {
 .contacts li {
   width: 100%;
   padding: 5px 10px;
-  margin-bottom: 15px ;
+  margin-bottom: 15px;
 }
 
 .active {
@@ -148,6 +158,7 @@ textarea {
 .img_cont_msg {
   height: 40px;
   width: 40px;
+
 }
 
 .online_icon {
@@ -162,7 +173,7 @@ textarea {
 }
 
 .offline {
-  background-color: #c23616 ;
+  background-color: #c23616;
 }
 
 .user_info {
@@ -202,8 +213,21 @@ textarea {
   background-color: #82ccdd;
   padding: 10px;
   position: relative;
+  word-break: break-all;
 }
 
+.typing_container{
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  margin-right: 50px;
+  border-radius: 25px;
+  padding: 10px;
+  position: relative;
+  word-break: break-all;
+  color: white;
+  font-size: 25px;
+}
 .msg_cotainer_send {
   margin-top: auto;
   margin-bottom: auto;
@@ -213,6 +237,7 @@ textarea {
   background-color: #78e08f;
   padding: 10px;
   position: relative;
+  word-break: break-all;
 }
 
 .msg_time {
@@ -221,7 +246,7 @@ textarea {
   bottom: -20px;
   color: #ff5900;
   font-size: 12px;
-  width: 100px;
+  width: 150px;
 }
 
 .msg_time_send {
@@ -230,7 +255,7 @@ textarea {
   bottom: -20px;
   color: #00ffcd;
   font-size: 12px;
-  width: 100px;
+  width: 60px;
 }
 
 .msg_head {
@@ -286,6 +311,6 @@ textarea {
 
 @media (max-width: 576px) {
   .contacts_card {
-    margin-bottom: 15px ;
+    margin-bottom: 15px;
   }
 }

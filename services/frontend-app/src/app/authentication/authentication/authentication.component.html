@@ -19,7 +19,7 @@
         <label>
           Password
         </label>
-        <input class="input-text" formControlName="password" type="password" />
+        <input class="input-text" formControlName="password" type="password" (keyup.enter)="authenticate()"/>
         <div *ngIf="isInvalid(formGroup.get('password'))" class="error-alert">
           Password is invalid
         </div>
