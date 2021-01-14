@@ -4,6 +4,12 @@ button{
   color: white;
   background-color: rgb(62, 6, 11);
 }
+mat-toolbar{
+  background-color: rgb(62, 6, 11);
+}
+.text-button{
+  padding-right: 10px;
+}
 mat-toolbar-row{
   margin: 0;
   padding: 0;
@@ -13,4 +19,7 @@ mat-toolbar-row{
   display: flex;
   flex-direction: row;
   align-items: stretch;
+}
+.mat-badge.hide-text .mat-badge-content {
+  color: transparent;
 }

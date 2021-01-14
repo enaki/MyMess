@@ -29,6 +29,7 @@
                     Left {{moment.unix(contact.status).fromNow()}}</p>
                 </div>
               </div>
+              <span class="notification" *ngIf="notificationFriends[pairUidContactIdx[contact.uid]] == true;"> </span>
             </li>
           </div>
         </div>

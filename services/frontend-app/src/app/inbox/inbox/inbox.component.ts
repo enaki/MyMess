@@ -30,6 +30,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
   searchText: string;
   chatId: string;
   typingFriends = [];
+  notificationFriends = [];
   basicUserDetails: BasicUserModel;
   socket: Socket;
   private subs: Subscription[];
@@ -51,7 +52,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.searchText = '';
     this.subs.push(this.socketService.socket.subscribe((socket) => {
       this.socket = socket;
-      if (socket != null){
+      if (socket != null) {
         this.socketHandler();
       }
     }));
@@ -60,7 +61,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
   ngOnInit(): void {
     // this.setupSocketConnection();
     //if (this.socket !== null) {
-        //this.socketHandler();
+    //this.socketHandler();
     //}
 
     this.basicUserDetails = this.userService.getBasicUserDetails();
@@ -68,7 +69,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.friendService.getFriendsIds(this.basicUserDetails.uid).toPromise().then((data: FriendListModel) => {
       this.contactsIds = data;
       this.contacts = [];
-      const friendInfoPromises = data.friendList.map( friendId => this.friendService.getFriendInfo(friendId).toPromise());
+      const friendInfoPromises = data.friendList.map(friendId => this.friendService.getFriendInfo(friendId).toPromise());
       this.firstFriend = false;
       friendInfoPromises.forEach(friendInfoPromise => {
         friendInfoPromise.then((basicUserModel: BasicUserModel) => {
@@ -76,6 +77,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
           basicUserModel.status = -1;
           this.contacts.push(basicUserModel);
           this.pairUidContactIdx[basicUserModel.uid] = this.contacts.length - 1;
+          this.notificationFriends.push(false);
           if (!this.firstFriend) {
             console.log('[ngOnInit] Establish connection with friend');
             this.selectedUser = this.contacts[0];
@@ -122,8 +124,10 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
       }
       this.establishConnectionWithFriend();
+      this.notificationFriends[this.pairUidContactIdx[this.selectedUser.uid]] = false;
     }
   }
+
   socketHandler(): void {
     console.log('SOCKET HANDLER CALLED');
     this.socket.on('user-connected', (data: any) => {
@@ -156,7 +160,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         if (data.hasOwnProperty(key)) {
           const contactIndex = this.pairUidContactIdx[key];
           console.log(key + ' - ' + data[key] + ' - ' + contactIndex);
-          if (this.contacts[contactIndex] !== undefined){
+          if (this.contacts[contactIndex] !== undefined) {
             this.contacts[contactIndex].status = data[key];
           }
         }
@@ -167,6 +171,8 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
       console.log(message);
       if (message.ownerId === this.selectedUser.uid) {
         this.messages[this.selectedUser.uid].push(message);
+      } else {
+        this.notificationFriends[this.pairUidContactIdx[message.ownerId]] = true;
       }
     });
   }
@@ -212,7 +218,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   ngOnDestroy(): void {
     // this.setupSocketDisconnect();
-    this.subs.forEach( (sub) => {
+    this.subs.forEach((sub) => {
       sub.unsubscribe();
     });
   }
