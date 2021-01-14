@@ -28,13 +28,24 @@
     font-family: "Open Sans", serif;
     margin-bottom: 2vh;
     margin-top: 1vh;
+    color: #db2a2a;
 }
 
-.card-text{
+.card-text-static{
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: center;
-    margin-left: 100px;
+    width: 40%;
+}
+.card-text-dynamic{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    font-size: 18px;
+    font-weight: normal;
+    font-family: "Tahoma", sans-serif;
+    color: #19b300;
 }
 
 .card-title-container{
@@ -58,15 +69,41 @@
     justify-content: center;
 }
 
+.presentation-text{
+    font-size: 20px;
+    color: #3127e6;
+    letter-spacing: 1px;
+}
+
+.text-padding{
+    padding: 5px;
+}
+
 .user-presentation-card{
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 40%;
+    background-color: #fff6f5;
+    border: 1px solid #ff8275;
+    border-radius: 10px;
+    padding-top: 20px;
+    margin-right: 10px;
 }
 
 .user-profile-picture{
     border: 1px solid #ff8275;
     width: 200px;
     height: 200px;
+    margin-bottom: 2%;
+}
+
+.user-presentation-text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: space-evenly;
+    max-height: 200px;
 }

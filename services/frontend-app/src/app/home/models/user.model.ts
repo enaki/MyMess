@@ -1,14 +1,8 @@
 export type UserModel = {
-    uid: string;
-    username: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    avatarLink: string;
-    status: string;
-    birthdate: string;
-    gender: string;
-    dataRegistered: string;
-    city: string;
-    country: string;
+    Uid: string;
+    Username: string;
+    FirstName: string;
+    LastName: string;
+    Email: string;
+    AvatarLink: string;
 };

@@ -1,9 +1,9 @@
 export type UserProfileModel = {
-    uid: string;
-    status: string;
-    birthdate: string;
-    gender: string;
-    dataRegistered: string;
-    city: string;
-    country: string;
+    Uid: string;
+    Status: string;
+    Birthdate: string;
+    Gender: string;
+    DataRegistered: string;
+    City: string;
+    Country: string;
 };

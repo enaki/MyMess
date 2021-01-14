@@ -1,37 +1,29 @@
 <div flex class="mat-content" *ngIf="loadedProfile && loadedProfileInfo | async">
     <mat-card>
         <div class="card-title-container">
-            <p class="card-title-text">{{userData.username}} profile</p>
+            <p class="card-title-text">User profile</p>
         </div>
         <div class="user-data-container">
             <div class="user-presentation-card">
-                <img class="user-profile-picture" src="{{userData.avatarLink}}" alt="image">
+                <img class="user-profile-picture" src="{{userData.AvatarLink}}" alt="image">
+                <div class="user-presentation-text card-title-text">
+                    <p class="text-padding">{{userData.FirstName}} {{userData.LastName}}</p>
+                    <p class="text-padding">@{{userData.Username}}</p>
+                </div>
             </div>
-            <div class="user-general-data">
-                <div class="card-data-component">
-                    <p class="card-text">Firstname: {{userData.firstName}}</p>
-                </div>
-                <div class="card-data-component">
-                    <p class="card-text">Lastname: {{userData.lastName}}</p>
-                </div>
-                <div class="card-data-component">
-                    <p class="card-text">Email: {{userData.email}}</p>
-                </div>
-                <div class="card-data-component">
-                    <p class="card-text">Birthdate: {{userProfileData.birthdate}}</p>
-                </div>
-                <div class="card-data-component">
-                    <p class="card-text">Gender: {{userProfileData.gender}}</p>
-                </div>
-                <div class="card-data-component">
-                    <p class="card-text">Country: {{userProfileData.country}}</p>
-                </div>
-                <div class="card-data-component">
-                    <p class="card-text">City: {{userProfileData.city}}</p>
-                </div>
-                <div class="card-data-component">
-                    <p class="card-text">Registered data: {{userProfileData.dataRegistered}}</p>
-                </div>
+            <div class="user-general-data" >
+                <ng-container *ngFor="let item of userData | keyvalue">
+                    <div class="card-data-component" *ngIf="item.key !=='Uid' && item.key !=='AvatarLink' && item.key !=='Username'">
+                        <div class="card-text-static presentation-text">{{item.key}}:</div>
+                        <div class="card-text-dynamic">{{item.value}}</div>
+                    </div>
+                </ng-container>
+                <ng-container *ngFor="let item of userProfileData | keyvalue">
+                    <div class="card-data-component" *ngIf="item.key !=='Uid'">
+                        <div class="card-text-static presentation-text">{{item.key}}:</div>
+                        <div class="card-text-dynamic">{{item.value}}</div>
+                    </div>
+                </ng-container>
             </div>
         </div>
     </mat-card>
