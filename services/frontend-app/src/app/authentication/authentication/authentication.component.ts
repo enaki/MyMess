@@ -7,6 +7,7 @@ import {LoginModel} from '../models/login.model';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../services/authentication.service';
 import {UserService} from '../../shared/services';
+import {CountryModel} from '../models/country.model';
 
 @Component({
     selector: 'app-authentication',
@@ -22,6 +23,17 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         private readonly userService: UserService
     ) {
         this.subs = new Array<Subscription>();
+        this.countries = new Array<CountryModel>();
+        this.subs.push(
+            this.authenticationService.getCountriesAndCities().subscribe(
+                (response: HttpResponse<any>) => {
+                    if (response.status === 200){
+                        this.countries = response.body.data;
+                        this.countriesLoaded = Promise.resolve(true);
+                    }
+                }
+            )
+        );
         this.loginFormGroup = this.formBuilder.group({
             username: [
                 '',
@@ -119,6 +131,9 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     public genders: Array<string> = ['Male', 'Female'];
     private subs: Subscription[];
     public isSetRegistered = false;
+    public countries: Array<CountryModel>;
+    public countriesLoaded: Promise<boolean>;
+    public selectedCountry: string;
 
     private static handleError(responseError: HttpErrorResponse): void {
         cleanErrorList();
@@ -139,7 +154,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
 
     public correspondingPasswords(): boolean{
-        return this.registerFormGroup.get('passwordHash') == this.registerFormGroup.get('confirmPassword');
+        return this.registerFormGroup.get('passwordHash') === this.registerFormGroup.get('confirmPassword');
     }
 
     ngOnInit(): void {
@@ -172,9 +187,10 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
 
     public authenticate(): void {
+        console.log(this.selectedCountry);
         if (this.isSetRegistered) {
             const data: RegisterModel = this.registerFormGroup.getRawValue();
-            delete data['confirmPassword'];
+            delete data.confirmPassword;
             this.subs.push(
                 this.authenticationService
                     .register(data)

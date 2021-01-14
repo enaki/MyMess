@@ -1,6 +1,6 @@
 .authentication-container {
   width: 50%;
-  max-height: 100%;
+  max-height: 100vh;
   padding: 2em;
   display: flex;
   flex-direction: column;
@@ -19,7 +19,6 @@
 
 :host {
   height: calc(90%);
-
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -103,4 +102,43 @@
   border: 1px solid gray;
   border-right: none;
   height: 10px;
+}
+
+@media only screen and (max-width: 760px) {
+  .input-text{
+    width: 100px;
+  }
+  .form-container{
+    max-width: 400px;
+    max-height: 300px;
+  }
+  .authenticate-button{
+    width: 100px;
+  }
+  .not-registered {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 1325px) {
+  .authenticate-img{
+    display: none;
+  }
+  .authentication-container{
+    width: 85%;
+    max-height: 95vh;
+    box-shadow: 0 0 8px rgba(0, 23, 87, 0.8);
+  }
+
+  :host {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  router-outlet{
+    display: none;
+    height: 0;
+  }
+  .authenticate-button{
+    margin: 0;
+  }
 }

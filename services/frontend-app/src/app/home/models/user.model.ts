@@ -1,12 +1,14 @@
-export type RegisterModel = {
+export type UserModel = {
+    uid: string;
     username: string;
-    passwordHash: string;
-    confirmPassword: string;
-    email: string;
     firstName: string;
     lastName: string;
+    email: string;
+    avatarLink: string;
+    status: string;
     birthdate: string;
     gender: string;
+    dataRegistered: string;
     city: string;
     country: string;
 };

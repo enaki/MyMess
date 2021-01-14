@@ -13,6 +13,13 @@ export class AuthenticationService {
       private readonly httpClient: HttpClient
   ) {}
 
+  public getCountriesAndCities(): Observable<HttpResponse<unknown>>{
+    return this.httpClient.get(
+        'https://countriesnow.space/api/v0.1/countries',
+        {observe: 'response'}
+    );
+  }
+
   public login(data: LoginModel): Observable<HttpResponse<unknown>>{
     return this.httpClient.post(
         'http://localhost:2020/auth/signIn',

@@ -1,0 +1,72 @@
+:host {
+    height: calc(90%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mat-content{
+    box-shadow: 0 0 8px rgba(0, 23, 87, 0.2);
+    width: 80%;
+}
+
+.card-data-component{
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    background-color: #fff6f5;
+    border-bottom: 1px solid #ff8275;
+    border-top: 1px solid #ff8275;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.card-title-text{
+    font-size: 30px;
+    font-weight: bold;
+    font-family: "Open Sans", serif;
+    margin-bottom: 2vh;
+    margin-top: 1vh;
+}
+
+.card-text{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin-left: 100px;
+}
+
+.card-title-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid gray;
+    padding-top: 1vh;
+    margin-bottom: 2vh;
+}
+.user-general-data {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.user-data-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-presentation-card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+}
+
+.user-profile-picture{
+    border: 1px solid #ff8275;
+    width: 200px;
+    height: 200px;
+}

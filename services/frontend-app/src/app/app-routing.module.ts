@@ -13,6 +13,14 @@ const routes: Routes = [
     redirectTo: 'authentication',
   },
   {
+    path: 'home',
+    loadChildren: () =>
+        import('./home/home.module').then(
+            (m) => m.HomeModule
+        ),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'authentication',
     loadChildren: () =>
         import('./authentication/authentication.module').then(

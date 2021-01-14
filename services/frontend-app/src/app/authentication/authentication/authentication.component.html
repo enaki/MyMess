@@ -1,7 +1,7 @@
-<img src="assets/images/login.svg"  alt="login" width="300" height="300"/>
+<img class="authenticate-img" src="assets/images/login.svg"  alt="login" width="300" height="300"/>
 <div class="authentication-container">
     <p class="authentication-title">{{ isSetRegistered ? "Register" : "Log in" }}</p>
-    <ng-container *ngIf="isSetRegistered; else login">
+    <ng-container *ngIf="isSetRegistered && countriesLoaded | async; else login">
         <form [formGroup]="registerFormGroup" class="authentication-form">
             <div class="form-container">
                 <div class="authentication-item">
@@ -67,7 +67,7 @@
                 </div>
                 <div class="authentication-item">
                     <div class="input-icon">
-                            <i class="fas fa-table"></i>
+                        <i class="fas fa-table"></i>
                     </div>
                     <input id="birthday" type="text" name="birthday" placeholder="Birthday"
                            class="input-text" onfocus="(this.type='date')"
@@ -92,9 +92,8 @@
                     <div class="input-icon">
                         <i class="fas fa-globe"></i>
                     </div>
-                    <select class="input-text" name="country" id="country" formControlName="country">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                    <select class="input-text" name="country" id="country" formControlName="country" >
+                        <option [value]="null"  *ngFor="let item of countries">{{item.country}}</option>
                     </select>
                 </div>
                 <div *ngIf="isInvalid(registerFormGroup.get('country'))" class="error-alert">
@@ -104,10 +103,9 @@
                     <div class="input-icon">
                         <i class="far fa-building"></i>
                     </div>
-                    <select class="input-text" name="city" id="city" formControlName="city">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
+                    <input id="city" type="text" name="city"
+                           placeholder="City" class="input-text"
+                           formControlName="city" required>
                 </div>
                 <div *ngIf="isInvalid(registerFormGroup.get('city'))" class="error-alert">
                     City is invalid
@@ -150,4 +148,3 @@
         <span>{{ isSetRegistered ? "Register" : "Login" }}</span>
     </button>
 </div>
-
