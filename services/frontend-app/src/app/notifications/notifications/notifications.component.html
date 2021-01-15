@@ -1,1 +1,36 @@
-<p>notifications works!</p>
+<div flex class="mat-content">
+  <mat-card>
+    <div class="container p-3">
+      <h2>Friend requests</h2>
+      <hr>
+    </div>
+
+    <div class="container">
+      <div class="card-columns">
+        <div *ngFor="let request of requests;">
+          <div class="card  text-center shadow-sm p-3 mb-5 bg-white rounded" style="max-width: 18rem;">
+            <div class=""></div>>
+            <img class="card-img-top " src="{{request.avatarLink}}" alt="Profile image"
+                 (click)="redirectToProfile(request.uid)">
+            <div class="card-body">
+              <h3 class="card-title">{{request.firstName}} {{request.lastName}}</h3>
+              <p class="card-text">@{{request.username}}</p>
+            </div>
+            <div class="card-header">
+              <button name="view" class="btn btn-success btn-sm" (click)="redirectToProfile(request.uid)">View
+              </button>
+              <button name="block" class="btn btn-primary btn-sm"
+                      (click)="acceptRequest(request.uid)">Accept
+              </button>
+              <button name="delete" class="btn btn-danger btn-sm"
+                      (click)="refuseRequest(request.uid)">Refuse
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+

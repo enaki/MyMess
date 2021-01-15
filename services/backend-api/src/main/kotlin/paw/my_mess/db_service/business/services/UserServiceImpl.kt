@@ -1,14 +1,18 @@
 package paw.my_mess.db_service.business.services
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import paw.my_mess.db_service.business.bussines_models.create.BusinessCreateUser
 import paw.my_mess.db_service.business.bussines_models.create.BusinessUpdateUser
 import paw.my_mess.db_service.business.bussines_models.get.*
 import paw.my_mess.db_service.business.error_handling.Response
+import paw.my_mess.db_service.business.interfaces.FriendService
 import paw.my_mess.db_service.business.interfaces.UserService
+import paw.my_mess.db_service.persistence.entities.FriendRequest
 import paw.my_mess.db_service.persistence.entities.User
 import paw.my_mess.db_service.persistence.entities.UserProfile
+import paw.my_mess.db_service.persistence.persistence.interfaces.IFriendRepository
 import paw.my_mess.db_service.persistence.persistence.interfaces.IUserProfileRepository
 import paw.my_mess.db_service.persistence.persistence.interfaces.IUserRepository
 import java.sql.Date
@@ -23,17 +27,20 @@ class UserServiceImpl : UserService {
     private lateinit var _userRepository: IUserRepository<User>
 
     @Autowired
+    private lateinit var _friendService: FriendService
+
+    @Autowired
     private lateinit var _userProfileRepository: IUserProfileRepository<UserProfile>
 
     @Autowired
     private lateinit var _imageService: ImageServiceImpl
 
+    @Autowired
+    private lateinit var _passwordEncoder: PasswordEncoder
+
     override fun getAllUsers(): Response<List<BusinessUser>?> {
         try {
             val userList = _userRepository.getAll()
-            for (user in userList) {
-
-            }
             return Response(successful_operation = true, data = userList.map { it.ToBusinessUser() }, code = 200)
         } catch (e: Exception) {
             return Response(successful_operation = false, data = null, code = 400, error = e.toString())
@@ -54,9 +61,23 @@ class UserServiceImpl : UserService {
         }
     }
 
+    override fun getStrangePeopleByUid(uid: String): Response<List<BusinessUser>?> {
+        try {
+            val userList = _userRepository.getAll()
+            val friendList = _friendService.getFriends(uid, toList = true).data as BusinessFriendshipList
+            val blockedList = _friendService.getBlockedFriends(uid, toList = true).data as BusinessBlockedUserList
+
+            val filteredList = userList.filter { !friendList.friendList.contains(it.uid) && !blockedList.blockedUserList.contains(it.uid) && it.uid != uid}.toList()
+            return Response(successful_operation = true, data = filteredList.map { it.ToBusinessUser() }, code = 200)
+        } catch (e: Exception) {
+            return Response(successful_operation = false, data = null, code = 400, error = e.toString())
+        }
+    }
+
     override fun createUser(user: BusinessCreateUser): Response<Any?> {
         try {
-            val uid = _userRepository.add(User(uid = "", userName = user.username, firstname = user.firstName, lastname = user.lastName, passwordHash = user.passwordHash, email = user.email, avatarPath = ""))
+            val passwordHash = this._passwordEncoder.encode(user.passwordHash)
+            val uid = _userRepository.add(User(uid = "", userName = user.username, firstname = user.firstName, lastname = user.lastName, passwordHash = passwordHash, email = user.email, avatarPath = ""))
             if (uid == null) {
                 return Response(successful_operation = false, data = Unit, code = 400, error = "Can't create user")
             }
@@ -112,7 +133,7 @@ class UserServiceImpl : UserService {
             val tempFirstname = user.firstName ?: user_from_db.firstname
             val tempLastname = user.lastName ?: user_from_db.lastname
 
-            val path = _imageService.createFile(uid,user.avatarIcon!!)
+            val path = _imageService.createFile(uid, user.avatarIcon!!)
             if(path != null && user_from_db.avatarPath != "null")
                 _imageService.deleteFile(user_from_db.avatarPath)
 

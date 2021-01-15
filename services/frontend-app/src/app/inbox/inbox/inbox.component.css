@@ -77,6 +77,11 @@ textarea {
   outline: 0;
 }
 
+.font_1{
+  color: #ffffff;
+  font-size: 60px;
+}
+
 .type_msg {
   background-color: rgba(0, 0, 0, 0.3);
   border: 0;
@@ -211,6 +216,18 @@ textarea {
   word-break: break-all;
 }
 
+.typing_container{
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  margin-right: 50px;
+  border-radius: 25px;
+  padding: 10px;
+  position: relative;
+  word-break: break-all;
+  color: white;
+  font-size: 25px;
+}
 .msg_cotainer_send {
   margin-top: auto;
   margin-bottom: auto;
@@ -296,4 +313,16 @@ textarea {
   .contacts_card {
     margin-bottom: 15px;
   }
+}
+
+.notification{
+  float:right;
+  border: 10px solid pink;
+  border-radius: 100%;
+  background-color: red;
+}
+li{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

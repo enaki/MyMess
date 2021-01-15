@@ -79,7 +79,52 @@ INSERT INTO user_profiles (uid, status, birthdate, gender, dateRegistered, city,
 	VALUES ((SELECT uid FROM users WHERE username='vasile'), 
 			'i am vasile', TO_DATE('1998-05-26','YYYY-MM-DD'), 'male', TO_DATE('2018-10-13','YYYY-MM-DD'), 'Ungheni', 'Romania');
 
+INSERT INTO user_profiles (uid, status, birthdate, gender, dateRegistered, city, country) 
+	VALUES ((SELECT uid FROM users WHERE username='alex'), 
+			'i am alex', TO_DATE('1998-09-30','YYYY-MM-DD'), 'male', TO_DATE('2018-11-13','YYYY-MM-DD'), 'Piatra Neamt', 'Romania');
+
 /* POPULATE CHATS TABLES */
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
+INSERT INTO chats (chatId) VALUES (default);
 INSERT INTO chats (chatId) VALUES (default);
 INSERT INTO chats (chatId) VALUES (default);
 

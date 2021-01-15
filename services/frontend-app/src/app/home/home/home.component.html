@@ -1,0 +1,30 @@
+<div flex class="mat-content" *ngIf="loadedProfile && loadedProfileInfo | async">
+    <mat-card>
+        <div class="card-title-container">
+            <p class="card-title-text">User profile</p>
+        </div>
+        <div class="user-data-container">
+            <div class="user-presentation-card">
+                <img class="user-profile-picture" src="{{userData.AvatarLink}}" alt="image">
+                <div class="user-presentation-text card-title-text">
+                    <p class="text-padding">{{userData.FirstName}} {{userData.LastName}}</p>
+                    <p class="text-padding">@{{userData.Username}}</p>
+                </div>
+            </div>
+            <div class="user-general-data" >
+                <ng-container *ngFor="let item of userData | keyvalue">
+                    <div class="card-data-component" *ngIf="item.key !=='Uid' && item.key !=='AvatarLink' && item.key !=='Username'">
+                        <div class="card-text-static presentation-text">{{item.key}}:</div>
+                        <div class="card-text-dynamic">{{item.value}}</div>
+                    </div>
+                </ng-container>
+                <ng-container *ngFor="let item of userProfileData | keyvalue">
+                    <div class="card-data-component" *ngIf="item.key !=='Uid'">
+                        <div class="card-text-static presentation-text">{{item.key}}:</div>
+                        <div class="card-text-dynamic">{{item.value}}</div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </mat-card>
+</div>

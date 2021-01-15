@@ -24,3 +24,8 @@ fun List<BusinessFriendship>.toFriendShipList(uid: String): BusinessFriendshipLi
     val list = this.map { if (uid == it.uid1) it.uid2 else it.uid1 }
     return BusinessFriendshipList(uid, list)
 }
+
+fun List<BusinessBlockedUser>.toBlockedUsersList(uid: String): BusinessBlockedUserList{
+    val list = this.map { it.targetId }
+    return BusinessBlockedUserList(uid, list)
+}

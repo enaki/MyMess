@@ -8,7 +8,9 @@ import {InboxService} from '../services/inbox.service';
 import {IdModel} from '../../shared/models/id.model';
 import {MessageModel} from '../models/message.model';
 import * as moment from 'moment';
-import {io} from 'socket.io-client';
+import {io, Socket} from 'socket.io-client';
+import {SocketService} from '../../shared/services/socket.service';
+import {Subscription} from 'rxjs';
 
 const SOCKET_ENDPOINT = 'localhost:2021';
 
@@ -25,69 +27,74 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
   messages = {};
   moment;
   inputText: string;
+  searchText: string;
   chatId: string;
+  typingFriends = [];
+  notificationFriends = [];
   basicUserDetails: BasicUserModel;
-  socket;
+  socket: Socket;
+  private subs: Subscription[];
+  firstFriend = false;
 
   constructor(
     private router: Router,
     private userService: UserService,
     private friendService: FriendService,
-    private inboxService: InboxService
+    private inboxService: InboxService,
+    private socketService: SocketService,
   ) {
+    this.subs = new Array<Subscription>();
     this.moment = moment;
     const user = this.userService.getUserDetails();
     if (user == null) {
       this.router.navigate(['login']);
     }
-  }
-
-  setupSocketConnection(): void {
-    this.socket = io(SOCKET_ENDPOINT);
-  }
-
-  setupSocketDisconnect(): void {
-    this.socket.disconnect();
-    this.socket.close();
+    this.searchText = '';
+    this.subs.push(this.socketService.socket.subscribe((socket) => {
+      this.socket = socket;
+      if (socket != null) {
+        this.socketHandler();
+      }
+    }));
   }
 
   ngOnInit(): void {
-    this.setupSocketConnection();
-    this.socketHandler();
-
+    // this.setupSocketConnection();
+    //if (this.socket !== null) {
+    //this.socketHandler();
+    //}
     this.basicUserDetails = this.userService.getBasicUserDetails();
     console.log(this.basicUserDetails);
     this.friendService.getFriendsIds(this.basicUserDetails.uid).toPromise().then((data: FriendListModel) => {
       this.contactsIds = data;
       this.contacts = [];
-      for (const friendId of data.friendList) {
-        let firstFriend = false;
-        const friendInfoPromises = [];
-        friendInfoPromises.push(this.friendService.getFriendInfo(friendId).toPromise());
-        friendInfoPromises.forEach(friendInfoPromise => {
-          friendInfoPromise.then((basicUserModel: BasicUserModel) => {
-            // console.log(basicUserModel);
-            basicUserModel.status = -1;
-            this.contacts.push(basicUserModel);
-            this.pairUidContactIdx[basicUserModel.uid] = this.contacts.length - 1;
-            if (!firstFriend){
-              console.log('[ngOnInit] Establish connection with friend');
-              this.selectedUser = this.contacts[0];
-              this.establishConnectionWithFriend();
-              firstFriend = true;
-            }
-          });
+      const friendInfoPromises = data.friendList.map(friendId => this.friendService.getFriendInfo(friendId).toPromise());
+      this.firstFriend = false;
+      friendInfoPromises.forEach(friendInfoPromise => {
+        friendInfoPromise.then((basicUserModel: BasicUserModel) => {
+          // console.log(basicUserModel);
+          basicUserModel.status = -1;
+          this.contacts.push(basicUserModel);
+          this.pairUidContactIdx[basicUserModel.uid] = this.contacts.length - 1;
+          this.notificationFriends.push(false);
+          if (!this.firstFriend) {
+            console.log('[ngOnInit] Establish connection with friend');
+            this.selectedUser = this.contacts[0];
+            this.establishConnectionWithFriend();
+            this.firstFriend = true;
+          }
         });
-        Promise.all(friendInfoPromises).then(() => {
+      });
+      Promise.all(friendInfoPromises).then(() => {
           console.log('[ngOnInit] All friendInfo Promises solved');
           this.socket.emit('friend-ids', this.contactsIds);
+          this.socket.emit('send-message-notifications', this.basicUserDetails.uid);
         }
       );
-      }
     });
   }
 
-  establishConnectionWithFriend(): void{
+  establishConnectionWithFriend(): void {
     this.inboxService.getChatId(this.basicUserDetails.uid, this.selectedUser.uid).toPromise().then((idModel: IdModel) => {
       this.chatId = idModel.id;
       const connection = {
@@ -117,29 +124,68 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
       }
       this.establishConnectionWithFriend();
+      if (this.notificationFriends[this.pairUidContactIdx[this.selectedUser.uid]]) {
+        this.socket.emit('message-notification-clear', this.selectedUser.uid);
+        this.notificationFriends[this.pairUidContactIdx[this.selectedUser.uid]] = false;
+      }
     }
   }
 
-  socketHandler(): void{
+  socketHandler(): void {
+    console.log('SOCKET HANDLER CALLED');
     this.socket.on('user-connected', (data: any) => {
-        console.log('User ' + data.uid + ' just connected.');
+      console.log('User ' + data.uid + ' just connected.');
+      const indexContact = this.pairUidContactIdx[data.uid];
+      if (indexContact !== undefined) {
+        this.contacts[indexContact].status = 0;
+      }
+    });
+    this.socket.on('message-notifications', (data: any) => {
+      console.log(this.selectedUser.uid);
+      for (const id of data) {
+        if (id !== this.selectedUser.uid) {
+          this.notificationFriends[this.pairUidContactIdx[id]] = true;
+        } else {
+          this.socket.emit('message-notification-clear', this.selectedUser.uid);
+        }
+      }
+    });
+    this.socket.on('receive-is-typing', (data: any) => {
+      this.typingFriends.push(data);
+    });
+    this.socket.on('receive-stop-typing', (data: any) => {
+      const index = this.typingFriends.indexOf(data);
+      if (index > -1) {
+        this.typingFriends.splice(index, 1);
+      }
+    });
+    this.socket.on('user-disconnected', (data: any) => {
+      console.log('User ' + data.uid + ' just disconnected.');
+      const indexContact = this.pairUidContactIdx[data.uid];
+      if (indexContact !== undefined) {
+        this.contacts[indexContact].status = moment().unix();
+      }
     });
     this.socket.on('take-friends-status', (data: any) => {
-      console.log(data);
-      console.log(this.contacts);
-      for (const key in data){
+      // console.log(data);
+      // console.log(this.contacts);
+      for (const key in data) {
         if (data.hasOwnProperty(key)) {
           const contactIndex = this.pairUidContactIdx[key];
           console.log(key + ' - ' + data[key] + ' - ' + contactIndex);
-          this.contacts[contactIndex].status = data[key];
+          if (this.contacts[contactIndex] !== undefined) {
+            this.contacts[contactIndex].status = data[key];
+          }
         }
       }
     });
     this.socket.on('receive-chat-message', (message: any) => {
       console.log('Received a message from ' + message.ownerId);
       console.log(message);
-      if (message.ownerId === this.selectedUser.uid){
+      if (message.ownerId === this.selectedUser.uid) {
         this.messages[this.selectedUser.uid].push(message);
+      } else {
+        this.notificationFriends[this.pairUidContactIdx[message.ownerId]] = true;
       }
     });
   }
@@ -175,11 +221,18 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
   }
 
-  onInputChange(text: string): void {
-    this.inputText = text;
+  notifyIsTyping(): void {
+    this.socket.emit('notify-is-typing', {id: this.basicUserDetails.uid, friendId: this.selectedUser.uid});
+  }
+
+  notifyStopTyping(): void {
+    this.socket.emit('notify-stop-typing', {id: this.basicUserDetails.uid, friendId: this.selectedUser.uid});
   }
 
   ngOnDestroy(): void {
-    this.setupSocketDisconnect();
+    // this.setupSocketDisconnect();
+    this.subs.forEach((sub) => {
+      sub.unsubscribe();
+    });
   }
 }

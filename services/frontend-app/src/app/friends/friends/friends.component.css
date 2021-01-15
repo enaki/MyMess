@@ -1,0 +1,19 @@
+.mat-content{
+  margin:1%;
+}
+
+button{
+  margin-left: 5%;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 20rem;
+  object-fit: cover;
+}
+
+.my-card {
+  max-width: 18rem;
+  border-radius: 2px;
+}
+

@@ -11,29 +11,39 @@ import {SharedModule} from './shared/shared.module';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {AuthorizationInterceptor} from './interceptor/autorization.interceptor';
+import {AuthGuard} from './guards/auth.guard';
+import {JwtModule} from '@auth0/angular-jwt';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MDBBootstrapModule.forRoot(),
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    SharedModule,
-    HttpClientModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthorizationInterceptor,
-      multi: true,
-    },
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MDBBootstrapModule.forRoot(),
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        SharedModule,
+        HttpClientModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: () => sessionStorage.getItem('userToken'),
+                allowedDomains: [],
+                disallowedRoutes: [],
+            },
+        }),
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthorizationInterceptor,
+            multi: true,
+        },
+        AuthGuard,
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
