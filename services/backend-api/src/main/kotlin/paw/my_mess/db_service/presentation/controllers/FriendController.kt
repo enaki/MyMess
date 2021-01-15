@@ -139,8 +139,9 @@ class FriendController {
     }
 
     @RequestMapping(value= ["/blocked/{userId}"], method = [RequestMethod.GET])
-    fun getBlockedFriends(@PathVariable("userId") userId: String):ResponseEntity<Any?>{
-        val response = this._friendService.getBlockedFriends(userId)
+    fun getBlockedFriends(@RequestParam("toList", required = false) toList: String?,
+                          @PathVariable("userId") userId: String):ResponseEntity<Any?>{
+        val response = this._friendService.getBlockedFriends(userId, toList = toList != null && (toList == "true" || toList == "1"))
         return if(response.successful_operation){
             ResponseEntity.status(response.code).body(response.data)
         }

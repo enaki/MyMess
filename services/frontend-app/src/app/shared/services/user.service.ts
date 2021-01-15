@@ -71,7 +71,7 @@ export class UserService {
       return null;
     }
     else{
-      console.log(data);
+      // console.log(data);
       const parsedData: UserModel = JSON.parse(data);
       return {
         uid: parsedData.uid,

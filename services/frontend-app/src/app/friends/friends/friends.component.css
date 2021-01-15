@@ -12,3 +12,8 @@ button{
   object-fit: cover;
 }
 
+.my-card {
+  max-width: 18rem;
+  border-radius: 2px;
+}
+

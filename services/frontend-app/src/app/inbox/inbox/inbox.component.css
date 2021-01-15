@@ -314,3 +314,15 @@ textarea {
     margin-bottom: 15px;
   }
 }
+
+.notification{
+  float:right;
+  border: 10px solid pink;
+  border-radius: 100%;
+  background-color: red;
+}
+li{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -7,7 +7,9 @@ import {LoginModel} from '../models/login.model';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../services/authentication.service';
 import {UserService} from '../../shared/services';
+import {SocketService} from '../../shared/services/socket.service';
 import {CountryModel} from '../models/country.model';
+
 
 @Component({
     selector: 'app-authentication',
@@ -135,6 +137,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     public countriesLoaded: Promise<boolean>;
     public selectedCountry: string;
 
+
     private static handleError(responseError: HttpErrorResponse): void {
         cleanErrorList();
         if (responseError.status === 400) {
@@ -218,6 +221,21 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                     )
             );
         }
+      }
+      this.subs.push(
+          this.authenticationService
+              .login(data)
+              .subscribe((data: HttpResponse<any>) => {
+                if (data.status === 200) {
+                  this.userService.setToken(data.body.token);
+                  sessionStorage.setItem('userToken', data.body.token);
+                  sessionStorage.setItem('identity', JSON.stringify(data.body));
+                  this.socketService.setupSocketConnection();
+                  this.router.navigate(['inbox']);
+                }
+              }, AuthenticationComponent.handleError
+              )
+      );
     }
 
     public isInvalid(form: AbstractControl): boolean {

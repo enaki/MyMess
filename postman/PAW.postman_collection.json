@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d32b364d-5270-41aa-bc21-6543138d57e1",
+		"_postman_id": "c161f12d-4f78-4a7c-b681-edb974923899",
 		"name": "PAW",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -114,7 +114,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": \"richard\",\r\n    \"passwordHash\": \"richard\",\r\n    \"email\": \"richard@gmail.com\",\r\n    \"firstname\": \"Richard\",\r\n    \"lastname\": \"Richard\",\r\n    \"birthdate\": \"1998-12-12\",\r\n    \"gender\": \"male\",\r\n    \"city\": \"Iasi\",\r\n    \"country\": \"Romania\"\r\n}",
+									"raw": "{\r\n    \"username\": \"richard1\",\r\n    \"passwordHash\": \"richard1\",\r\n    \"email\": \"richard@gmail.com\",\r\n    \"firstName\": \"Richard\",\r\n    \"lastName\": \"Richard\",\r\n    \"birthdate\": \"1998-12-12\",\r\n    \"gender\": \"male\",\r\n    \"city\": \"Iasi\",\r\n    \"country\": \"Romania\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -131,6 +131,28 @@
 									"path": [
 										"api",
 										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Strangers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/users/unknown/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"users",
+										"unknown",
+										"2"
 									]
 								}
 							},
@@ -257,46 +279,21 @@
 							"response": []
 						},
 						{
-							"name": "Get Chat ID",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:2020/api/chat?uid1=1&uid2=3",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "2020",
-									"path": [
-										"api",
-										"chat"
-									],
-									"query": [
-										{
-											"key": "uid1",
-											"value": "1"
-										},
-										{
-											"key": "uid2",
-											"value": "3"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Add message",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"chatId\": 1,\n    \"ownerId\": 2,\n    \"text\": \"ajutor\",\n    \"imagePath\": \"null\"\n}"
+									"raw": "{\n    \"chatId\": 1,\n    \"ownerId\": 2,\n    \"text\": \"ajutor\",\n    \"imagePath\": \"null\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
 								"url": {
-									"raw": "http://localhost:2020/api/messages/",
+									"raw": "http://localhost:2020/api/messages",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -304,8 +301,7 @@
 									"port": "2020",
 									"path": [
 										"api",
-										"messages",
-										""
+										"messages"
 									]
 								}
 							},
@@ -667,7 +663,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:2020/api/friends/blocked/1",
+									"raw": "http://localhost:2020/api/friends/blocked/1?toList=1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -678,6 +674,12 @@
 										"friends",
 										"blocked",
 										"1"
+									],
+									"query": [
+										{
+											"key": "toList",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -716,7 +718,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": \"ana\",\r\n    \"password\": \"ana\"\r\n}",
+									"raw": "{\r\n    \"username\": \"mikasa\",\r\n    \"password\": \"mikasa\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -748,7 +750,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmEiLCJ1aWQiOiIyIiwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE2MDk3NjA2NjIsImV4cCI6MTYwOTc2NDI2Mn0.gI4yvhCxM8l08Yvp0-nF2OkdlzayDm2l1gLbYtetY50",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmEiLCJ1aWQiOiIyIiwidXNlcm5hbWUiOiJhbmEiLCJmaXJzdG5hbWUiOiJBbmEiLCJsYXN0bmFtZSI6IkFyZSBNZXJlIiwiZW1haWwiOiJhbmFAZ21haWwuY29tIiwiYXZhdGFyUGF0aCI6ImFuYS5wbmciLCJkYXRlUmVnaXN0ZXJlZCI6MTU2Mjg3ODgwMDAwMCwiZ2VuZGVyIjoibWFsZSIsImJpcnRoZGF0ZSI6NjYwOTUyODAwMDAwLCJjb3VudHJ5IjoiUm9tYW5pYSIsImNpdHkiOiJJYXNpIiwic3RhdHVzIjoiaSBhbSBub3QgaGFwcHkiLCJyb2xlcyI6WyJ1c2VyIl0sImlhdCI6MTYwOTc2MzI1NiwiZXhwIjoxNjA5NzY2ODU2fQ.lbvw9wVvhlFY5hdLU_bcyQ6X_EpkjlMyCAf4Koo7G-g",
 										"type": "text"
 									}
 								],
@@ -771,6 +773,38 @@
 									"path": [
 										"auth",
 										"me"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Images",
+					"item": [
+						{
+							"name": "Get Image",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWthc2EiLCJ1aWQiOiIyIiwidXNlcm5hbWUiOiJtaWthc2EiLCJmaXJzdG5hbWUiOiJNaWthc2EiLCJsYXN0bmFtZSI6IkFja2VybWFuIiwiZW1haWwiOiJtaWthc2FAZ21haWwuY29tIiwiYXZhdGFyUGF0aCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MjAyMC9hcGkvaW1hZ2VzL21pa2FzYS5wbmciLCJkYXRlUmVnaXN0ZXJlZCI6MTU2Mjg3ODgwMDAwMCwiZ2VuZGVyIjoibWFsZSIsImJpcnRoZGF0ZSI6NjYwOTUyODAwMDAwLCJjb3VudHJ5IjoiUm9tYW5pYSIsImNpdHkiOiJJYXNpIiwic3RhdHVzIjoiaSBhbSBub3QgbWlrYXNhIiwicm9sZXMiOlsidXNlciJdLCJpYXQiOjE2MTA0NzQ3NTcsImV4cCI6MTYxMDQ3ODM1N30.JkaJJVZZDwQJgzeoeMB5wMUsGguQpuAfkPJRBdUDPww",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:2020/api/images/naruto.png",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"images",
+										"naruto.png"
 									]
 								}
 							},

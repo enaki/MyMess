@@ -13,7 +13,7 @@
         <div class="card-body contacts_body">
           <div class="contacts">
             <li *ngFor="let contact of contacts;"
-                [ngClass]="{active: contact.uid === selectedUser.uid}"
+                [ngClass]="{active: selectedUser !== undefined && contact.uid === selectedUser.uid}"
                 (click)="changeChat(contact.uid)"
             >
               <div class="d-flex bd-highlight"
@@ -24,11 +24,12 @@
                 </div>
                 <div class="user_info">
                   <span>{{contact.firstName}} {{contact.lastName}}</span>
-                  <p *ngIf="contact.status !== undefined && contact.status == 0">"Online"</p>
+                  <p *ngIf="contact.status !== undefined && contact.status == 0">Online</p>
                   <p *ngIf="contact.status !== undefined && contact.status > 0">
                     Left {{moment.unix(contact.status).fromNow()}}</p>
                 </div>
               </div>
+              <span class="notification" *ngIf="notificationFriends[pairUidContactIdx[contact.uid]] == true;"> </span>
             </li>
           </div>
         </div>

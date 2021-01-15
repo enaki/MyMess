@@ -16,7 +16,7 @@ interface FriendService {
     fun unblockFriend(userId: String, targetId: String): Response<Any?>
     fun getFriends(userId: String, toList: Boolean=false): Response<Any?>
     fun getFriendship(userId: String): Response<BusinessFriendship>
-    fun getBlockedFriends(userId: String): Response<List<BusinessBlockedUser>>
+    fun getBlockedFriends(userId: String, toList: Boolean=false): Response<Any?>
     fun removeFriend(userId: String, targetId: String): Response<Any?>
     fun getFriendRequests(userId: String): Response<List<BusinessFriendRequest>>
 }
