@@ -5,12 +5,14 @@
     </button>
     <button mat-button (click)="goToInboxPage()">
       <mat-icon>chat</mat-icon>
-      <span class="text-button hide-text" matBadge="0" matBadgePosition="after" matBadgeSize="small" matBadgeColor="warn">Inbox</span>
+      <span *ngIf="showInboxNotification === true" class="text-button hide-text" matBadge="0" matBadgePosition="after" matBadgeSize="small" matBadgeColor="warn">Inbox</span>
+      <span *ngIf="showInboxNotification === false">Inbox</span>
     </button>
     <span class="example-spacer"></span>
     <button mat-raised-button (click)="goToNotificationPage()">
       <mat-icon>notifications-none</mat-icon>
-      <span class="text-button hide-text" matBadge="0" matBadgePosition="after" matBadgeSize="small" matBadgeColor="warn">Notifications</span>
+      <span *ngIf="showNotifications" class="text-button hide-text" matBadge="0" matBadgePosition="after" matBadgeSize="small" matBadgeColor="warn">Notifications</span>
+      <span *ngIf="showNotifications === false">Notifications</span>
     </button>
     <span class="example-spacer"></span>
     <button mat-raised-button (click)="goToFriendsPage()">

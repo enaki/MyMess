@@ -63,7 +63,6 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     //if (this.socket !== null) {
     //this.socketHandler();
     //}
-
     this.basicUserDetails = this.userService.getBasicUserDetails();
     console.log(this.basicUserDetails);
     this.friendService.getFriendsIds(this.basicUserDetails.uid).toPromise().then((data: FriendListModel) => {
@@ -89,6 +88,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
       Promise.all(friendInfoPromises).then(() => {
           console.log('[ngOnInit] All friendInfo Promises solved');
           this.socket.emit('friend-ids', this.contactsIds);
+          this.socket.emit('send-message-notifications', this.basicUserDetails.uid);
         }
       );
     });
@@ -124,7 +124,10 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
       }
       this.establishConnectionWithFriend();
-      this.notificationFriends[this.pairUidContactIdx[this.selectedUser.uid]] = false;
+      if (this.notificationFriends[this.pairUidContactIdx[this.selectedUser.uid]]) {
+        this.socket.emit('message-notification-clear', this.selectedUser.uid);
+        this.notificationFriends[this.pairUidContactIdx[this.selectedUser.uid]] = false;
+      }
     }
   }
 
@@ -135,6 +138,16 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
       const indexContact = this.pairUidContactIdx[data.uid];
       if (indexContact !== undefined) {
         this.contacts[indexContact].status = 0;
+      }
+    });
+    this.socket.on('message-notifications', (data: any) => {
+      console.log(this.selectedUser.uid);
+      for (const id of data) {
+        if (id !== this.selectedUser.uid) {
+          this.notificationFriends[this.pairUidContactIdx[id]] = true;
+        } else {
+          this.socket.emit('message-notification-clear', this.selectedUser.uid);
+        }
       }
     });
     this.socket.on('receive-is-typing', (data: any) => {

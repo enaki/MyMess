@@ -50,12 +50,12 @@ serverSocket.on('connection', socket => {
         socketsUidPair[socket.id] = data.uid;
         if (unseenFrom[data.uid] !== undefined)
             serverSocket.to(socket.id).emit("message-notifications", unseenFrom[data.uid]);
-            socket.broadcast.emit('user-connected', {"uid": data.uid})
+        socket.broadcast.emit('user-connected', {"uid": data.uid})
     });
 
     socket.on('notify-is-typing', data => {
         console.log(getMoment() + "Socket: <" + socket.id + "> set for user <" + data.username + "> and his friend <" + data.friendName + ">");
-        if (allUsers[data.friendId] !== undefined){
+        if (allUsers[data.friendId] !== undefined) {
             const socketFriendId = allUsers[data.friendId]["socketId"];
             serverSocket.to(socketFriendId).emit("receive-is-typing", data.id);
         }
@@ -63,7 +63,7 @@ serverSocket.on('connection', socket => {
 
     socket.on('notify-stop-typing', data => {
         console.log(getMoment() + "Socket: <" + socket.id + "> set for user <" + data.username + "> and his friend <" + data.friendName + ">");
-        if (allUsers[data.friendId] !== undefined){
+        if (allUsers[data.friendId] !== undefined) {
             const socketFriendId = allUsers[data.friendId]["socketId"];
             serverSocket.to(socketFriendId).emit("receive-stop-typing", data.id);
         }
@@ -73,9 +73,9 @@ serverSocket.on('connection', socket => {
         console.log(getMoment() + "Socket: <" + socket.id + "> Received friendList from " + data.uid + ">");
         // console.log(data.friendList);
         let friendActives = {};
-        for (let idx in data.friendList){
+        for (let idx in data.friendList) {
             let friendId = data.friendList[idx];
-            if (friendId in actives){
+            if (friendId in actives) {
                 friendActives[friendId] = actives[friendId];
                 //const friendSocketId = allUsers[friendId]["socketId"];
                 //serverSocket.to(friendSocketId).emit("friend-is-active", friendActives);
@@ -87,42 +87,58 @@ serverSocket.on('connection', socket => {
     socket.on('send-chat-message', data => {
         console.log("\n" + getMoment() + " Someone send a message ");
         let validMessage = true;
-        for (let i = 0; i < messageFields.length; i++){
-            if (!data.hasOwnProperty(messageFields[i])){
+        for (let i = 0; i < messageFields.length; i++) {
+            if (!data.hasOwnProperty(messageFields[i])) {
                 validMessage = false;
                 break;
             }
         }
-        if (validMessage){
+        if (validMessage) {
             console.log(getMoment() + allUsers[socketsUidPair[socket.id]]["username"] + " sent a valid message. ");
 
             fetch('http://localhost:2020/api/messages', {
                 method: 'post',
-                body:    JSON.stringify(data),
-                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+                headers: {'Content-Type': 'application/json'},
             })
                 .then(res => res.json())
                 .then(json => {
                     console.log(json);
                     const uid = socketsUidPair[socket.id];
                     const friendId = allUsers[uid]["friendId"];
-                    if (allUsers[friendId] !== undefined){
+                    if (allUsers[friendId] !== undefined) {
                         const socketFriendId = allUsers[friendId]["socketId"];
                         data["date"] = moment.now();
                         serverSocket.to(socketFriendId).emit("receive-chat-message", data);
-                    } else {
-                        if (unseenFrom[friendId] === undefined){
-                            unseenFrom[friendId] = [];
-                        }
-                        unseenFrom[friendId].push(uid);
+                    }
+                    if (unseenFrom[friendId] === undefined) {
+                        unseenFrom[friendId] = [];
                     }
 
+                    unseenFrom[friendId].push(uid);
                 });
         } else {
             console.log(getMoment() + socketsUidPair[socket.id] + " send an invalid message ");
         }
     });
-
+    socket.on('send-message-notifications', (uid) => {
+        console.log("HEREEEEEE" + uid);
+        console.log(unseenFrom[uid]);
+        if (unseenFrom[uid] !== undefined) {
+            serverSocket.to(socket.id).emit("message-notifications", unseenFrom[uid]);
+        }
+    });
+    socket.on('message-notification-clear', friendId => {
+        if (unseenFrom !== undefined && unseenFrom[socketsUidPair[socket.id]] !== undefined) {
+            let index = unseenFrom[socketsUidPair[socket.id]].indexOf(friendId);
+            if (index > -1) {
+                unseenFrom[socketsUidPair[socket.id]].splice(index);
+            }
+            if (unseenFrom[socketsUidPair[socket.id]].length === 0) {
+                delete unseenFrom[socketsUidPair[socket.id]];
+            }
+        }
+    });
     socket.on('disconnect', () => {
         const uid = socketsUidPair[socket.id]
         console.log(getMoment() + "(Socket, User): (" + socket.id + ", " + uid + ") disconnected");
