@@ -4,7 +4,7 @@ import {Subscription} from 'rxjs';
 import {HttpResponse} from '@angular/common/http';
 import {UserModel} from '../models/user.model';
 import {UserProfileModel} from '../models/userprofile.model';
-import {reduce} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-home',
@@ -14,7 +14,8 @@ import {reduce} from 'rxjs/operators';
 export class HomeComponent implements OnInit, OnDestroy {
 
     constructor(
-        private readonly homeService: HomeService
+        private readonly homeService: HomeService,
+        private readonly route: ActivatedRoute
     ) {
         this.subs = new Array<Subscription>();
         this.userData = null;
@@ -25,11 +26,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     public userProfileData: UserProfileModel;
     public loadedProfile: Promise<boolean>;
     public loadedProfileInfo: Promise<boolean>;
+    public userId: string;
 
     ngOnInit(): void {
+        const tmp = this.route.snapshot.paramMap;
+        this.userId = tmp.get('userUid') !== null ? tmp.get('userUid') : JSON.parse(sessionStorage.getItem('user')).uid;
         this.subs.push(
             this.homeService
-                .getUserData(JSON.parse(sessionStorage.getItem('user')).uid)
+                .getUserData(this.userId)
                 .subscribe(
                     (response: HttpResponse<any>) => {
                         if (response.status === 200){
@@ -44,7 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         );
         this.subs.push(
             this.homeService
-                .getUserProfileData(JSON.parse(sessionStorage.getItem('user')).uid)
+                .getUserProfileData(this.userId)
                 .subscribe(
                     (response: HttpResponse<any>) => {
                         if (response.status === 200){
