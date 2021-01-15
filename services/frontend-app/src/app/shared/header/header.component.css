@@ -3,6 +3,8 @@ button{
   border-radius: 0;
   color: white;
   background-color: rgb(62, 6, 11);
+  border: 0;
+  outline: 0;
 }
 mat-toolbar{
   background-color: rgb(62, 6, 11);

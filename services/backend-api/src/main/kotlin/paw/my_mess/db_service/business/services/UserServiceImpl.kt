@@ -1,6 +1,7 @@
 package paw.my_mess.db_service.business.services
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import paw.my_mess.db_service.business.bussines_models.create.BusinessCreateUser
 import paw.my_mess.db_service.business.bussines_models.create.BusinessUpdateUser
@@ -33,6 +34,9 @@ class UserServiceImpl : UserService {
 
     @Autowired
     private lateinit var _imageService: ImageServiceImpl
+
+    @Autowired
+    private lateinit var _passwordEncoder: PasswordEncoder
 
     override fun getAllUsers(): Response<List<BusinessUser>?> {
         try {
@@ -72,7 +76,8 @@ class UserServiceImpl : UserService {
 
     override fun createUser(user: BusinessCreateUser): Response<Any?> {
         try {
-            val uid = _userRepository.add(User(uid = "", userName = user.username, firstname = user.firstName, lastname = user.lastName, passwordHash = user.passwordHash, email = user.email, avatarPath = ""))
+            val passwordHash = this._passwordEncoder.encode(user.passwordHash)
+            val uid = _userRepository.add(User(uid = "", userName = user.username, firstname = user.firstName, lastname = user.lastName, passwordHash = passwordHash, email = user.email, avatarPath = ""))
             if (uid == null) {
                 return Response(successful_operation = false, data = Unit, code = 400, error = "Can't create user")
             }
@@ -128,7 +133,7 @@ class UserServiceImpl : UserService {
             val tempFirstname = user.firstName ?: user_from_db.firstname
             val tempLastname = user.lastName ?: user_from_db.lastname
 
-            val path = _imageService.createFile(uid,user.avatarIcon!!)
+            val path = _imageService.createFile(uid, user.avatarIcon!!)
             if(path != null && user_from_db.avatarPath != "null")
                 _imageService.deleteFile(user_from_db.avatarPath)
 

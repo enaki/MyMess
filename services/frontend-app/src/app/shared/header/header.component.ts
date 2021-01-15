@@ -1,9 +1,10 @@
 import {Component, OnDestroy} from '@angular/core';
 import {HeaderService} from '../services/header.service';
-import {UserService} from '../services/user.service';
+import {UserService} from '../services';
 import {SocketService} from '../services/socket.service';
 import {Socket} from 'socket.io-client';
 import {Subscription} from 'rxjs';
+
 
 @Component({
   selector: 'app-header',

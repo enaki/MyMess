@@ -15,7 +15,7 @@ export class HeaderService {
   }
 
   public navigateToHome(): void{
-    this.router.navigate(['']).then(r => {});
+    this.router.navigate(['home']).then(r => {});
   }
 
   public navigateToFriends(): void{
@@ -27,7 +27,7 @@ export class HeaderService {
   }
 
   public navigateToLogin(): void{
-    this.router.navigate(['login']).then(r => {});
+    this.router.navigate(['authentication']).then(r => {});
   }
 
   public navigateToNotification(): void{
