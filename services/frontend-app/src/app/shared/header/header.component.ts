@@ -10,9 +10,11 @@ import {Subscription} from 'rxjs';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnDestroy{
+export class HeaderComponent implements OnDestroy {
   socket: Socket;
   private subs: Subscription[];
+  showInboxNotification = true;
+  showNotifications = false;
 
   constructor(
     private headerService: HeaderService,
@@ -22,46 +24,51 @@ export class HeaderComponent implements OnDestroy{
     this.subs = new Array<Subscription>();
     this.subs.push(this.socketService.socket.subscribe((socket) => {
       this.socket = socket;
-      if (socket != null){
+      if (socket != null) {
         this.socketHandler();
       }
     }));
+    this.showInboxNotification = false;
   }
 
   socketHandler(): void {
     this.socket.on('message-notifications', (data: any) => {
       console.log('Unseen messages from.');
       console.log(data);
+      if (data.length > 0) {
+        this.showInboxNotification = true;
+      }
     });
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach( (sub) => {
+    this.subs.forEach((sub) => {
       sub.unsubscribe();
     });
   }
 
-  public goToInboxPage(): void{
+  public goToInboxPage(): void {
+    this.showInboxNotification = false;
     this.headerService.navigateToInbox();
   }
 
-  public goToHomePage(): void{
+  public goToHomePage(): void {
     this.headerService.navigateToHome();
   }
 
-  public goToNotificationPage(): void{
+  public goToNotificationPage(): void {
     this.headerService.navigateToNotification();
   }
 
-  public goToFriendsPage(): void{
+  public goToFriendsPage(): void {
     this.headerService.navigateToFriends();
   }
 
-  public goToProfilePage(): void{
+  public goToProfilePage(): void {
     this.headerService.navigateToProfile();
   }
 
-  public goToLoginPage(): void{
+  public goToLoginPage(): void {
     this.headerService.navigateToLogin();
   }
 
@@ -69,7 +76,7 @@ export class HeaderComponent implements OnDestroy{
    * Metoda verifica daca userul este logat.
    */
   public isUserLoggedIn(): boolean {
-   return this.userService.getUserName() != null;
+    return this.userService.getUserName() != null;
   }
 
   // TODO - trebuie implementata o metoda de login cu ajutorul jwt
