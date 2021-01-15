@@ -52,6 +52,6 @@ export class NotificationsComponent implements OnInit {
 
   redirectToProfile = (id: string) => {
     // TODO: go to user profile
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/home', id]);
   }
 }

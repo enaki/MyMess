@@ -122,7 +122,7 @@ class UserServiceImpl : UserService {
             val user_from_db = _userRepository.get(uid)
             val user_profile_from_db = _userProfileRepository.get(uid)
 
-            if (user_from_db == null || user_profile_from_db == null) {
+            if (user_from_db == null || user_profile_from_db == null) {                                                                                                
                 return Response(successful_operation = false, data = user, code = 404, message = "User Not Found")
             }
 

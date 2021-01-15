@@ -22,20 +22,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         private readonly formBuilder: FormBuilder,
         private readonly router: Router,
         private readonly authenticationService: AuthenticationService,
-        private readonly userService: UserService
+        private readonly userService: UserService,
+        private readonly socketService: SocketService
     ) {
         this.subs = new Array<Subscription>();
         this.countries = new Array<CountryModel>();
-        this.subs.push(
-            this.authenticationService.getCountriesAndCities().subscribe(
-                (response: HttpResponse<any>) => {
-                    if (response.status === 200){
-                        this.countries = response.body.data;
-                        this.countriesLoaded = Promise.resolve(true);
-                    }
-                }
-            )
-        );
         this.loginFormGroup = this.formBuilder.group({
             username: [
                 '',
@@ -161,6 +152,16 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.subs.push(
+            this.authenticationService.getCountriesAndCities().subscribe(
+                (response: HttpResponse<any>) => {
+                    if (response.status === 200){
+                        this.countries = response.body.data;
+                        this.countriesLoaded = Promise.resolve(true);
+                    }
+                }
+            )
+        );
         sessionStorage.clear();
     }
 
@@ -215,27 +216,13 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                                 this.userService.setToken(response.body.token);
                                 sessionStorage.setItem('userToken', response.body.token);
                                 sessionStorage.setItem('identity', JSON.stringify(response.body));
-                                this.router.navigate(['inbox']).then( () => {});
+                                this.socketService.setupSocketConnection();
+                                this.router.navigate(['inbox']);
                             }
                         }, AuthenticationComponent.handleError
                     )
             );
         }
-      }
-      this.subs.push(
-          this.authenticationService
-              .login(data)
-              .subscribe((data: HttpResponse<any>) => {
-                if (data.status === 200) {
-                  this.userService.setToken(data.body.token);
-                  sessionStorage.setItem('userToken', data.body.token);
-                  sessionStorage.setItem('identity', JSON.stringify(data.body));
-                  this.socketService.setupSocketConnection();
-                  this.router.navigate(['inbox']);
-                }
-              }, AuthenticationComponent.handleError
-              )
-      );
     }
 
     public isInvalid(form: AbstractControl): boolean {

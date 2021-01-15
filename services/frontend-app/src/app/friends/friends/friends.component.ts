@@ -46,7 +46,7 @@ export class FriendsComponent implements OnInit {
         this.getFriends()
       );
     }
-  };
+  }
 
   deleteFriend = (name: string, id: string) => {
     if (confirm(`Are you sure to remove ${name} as your friend?`)) {
@@ -54,12 +54,12 @@ export class FriendsComponent implements OnInit {
         this.getFriends()
       );
     }
-  };
+  }
 
   redirectToProfile = (id: string) => {
     // TODO: redirect to friend profile
-    this.router.navigate(['/profile']);
-  };
+    this.router.navigate(['/home', id]);
+  }
 
   redirectToAddFriends = () => {
     this.router.navigate(['friends/find']);

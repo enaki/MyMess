@@ -45,7 +45,7 @@ export class AddFriendsComponent implements OnInit {
   }
 
   redirectToProfile = (id: string) => {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/home', id]);
   }
 }
 
