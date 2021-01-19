@@ -76,6 +76,9 @@ class UserServiceImpl : UserService {
 
     override fun createUser(user: BusinessCreateUser): Response<Any?> {
         try {
+            if (user.passwordHash == "" || user.username == "") {
+                return Response(successful_operation = false, data = user, code = 404, message = "Password or username is null")
+            }
             val passwordHash = this._passwordEncoder.encode(user.passwordHash)
             val uid = _userRepository.add(User(uid = "", userName = user.username, firstname = user.firstName, lastname = user.lastName, passwordHash = passwordHash, email = user.email, avatarPath = ""))
             if (uid == null) {
@@ -119,23 +122,27 @@ class UserServiceImpl : UserService {
 
     override fun updateUser(uid: String, user: BusinessUpdateUser): Response<Any?> {
         try {
+            if (user.passwordHash == "" || user.username == "") {
+                return Response(successful_operation = false, data = user, code = 404, message = "Password or username is null")
+            }
             val user_from_db = _userRepository.get(uid)
             val user_profile_from_db = _userProfileRepository.get(uid)
-
-            if (user_from_db == null || user_profile_from_db == null) {                                                                                                
+            if (user_from_db == null || user_profile_from_db == null) {
                 return Response(successful_operation = false, data = user, code = 404, message = "User Not Found")
             }
-
+            val passwordHash = this._passwordEncoder.encode(user.passwordHash)
             // updatam userul
             val tempUsername = user.username ?: user_from_db.userName
-            val tempPasswordhash = user.passwordHash ?: user_from_db.passwordHash
+            val tempPasswordhash = passwordHash ?: user_from_db.passwordHash
             val tempEmail = user.email ?: user_from_db.email
             val tempFirstname = user.firstName ?: user_from_db.firstname
             val tempLastname = user.lastName ?: user_from_db.lastname
-
-            val path = _imageService.createFile(uid, user.avatarIcon!!)
-            if(path != null && user_from_db.avatarPath != "null")
-                _imageService.deleteFile(user_from_db.avatarPath)
+            var path: String? = null;
+            if(user.avatarIcon != null){
+                path = _imageService.createFile(uid, user.avatarIcon!!)
+                if(path != null && user_from_db.avatarPath != "null")
+                    _imageService.deleteFile(user_from_db.avatarPath)
+            }
 
             val tempAvatarpath = path ?: user_from_db.avatarPath
             val userToUpdate = User(uid, tempUsername, tempPasswordhash, tempFirstname, tempLastname, tempEmail, tempAvatarpath)
