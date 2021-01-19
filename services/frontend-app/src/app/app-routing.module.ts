@@ -36,10 +36,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'profile',
+    path: 'people',
     loadChildren: () =>
-        import('./profile/profile.module').then(
-            (m) => m.ProfileModule
+        import('./people/people.module').then(
+            (m) => m.PeopleModule
         ),
     canActivate: [AuthGuard]
   },

@@ -1,20 +1,20 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {FriendsRoutingModule} from './friends-routing.module';
-import {FriendsComponent} from './friends/friends.component';
+import {PeopleRoutingModule} from './people-routing.module';
+import {PeopleComponent} from './people/people.component';
 import {MatCardModule} from '@angular/material/card';
 import {FormsModule} from '@angular/forms';
 
+
 @NgModule({
-  declarations: [
-    FriendsComponent],
+  declarations: [PeopleComponent],
   imports: [
     CommonModule,
-    FriendsRoutingModule,
+    PeopleRoutingModule,
     MatCardModule,
     FormsModule,
   ]
 })
-export class FriendsModule {
+export class PeopleModule {
 }

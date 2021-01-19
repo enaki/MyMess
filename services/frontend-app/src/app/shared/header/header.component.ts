@@ -65,8 +65,8 @@ export class HeaderComponent implements OnDestroy {
     this.headerService.navigateToFriends();
   }
 
-  public goToProfilePage(): void {
-    this.headerService.navigateToProfile();
+  public goToPeoplePage(): void {
+    this.headerService.navigateToPeople();
   }
 
   public goToLoginPage(): void {

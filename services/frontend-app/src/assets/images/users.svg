@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: SketchAPI 5.1.316 <https://api.sketch.io/> -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketchjs="https://sketch.io/dtd/" style="" sketchjs:metadata="eyJ0aXRsZSI6IjYxZGZmZmEwLTExMTQtNGE2Zi1hNmQ4LTA3MWUzNDQ1MDE1YSIsImRlc2NyaXB0aW9uIjoiTWFkZSB3aXRoIFNrZXRjaHBhZCAtIGh0dHBzOi8vc2tldGNoLmlvL3NrZXRjaHBhZCIsIm1ldGFkYXRhIjp7fSwiY2xpcFBhdGgiOnsiZW5hYmxlZCI6dHJ1ZSwic3R5bGUiOnsic3Ryb2tlU3R5bGUiOiJibGFjayIsImxpbmVXaWR0aCI6MX19LCJleHBvcnREUEkiOjcyLCJleHBvcnRGb3JtYXQiOiJwbmciLCJleHBvcnRRdWFsaXR5IjowLjk1LCJ1bml0cyI6InB4Iiwid2lkdGgiOjkyMiwiaGVpZ2h0Ijo3MTIsInBhZ2VzIjp7Imxlbmd0aCI6MSwiZGF0YSI6W3sid2lkdGgiOjkyMiwiaGVpZ2h0Ijo3MTJ9XX19" width="922" height="712" viewBox="0 0 922 712" sketchjs:version="5.1.316">
+<path sketchjs:tool="rectangle" style="fill: transparent; mix-blend-mode: source-over; fill-opacity: 1; fill-rule: nonzero; vector-effect: non-scaling-stroke;" d="M0 0 L922 0 922 712 0 712 z"/>
+<g sketchjs:tool="clipart" style="mix-blend-mode: source-over;" transform="matrix(19.67081493376154,0,0,19.67081493376154,49.16459253311925,25.131674026495375)">
+	<g sketchjs:uid="1" style="">
+		<g sketchjs:uid="2" style="">
+			<path d="M25.2,6.3c1.9,1.2,3.2,3.2,3.5,5.5c0.8,0.4,1.6,0.6,2.5,0.6c3.3,0,6-2.7,6-6c0-3.3-2.7-6-6-6    C27.9,0.4,25.3,3,25.2,6.3z M21.3,18.5c3.3,0,6-2.7,6-6s-2.7-6-6-6s-6,2.7-6,6S18,18.5,21.3,18.5z M23.8,18.9h-5.1    c-4.2,0-7.7,3.4-7.7,7.7v6.2l0,0.1l0.4,0.1c4,1.3,7.5,1.7,10.4,1.7c5.6,0,8.9-1.6,9.1-1.7l0.4-0.2h0v-6.2    C31.5,22.4,28.1,18.9,23.8,18.9z M33.7,12.8h-5c-0.1,2-0.9,3.8-2.3,5.1c3.8,1.1,6.5,4.6,6.5,8.7v1.9c5-0.2,7.8-1.6,8-1.7l0.4-0.2    h0v-6.2C41.4,16.2,38,12.8,33.7,12.8z M10.8,12.4c1.2,0,2.3-0.3,3.2-0.9c0.3-1.9,1.3-3.6,2.8-4.7c0-0.1,0-0.2,0-0.3    c0-3.3-2.7-6-6-6c-3.3,0-6,2.7-6,6C4.8,9.7,7.5,12.4,10.8,12.4z M16.2,17.9c-1.4-1.3-2.2-3.1-2.3-5.1c-0.2,0-0.4,0-0.6,0H8.2    c-4.2,0-7.7,3.4-7.7,7.7v6.2l0,0.1L1,26.9c3.2,1,6.1,1.5,8.6,1.6v-1.9C9.7,22.5,12.4,19,16.2,17.9z" sketchjs:uid="3" style="fill: #dfdfdf; fill-rule: nonzero; fill-opacity: 1;"/>
+		</g>
+	</g>
+</g>
+</svg>
