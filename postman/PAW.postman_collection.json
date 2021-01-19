@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c161f12d-4f78-4a7c-b681-edb974923899",
+		"_postman_id": "7913a6a2-227c-48cf-8764-b6bed863a937",
 		"name": "PAW",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -84,7 +84,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": \"richard1\",\r\n    \"passwordHash\": \"richard\",\r\n    \"email\": \"richard@gmail.com\",\r\n    \"firstname\": \"Richard\",\r\n    \"lastname\": \"Richard\",\r\n    \"birthdate\": \"1998-12-12\",\r\n    \"gender\": \"male\",\r\n    \"city\": \"Iasi\",\r\n    \"country\": \"Romania\"\r\n}",
+									"raw": "{\r\n    \"username\": \"naruto\",\r\n    \"passwordHash\": \"Naruto1!\",\r\n    \"email\": \"naruto@gmail.com\",\r\n    \"firstName\": \"Naruto\",\r\n    \"lastName\": \"Uzumaki\",\r\n    \"birthdate\": \"2000-12-12\",\r\n    \"gender\": \"male\",\r\n    \"country\": \"Romania\",\r\n    \"city\": \"Bucharest\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -153,6 +153,27 @@
 										"users",
 										"unknown",
 										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update profile picture",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/images/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"images",
+										"3"
 									]
 								}
 							},
