@@ -20,9 +20,9 @@
       <span class="text-button hide-text">Friends</span>
     </button>
     <span class="example-spacer"></span>
-    <button mat-raised-button (click)="goToProfilePage()">
+    <button mat-raised-button (click)="goToPeoplePage()">
       <mat-icon>person-outline</mat-icon>
-      <span class="text-button hide-text">Profile</span>
+      <span class="text-button hide-text">People</span>
     </button>
     <button *ngIf="isUserLoggedIn(); else login" mat-raised-button color="warn" (click)="logout()">
       <mat-icon>logout</mat-icon>

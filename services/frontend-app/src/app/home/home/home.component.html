@@ -1,7 +1,7 @@
-<div flex class="mat-content" *ngIf="loadedProfile && loadedProfileInfo | async">
+<div flex class="mat-content" *ngIf="loadedProfile && loadedProfileInfo | async; else loading">
     <mat-card>
         <div class="card-title-container">
-            <p class="card-title-text">User profile</p>
+            <p class="card-title-text" >{{loggedUserId !== userId ? 'User profile' : 'My user profile' }}</p>
         </div>
         <div class="user-data-container">
             <div class="user-presentation-card">
@@ -9,6 +9,7 @@
                 <div class="user-presentation-text card-title-text">
                     <p class="text-padding">{{userData.FirstName}} {{userData.LastName}}</p>
                     <p class="text-padding">@{{userData.Username}}</p>
+                    <button class="button-profile" mat-raised-button color="warn" (click)="goToUpdateProfile()" *ngIf="loggedUserId === userId">Update profile</button>
                 </div>
             </div>
             <div class="user-general-data" >
@@ -28,3 +29,6 @@
         </div>
     </mat-card>
 </div>
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

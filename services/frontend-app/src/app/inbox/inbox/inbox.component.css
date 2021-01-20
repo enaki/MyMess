@@ -27,6 +27,10 @@ textarea {
   height: 100%;
 }
 
+message_count {
+  color: #6EEB83;
+}
+
 .chat {
   flex: 1;
   margin-top: 5px;
@@ -38,7 +42,7 @@ textarea {
 
 .card {
   border-radius: 15px;
-  background-color: rgba(22, 4, 4, 0.8);
+  background-color: #611A29;
 }
 
 .contacts_body {
@@ -55,6 +59,7 @@ textarea {
 .card-header {
   border-radius: 15px 15px 0 0;
   border-bottom: 0;
+  background: linear-gradient(0deg, rgba(97, 26, 41, 1) 0%, rgba(252, 191, 73, 1) 100%);
 }
 
 .card-footer {
@@ -68,8 +73,12 @@ textarea {
 
 .search {
   border-radius: 15px 0 0 15px;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(183, 155, 143, 0.3);
   border: 0;
+}
+
+.search::placeholder {
+  color: white;
 }
 
 .search:focus {
@@ -77,13 +86,13 @@ textarea {
   outline: 0;
 }
 
-.font_1{
+.font_1 {
   color: #ffffff;
   font-size: 60px;
 }
 
 .type_msg {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(183, 155, 143, 0.3);
   border: 0;
   color: white;
   height: 60px;
@@ -95,9 +104,13 @@ textarea {
   outline: 0;
 }
 
+.type_msg::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
 .attach_btn {
   border-radius: 15px 0 0 15px;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(183, 155, 143, 0.3);
   border: 0;
   color: white;
   cursor: pointer;
@@ -105,7 +118,7 @@ textarea {
 
 .send_btn {
   border-radius: 0 15px 15px 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(183, 155, 143, 0.3);
   border: 0;
   color: white;
   cursor: pointer;
@@ -189,7 +202,7 @@ textarea {
 
 .user_info p, .user_info p span {
   font-size: 12px;
-  color: rgb(243, 248, 13);
+  color: #6EEB83;
 }
 
 .video_cam {
@@ -210,13 +223,13 @@ textarea {
   margin-left: 10px;
   margin-right: 50px;
   border-radius: 25px;
-  background-color: #82ccdd;
+  background-color: #63D2FF;
   padding: 10px;
   position: relative;
   word-break: break-all;
 }
 
-.typing_container{
+.typing_container {
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 10px;
@@ -228,13 +241,14 @@ textarea {
   color: white;
   font-size: 25px;
 }
+
 .msg_cotainer_send {
   margin-top: auto;
   margin-bottom: auto;
   margin-right: 10px;
   margin-left: 50px;
   border-radius: 25px;
-  background-color: #78e08f;
+  background-color: #6EEB83;
   padding: 10px;
   position: relative;
   word-break: break-all;
@@ -244,7 +258,7 @@ textarea {
   position: absolute;
   left: 0;
   bottom: -20px;
-  color: #ff5900;
+  color: #FF934F;
   font-size: 12px;
   width: 150px;
 }
@@ -253,7 +267,7 @@ textarea {
   position: absolute;
   right: 0;
   bottom: -20px;
-  color: #00ffcd;
+  color: #6EEB83;
   font-size: 12px;
   width: 60px;
 }
@@ -315,13 +329,14 @@ textarea {
   }
 }
 
-.notification{
-  float:right;
+.notification {
+  float: right;
   border: 10px solid pink;
   border-radius: 100%;
   background-color: red;
 }
-li{
+
+li {
   display: flex;
   align-items: center;
   justify-content: space-between;

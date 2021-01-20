@@ -1,0 +1,81 @@
+<div flex class="mat-content" *ngIf="countriesLoaded && profileLoaded && userProfileLoaded | async; else loading">
+    <mat-card>
+        <div class="card-title-container">
+            <p class="card-title-text">Update my profile information</p>
+        </div>
+        <div class="container-main">
+            <div class="container-user-info">
+                <div class="container-update-data" [formGroup]="updateUserProfile">
+                    <mat-form-field class="input-text-update-data" appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <input matInput type="text" [(ngModel)]="userData.Username" formControlName="username">
+                        <mat-error>Username is invalid</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="input-text-update-data" appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwordHash">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error>Password is invalid</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="input-text-update-data" appearance="outline">
+                        <mat-label>Comfirm password</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="tempPassword">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error>Passwords don't match</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="input-text-update-data" appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" [(ngModel)]="userData.Email">
+                        <mat-error>Email is invalid</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="input-text-update-data" appearance="outline">
+                        <mat-label>Firstname</mat-label>
+                        <input matInput type="text" formControlName="firstName" [(ngModel)]="userData.FirstName">
+                        <mat-error>Firstname is invalid</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="input-text-update-data" appearance="outline">
+                        <mat-label>Lastname</mat-label>
+                        <input matInput type="text" formControlName="lastName" [(ngModel)]="userData.LastName">
+                        <mat-error>Lastname is invalid</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="input-text-update-data" appearance="outline">
+                        <mat-label>Birthdate</mat-label>
+                        <input matInput type="date"  formControlName="birthdate" [(ngModel)]="userProfileData.Birthdate">
+                    </mat-form-field>
+                    <mat-form-field class="input-text-update-data" appearance="outline">
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="gender" [(ngModel)]="userProfileData.Gender" >
+                            <mat-option value="male">Male</mat-option>
+                            <mat-option value="female">Female</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="input-text-update-data" appearance="outline">
+                        <mat-label>City</mat-label>
+                        <input matInput value="City" formControlName="city" [(ngModel)]="userProfileData.City">
+                    </mat-form-field>
+                    <mat-form-field class="input-text-update-data" appearance="outline">
+                        <mat-label>Country</mat-label>
+                        <mat-select formControlName="country" [(ngModel)]="userProfileData.Country">
+                            <mat-option *ngFor="let item of countries" value="{{item.country}}">{{item.country}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <button mat-raised-button class="button" color="warn" (click)="updateUserData()">
+                    Update data
+                </button>
+            </div>
+            <div class="container-user-picture">
+                <img class="user-profile-picture" [src]="userData.AvatarLink" alt="Profile picture">
+                <input #pictureInput hidden="true" (change)="changeProfilePicture($event)" onclick="this.value=null" type="file" accept=".png"/>
+                <button class="button-profile-picture" mat-raised-button color="warn" (click)="pictureInput.click()">Update profile picture</button>
+            </div>
+        </div>
+    </mat-card>
+</div>
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

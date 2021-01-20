@@ -65,6 +65,18 @@ class FriendController {
         }
     }
 
+    @RequestMapping(value = ["{id}/sent-friend-requests"], method = [RequestMethod.GET])
+    fun getSentFriendRequests(@PathVariable("id") id: String): ResponseEntity<Any?>{
+        val response = this._friendService.getSentFriendRequests(id)
+        return if (response.successful_operation){
+
+            ResponseEntity.status(response.code).body(response.data)
+        }
+        else{
+            ResponseEntity.status(response.code).body(MyError(response.code, response.error, response.message))
+        }
+    }
+
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
     fun getFriends(@RequestParam("toList", required = false) toList: String?,
                    @PathVariable("id") id: String): ResponseEntity<Any?>{

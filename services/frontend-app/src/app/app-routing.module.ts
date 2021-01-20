@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AuthGuard} from './guards/auth.guard';
+import {UpdateProfileComponent} from './home/update-profile/update-profile.component';
 
 /**
  * Const routes declares the path and the corresponding components.
@@ -36,10 +37,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'profile',
+    path: 'people',
     loadChildren: () =>
-        import('./profile/profile.module').then(
-            (m) => m.ProfileModule
+        import('./people/people.module').then(
+            (m) => m.PeopleModule
         ),
     canActivate: [AuthGuard]
   },

@@ -23,10 +23,6 @@ export class FriendService {
     return this.http.get<BasicUserModel>(`${this.userEndpoint}/${friendId}`);
   }
 
-  public getAllUsers(): Observable<BasicUserModel[]> {
-    return this.http.get<BasicUserModel[]>(`${this.userEndpoint}`);
-  }
-
   public blockFriend(userId: string, friendId: string): Observable<{}> {
     return this.http.post(`${this.friendsEndpoint}/block/${userId}?blockedId=${friendId}`, null);
   }
