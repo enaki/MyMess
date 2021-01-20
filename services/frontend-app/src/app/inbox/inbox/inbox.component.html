@@ -47,7 +47,7 @@
             </div>
             <div *ngIf="selectedUser !== undefined" class="user_info">
               <span>{{selectedUser.firstName}} {{selectedUser.lastName}}</span>
-              <p
+              <p class="message_count"
                 *ngIf="messages !== undefined && messages[selectedUser.uid] !== undefined">
                 {{messages[selectedUser.uid].length}} Messages
               </p>
