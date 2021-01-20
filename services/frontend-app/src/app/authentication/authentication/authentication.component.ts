@@ -129,7 +129,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     public countriesLoaded: Promise<boolean>;
 
 
-    private handleError(responseError: HttpErrorResponse): void {
+    public handleError(responseError: HttpErrorResponse): void {
         if (responseError.status === 400) {
             if ('code' in responseError.error) {
                 this.openSnackBar(responseError.error.error, 'Ok');
@@ -139,7 +139,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         }
     }
 
-    private openSnackBar(message: string, action: string): void{
+    public openSnackBar(message: string, action: string): void{
         this.snackBar.open(message, action, {duration: 2000});
     }
 
@@ -199,10 +199,9 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                     .subscribe((response: HttpResponse<any>) => {
                         if (response.status === 201) {
                             this.setRegister();
-                            document.getElementById('successful-register').innerHTML =
-                                'Successful register user, please log in!';
+                            this.openSnackBar('Successful register user, please log in!', 'Ok');
                         }
-                    }, this.handleError)
+                    }, (err) => {this.handleError(err); })
             );
         } else {
             if (!this.loginFormGroup.valid){
@@ -214,14 +213,15 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 this.authenticationService
                     .login(data)
                     .subscribe((response: HttpResponse<any>) => {
+                            console.log(response);
                             if (response.status === 200) {
                                 this.userService.setToken(response.body.token);
                                 sessionStorage.setItem('userToken', response.body.token);
                                 sessionStorage.setItem('identity', JSON.stringify(response.body));
                                 this.socketService.setupSocketConnection();
-                                this.router.navigate(['inbox']);
+                                this.router.navigate(['inbox']).then(r => {});
                             }
-                        }, this.handleError
+                        }, (err) => {this.handleError(err); }
                     )
             );
         }

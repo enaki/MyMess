@@ -20,7 +20,7 @@
                         <mat-error>Password is invalid</mat-error>
                     </mat-form-field>
                     <mat-form-field class="input-text-update-data" appearance="outline">
-                        <mat-label>Comfirm password</mat-label>
+                        <mat-label>Confirm password</mat-label>
                         <input matInput [type]="hide ? 'password' : 'text'" formControlName="tempPassword">
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
