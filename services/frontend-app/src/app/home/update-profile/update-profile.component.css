@@ -1,0 +1,108 @@
+:host {
+    height: calc(90%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-card {
+    background-color: rgb(232, 247, 253);
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 23, 87, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.mat-content{
+    width: 80%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.card-title-text{
+    font-size: 30px;
+    font-weight: bold;
+    font-family: "Open Sans", serif;
+    margin-bottom: 3vh;
+    margin-top: 1vh;
+    color: #BC060B
+}
+
+.card-title-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid gray;
+    padding-top: 1vh;
+    margin-bottom: 2vh;
+    width: 100%;
+}
+
+.input-text-update-data{
+    margin: 10px;
+    width: 300px;
+}
+
+.container-update-data{
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    max-height: 500px;
+    width: 70%;
+}
+
+.container-main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:center;
+    width: 100%;
+}
+
+.container-user-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    width: 70%;
+}
+
+.container-user-picture{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    width: 30%;
+}
+
+mat-form-field .mat-form-field-appearance-outline {
+    color: #BC060B;
+}
+
+.button {
+    font-size: 20px;
+    padding: 3px;
+    outline: 0;
+    cursor: pointer;
+    width: 150px;
+}
+
+.button-profile-picture{
+    font-size: 20px;
+    padding: 5px 20px;
+    outline: 0;
+    cursor: pointer;
+}
+
+.user-profile-picture{
+    border: 1px solid #ff8275;
+    width: 300px;
+    height: 300px;
+    margin-bottom: 5%;
+    border-radius: 15px;
+}

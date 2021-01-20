@@ -443,4 +443,36 @@ class FriendServiceImpl: FriendService {
             )
         }
     }
+
+    override fun getSentFriendRequests(userId: String): Response<BusinessSentFriendRequestList> {
+        return try {
+            checkUsersId(userId)
+
+            val response = this._friendRequestRepository.getAll()
+                    .map { it.ToBusinessFriendRequest() }
+                    .ToBusinessSentFriendRequestList(userId)
+            Response(
+                    successful_operation = true,
+                    code = 200,
+                    data = response
+            )
+        }
+        catch (error: NoSuchElementException){
+            Response(
+                    successful_operation = false,
+                    code = 404,
+                    data = null,
+                    error = error.message ?: "null",
+                    message = "Invalid id."
+            )
+        }
+        catch (error: Throwable){
+            Response(
+                    successful_operation = false,
+                    code = 400,
+                    data = null,
+                    error = error.message ?: "null"
+            )
+        }
+    }
 }

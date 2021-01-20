@@ -15,7 +15,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     constructor(
         private readonly homeService: HomeService,
-        private readonly route: ActivatedRoute
+        private readonly route: ActivatedRoute,
+        private readonly navigatorRoute: Router
     ) {
         this.subs = new Array<Subscription>();
         this.userData = null;
@@ -27,8 +28,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     public loadedProfile: Promise<boolean>;
     public loadedProfileInfo: Promise<boolean>;
     public userId: string;
+    public loggedUserId: string;
 
     ngOnInit(): void {
+        this.loggedUserId = JSON.parse(sessionStorage.getItem('user')).uid;
         const tmp = this.route.snapshot.paramMap;
         this.userId = tmp.get('userUid') !== null ? tmp.get('userUid') : JSON.parse(sessionStorage.getItem('user')).uid;
         this.subs.push(
@@ -37,7 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                 .subscribe(
                     (response: HttpResponse<any>) => {
                         if (response.status === 200){
-                            this.userData = this.capitalizeKeys(response.body);
+                            this.userData = this.homeService.capitalizeKeys(response.body);
                             this.loadedProfile = Promise.resolve(true);
                         }
                         if (response.status / 100 === 4){
@@ -52,7 +55,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                 .subscribe(
                     (response: HttpResponse<any>) => {
                         if (response.status === 200){
-                            this.userProfileData = this.capitalizeKeys(response.body);
+                            this.userProfileData = this.homeService.capitalizeKeys(response.body);
                             this.loadedProfileInfo = Promise.resolve(true);
                         }
                         if (response.status / 100 === 4){
@@ -63,16 +66,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         );
     }
 
-    private capitalizeKeys(obj: any): any{
-        Object.keys(obj).forEach((key) => {
-            let temp;
-            if (obj.hasOwnProperty(key)) {
-                temp = obj[key];
-                delete obj[key];
-                obj[key.charAt(0).toUpperCase() + key.substring(1)] = temp;
-            }
-        });
-        return obj;
+    public goToUpdateProfile(): void{
+        this.navigatorRoute.navigate(['home/update-profile']).then(r => {console.log('Redirected to update-profile page.'); });
     }
 
     ngOnDestroy(): void {
