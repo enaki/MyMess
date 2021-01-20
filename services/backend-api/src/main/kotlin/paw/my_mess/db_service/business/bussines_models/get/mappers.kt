@@ -20,7 +20,10 @@ fun UserChat.ToBusinessUserChat(): BusinessUserChat { return BusinessUserChat(ch
 
 fun BlockedUser.ToBusinessBlockedUser(): BusinessBlockedUser { return BusinessBlockedUser(blockedUsersId, uid, targetId) }
 
-fun List<BusinessFriendRequest>.ToBusinessFriendRequestList(uid: String): BusinessFriendRequestList{
+fun List<BusinessFriendRequest>.ToBusinessSentFriendRequestList(uid: String): BusinessSentFriendRequestList{
+    val list = this.filter { uid == it.fromId }
+            .map { it.toId }
+    return BusinessSentFriendRequestList(uid, list)
 }
 
 fun List<BusinessFriendship>.toFriendShipList(uid: String): BusinessFriendshipList{
