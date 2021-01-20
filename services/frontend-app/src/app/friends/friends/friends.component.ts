@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {UserService} from '../../shared/services';
 import {FriendService} from '../../shared/services';
 import {Router} from '@angular/router';
 import {BasicUserModel} from '../../shared/models/basic-user.model';
 import {FriendListModel} from '../../shared/models/friend-list.model';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-friends',
@@ -12,56 +13,63 @@ import {FriendListModel} from '../../shared/models/friend-list.model';
   styleUrls: ['./friends.component.css']
 })
 
-export class FriendsComponent implements OnInit {
+export class FriendsComponent implements OnInit, OnDestroy {
+  subscriptions: Array<Subscription> = new Array<Subscription>();
   friends: BasicUserModel[];
+  user: BasicUserModel;
   searchText: string;
-  uid = '3'; // TODO: replace with user uid
 
   constructor(private router: Router, private userService: UserService, private friendService: FriendService) {
-    // const user = this.userService.getUserDetails();
-    // if (user == null) {
-    //   this.router.navigate(['login']);
-    // }
+    const user = this.userService.getUserDetails();
+    if (user == null) {
+      this.router.navigate(['login']);
+    }
   }
 
   getFriends(): void {
-    this.friendService.getFriendsIds(this.uid).subscribe((data: FriendListModel) => {
-      this.friends = [];
-      for (const friendId of data.friendList) {
-        this.friendService.getFriendInfo(friendId).subscribe((basicUserModel) => {
-          this.friends.push(basicUserModel);
-        });
-      }
-    });
+    this.subscriptions.push(
+      this.friendService.getFriendsIds(this.user.uid).subscribe((data: FriendListModel) => {
+        this.friends = [];
+        for (const friendId of data.friendList) {
+          this.friendService.getFriendInfo(friendId).subscribe((basicUserModel) => {
+            this.friends.push(basicUserModel);
+          });
+        }
+      }));
   }
 
   ngOnInit(): void {
+    this.user = this.userService.getBasicUserDetails();
     this.getFriends();
     this.searchText = '';
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    });
+  }
+
   blockFriend = (name: string, id: string) => {
     if (confirm(`Are you sure you want to block ${name}?`)) {
-      this.friendService.blockFriend(this.uid, id).subscribe(() =>
-        this.getFriends()
-      );
+      this.subscriptions.push(
+        this.friendService.blockFriend(this.user.uid, id).subscribe(() =>
+          this.getFriends()
+        ));
     }
   }
 
   deleteFriend = (name: string, id: string) => {
     if (confirm(`Are you sure to remove ${name} as your friend?`)) {
-      this.friendService.deleteFriend(this.uid, id).subscribe(() =>
-        this.getFriends()
-      );
+      this.subscriptions.push(
+        this.friendService.deleteFriend(this.user.uid, id).subscribe(() =>
+          this.getFriends()
+        ));
     }
   }
 
   redirectToProfile = (id: string) => {
-    // TODO: redirect to friend profile
     this.router.navigate(['/home', id]);
   }
 
-  redirectToAddFriends = () => {
-    this.router.navigate(['friends/find']);
-  }
 }

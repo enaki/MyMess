@@ -16,6 +16,7 @@ export class HeaderComponent implements OnDestroy {
   private subs: Subscription[];
   showInboxNotification = true;
   showNotifications = false;
+  isInInbox = false;
 
   constructor(
     private headerService: HeaderService,
@@ -30,13 +31,12 @@ export class HeaderComponent implements OnDestroy {
       }
     }));
     this.showInboxNotification = false;
+    this.isInInbox = true;
   }
 
   socketHandler(): void {
-    this.socket.on('message-notifications', (data: any) => {
-      console.log('Unseen messages from.');
-      console.log(data);
-      if (data.length > 0) {
+    this.socket.on('notify-inbox', (data: any) => {
+      if (!this.isInInbox) {
         this.showInboxNotification = true;
       }
     });
@@ -50,26 +50,32 @@ export class HeaderComponent implements OnDestroy {
 
   public goToInboxPage(): void {
     this.showInboxNotification = false;
+    this.isInInbox = true;
     this.headerService.navigateToInbox();
   }
 
   public goToHomePage(): void {
+    this.isInInbox = false;
     this.headerService.navigateToHome();
   }
 
   public goToNotificationPage(): void {
+    this.isInInbox = false;
     this.headerService.navigateToNotification();
   }
 
   public goToFriendsPage(): void {
+    this.isInInbox = false;
     this.headerService.navigateToFriends();
   }
 
-  public goToProfilePage(): void {
-    this.headerService.navigateToProfile();
+  public goToPeoplePage(): void {
+    this.isInInbox = false;
+    this.headerService.navigateToPeople();
   }
 
   public goToLoginPage(): void {
+    this.isInInbox = false;
     this.headerService.navigateToLogin();
   }
 

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7913a6a2-227c-48cf-8764-b6bed863a937",
+		"_postman_id": "33895c9e-5293-4afc-9450-2add4b19c6b8",
 		"name": "PAW",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -498,6 +498,28 @@
 										"api",
 										"friends",
 										"friend-requests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Sent Friend Requests Of User Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/friends/2/sent-friend-requests",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"friends",
+										"2",
+										"sent-friend-requests"
 									]
 								}
 							},

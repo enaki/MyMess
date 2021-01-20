@@ -22,8 +22,8 @@ export class HeaderService {
     this.router.navigate(['friends']).then(r => {});
   }
 
-  public navigateToProfile(): void{
-    this.router.navigate(['profile']).then(r => {});
+  public navigateToPeople(): void{
+    this.router.navigate(['people']).then(r => {});
   }
 
   public navigateToLogin(): void{
