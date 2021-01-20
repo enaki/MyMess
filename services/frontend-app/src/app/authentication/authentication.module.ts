@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatOptionModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {SharedModule} from '../shared/shared.module';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
@@ -20,7 +21,8 @@ import {SharedModule} from '../shared/shared.module';
         MatFormFieldModule,
         MatOptionModule,
         MatDatepickerModule,
-        SharedModule
+        SharedModule,
+        MatSnackBarModule
     ]
 })
 export class AuthenticationModule { }
