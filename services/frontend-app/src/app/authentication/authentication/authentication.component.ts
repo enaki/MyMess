@@ -132,7 +132,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     private static handleError(responseError: HttpErrorResponse): void {
         cleanErrorList();
         if (responseError.status === 400) {
-            console.log(responseError);
             if ('code' in responseError.error) {
                 const newError = document.createElement('div');
                 newError.className = 'error-item';
@@ -191,7 +190,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
 
     public authenticate(): void {
-        console.log(this.selectedCountry);
         if (this.isSetRegistered) {
             const data: RegisterModel = this.registerFormGroup.getRawValue();
             delete data.confirmPassword;

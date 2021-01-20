@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatOptionModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {SharedModule} from '../shared/shared.module';
 
 
 
@@ -18,7 +19,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
         ReactiveFormsModule,
         MatFormFieldModule,
         MatOptionModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        SharedModule
     ]
 })
 export class AuthenticationModule { }
