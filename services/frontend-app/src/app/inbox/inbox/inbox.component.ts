@@ -111,6 +111,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   changeChat(id: string): void {
+    this.socket.emit('message-notification-clear', this.selectedUser.uid);
     console.log('Change chat');
     // this.setupSocketDisconnect();
     // this.setupSocketConnection();
