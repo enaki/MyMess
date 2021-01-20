@@ -1,9 +1,10 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HeaderService} from '../services/header.service';
 import {UserService} from '../services';
 import {SocketService} from '../services/socket.service';
 import {Socket} from 'socket.io-client';
 import {Subscription} from 'rxjs';
+import {FriendRequestsService} from "../services/friend-requests.service";
 
 
 @Component({
@@ -11,17 +12,18 @@ import {Subscription} from 'rxjs';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnDestroy {
+export class HeaderComponent implements OnDestroy, OnInit {
   socket: Socket;
   private subs: Subscription[];
   showInboxNotification = true;
-  showNotifications = false;
+  showNotifications = true;
   isInInbox = false;
 
   constructor(
     private headerService: HeaderService,
     private userService: UserService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private friendRequestsService: FriendRequestsService
   ) {
     this.subs = new Array<Subscription>();
     this.subs.push(this.socketService.socket.subscribe((socket) => {
@@ -32,6 +34,20 @@ export class HeaderComponent implements OnDestroy {
     }));
     this.showInboxNotification = false;
     this.isInInbox = true;
+  }
+
+  public ngOnInit() {
+    this.headerService.getRouter().events.subscribe((val) => {
+      try {
+        this.friendRequestsService.getFriendRequests(JSON.parse(sessionStorage.getItem('user')).uid).toPromise().then((data) => {
+          if (data.length > 0) {
+            this.showNotifications = true;
+          }
+        });
+      } catch (e) {
+        this.showNotifications = false;
+      }
+    });
   }
 
   socketHandler(): void {
@@ -61,6 +77,7 @@ export class HeaderComponent implements OnDestroy {
 
   public goToNotificationPage(): void {
     this.isInInbox = false;
+    this.showNotifications = false;
     this.headerService.navigateToNotification();
   }
 

@@ -33,4 +33,7 @@ export class HeaderService {
   public navigateToNotification(): void{
     this.router.navigate(['notifications']).then(r => {});
   }
+  public getRouter(): Router{
+    return this.router;
+  }
 }
