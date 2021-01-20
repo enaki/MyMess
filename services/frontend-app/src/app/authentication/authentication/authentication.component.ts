@@ -9,6 +9,7 @@ import {AuthenticationService} from '../services/authentication.service';
 import {UserService} from '../../shared/services';
 import {SocketService} from '../../shared/services/socket.service';
 import {CountryModel} from '../models/country.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -17,13 +18,13 @@ import {CountryModel} from '../models/country.model';
     styleUrls: ['./authentication.component.css']
 })
 export class AuthenticationComponent implements OnInit, OnDestroy {
-
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly router: Router,
         private readonly authenticationService: AuthenticationService,
         private readonly userService: UserService,
-        private readonly socketService: SocketService
+        private readonly socketService: SocketService,
+        private readonly snackBar: MatSnackBar
     ) {
         this.subs = new Array<Subscription>();
         this.countries = new Array<CountryModel>();
@@ -126,25 +127,20 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     public isSetRegistered = false;
     public countries: Array<CountryModel>;
     public countriesLoaded: Promise<boolean>;
-    public selectedCountry: string;
 
 
-    private static handleError(responseError: HttpErrorResponse): void {
-        cleanErrorList();
+    private handleError(responseError: HttpErrorResponse): void {
         if (responseError.status === 400) {
-            console.log(responseError);
             if ('code' in responseError.error) {
-                const newError = document.createElement('div');
-                newError.className = 'error-item';
-                newError.innerHTML = responseError.error.error;
-                document.getElementById('error-list').appendChild(newError);
+                this.openSnackBar(responseError.error.error, 'Ok');
             } else {
-                const newError = document.createElement('div');
-                newError.className = 'error-item';
-                newError.innerHTML = responseError.statusText;
-                document.getElementById('error-list').appendChild(newError);
+                this.openSnackBar(responseError.statusText, 'Ok');
             }
         }
+    }
+
+    private openSnackBar(message: string, action: string): void{
+        this.snackBar.open(message, action, {duration: 2000});
     }
 
     public correspondingPasswords(): boolean{
@@ -173,7 +169,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
     public setRegister(): void {
         this.isSetRegistered = !this.isSetRegistered;
-        cleanErrorList();
         if (!this.isSetRegistered){
             this.registerFormGroup.markAllAsTouched();
             this.registerFormGroup.setValue({
@@ -191,8 +186,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
 
     public authenticate(): void {
-        console.log(this.selectedCountry);
         if (this.isSetRegistered) {
+            if (!this.registerFormGroup.valid){
+                this.openSnackBar('Invalid register data!', 'Ok');
+                return;
+            }
             const data: RegisterModel = this.registerFormGroup.getRawValue();
             delete data.confirmPassword;
             this.subs.push(
@@ -204,9 +202,13 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                             document.getElementById('successful-register').innerHTML =
                                 'Successful register user, please log in!';
                         }
-                    }, AuthenticationComponent.handleError)
+                    }, this.handleError)
             );
         } else {
+            if (!this.loginFormGroup.valid){
+                this.openSnackBar('Invalid login data!', 'Ok');
+                return;
+            }
             const data: LoginModel = this.loginFormGroup.getRawValue();
             this.subs.push(
                 this.authenticationService
@@ -219,7 +221,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                                 this.socketService.setupSocketConnection();
                                 this.router.navigate(['inbox']);
                             }
-                        }, AuthenticationComponent.handleError
+                        }, this.handleError
                     )
             );
         }
@@ -231,13 +233,3 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
 }
 
-function cleanErrorList(): void {
-    const tmp = document.getElementById('error-list');
-    if (tmp !== undefined)
-    {
-        const errorList = document.getElementById('error-list').childNodes;
-        errorList.forEach((child) => {
-            document.getElementById('error-list').removeChild(child);
-        });
-    }
-}

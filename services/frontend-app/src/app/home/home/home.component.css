@@ -15,6 +15,14 @@ mat-card {
     box-shadow: 0 0 8px rgba(0, 23, 87, 0.2);
 }
 
+.button-profile{
+    font-size: 20px;
+    padding: 3px;
+    outline: 0;
+    cursor: pointer;
+    width: 150px;
+}
+
 .card-data-component{
     display: flex;
     align-content: center;
