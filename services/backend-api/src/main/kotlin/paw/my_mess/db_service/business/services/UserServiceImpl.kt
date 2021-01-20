@@ -80,7 +80,9 @@ class UserServiceImpl : UserService {
                 return Response(successful_operation = false, data = user, code = 404, message = "Password or username is null")
             }
             val passwordHash = this._passwordEncoder.encode(user.passwordHash)
-            val uid = _userRepository.add(User(uid = "", userName = user.username, firstname = user.firstName, lastname = user.lastName, passwordHash = passwordHash, email = user.email, avatarPath = ""))
+            val gender = user.gender.toLowerCase()
+            val avatarPath = if (gender == "male") "male.png" else "female.png"
+            val uid = _userRepository.add(User(uid = "", userName = user.username, firstname = user.firstName, lastname = user.lastName, passwordHash = passwordHash, email = user.email, avatarPath = avatarPath))
             if (uid == null) {
                 return Response(successful_operation = false, data = Unit, code = 400, error = "Can't create user")
             }

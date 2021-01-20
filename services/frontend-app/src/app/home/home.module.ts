@@ -12,6 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {MatIconModule} from '@angular/material/icon';
         MatInputModule,
         MatSelectModule,
         MatIconModule,
-        FormsModule
+        FormsModule,
+        MatSnackBarModule
     ]
 })
 export class HomeModule { }

@@ -74,7 +74,7 @@ class ImageServiceImpl : ImageService {
                     ?: return Response(successful_operation = false, code = 404, data = null, error = "user not found", message = "");
             user.avatarPath = avatarPath
             _userRepository.update(uid, user)
-            return Response(successful_operation = true, code = 200, data = "success")
+            return Response(successful_operation = true, code = 200, data = null)
         } catch (e: Exception) {
             return Response(successful_operation = false, code = 404, data = null, error = "user not found", message = "")
         }

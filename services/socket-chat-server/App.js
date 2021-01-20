@@ -110,12 +110,14 @@ serverSocket.on('connection', socket => {
                         const socketFriendId = allUsers[friendId]["socketId"];
                         data["date"] = moment.now();
                         serverSocket.to(socketFriendId).emit("receive-chat-message", data);
+                        serverSocket.to(socketFriendId).emit("notify-inbox");
                     }
                     if (unseenFrom[friendId] === undefined) {
                         unseenFrom[friendId] = [];
                     }
 
                     unseenFrom[friendId].push(uid);
+
                 });
         } else {
             console.log(getMoment() + socketsUidPair[socket.id] + " send an invalid message ");
@@ -143,6 +145,13 @@ serverSocket.on('connection', socket => {
         const uid = socketsUidPair[socket.id]
         console.log(getMoment() + "(Socket, User): (" + socket.id + ", " + uid + ") disconnected");
         socket.broadcast.emit('user-disconnected', {"uid": uid})
+        if (allUsers[uid] !== undefined) {
+            const friendId = allUsers[uid]["friendId"];
+            if (allUsers[friendId] !== undefined) {
+                const socketFriendId = allUsers[friendId]["socketId"];
+                serverSocket.to(socketFriendId).emit("receive-stop-typing", uid)
+            }
+        }
         actives[uid] = moment().unix();
         delete allUsers[socketsUidPair[socket.id]];
         delete socketsUidPair[socket.id];

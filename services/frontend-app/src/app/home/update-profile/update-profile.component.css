@@ -56,6 +56,30 @@ mat-card {
     width: 70%;
 }
 
+.container-main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:center;
+    width: 100%;
+}
+
+.container-user-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    width: 70%;
+}
+
+.container-user-picture{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    width: 30%;
+}
+
 mat-form-field .mat-form-field-appearance-outline {
     color: #BC060B;
 }
@@ -66,4 +90,153 @@ mat-form-field .mat-form-field-appearance-outline {
     outline: 0;
     cursor: pointer;
     width: 150px;
+}
+
+.button-profile-picture{
+    font-size: 20px;
+    padding: 5px 20px;
+    outline: 0;
+    cursor: pointer;
+}
+
+.user-profile-picture{
+    border: 1px solid #ff8275;
+    width: 300px;
+    height: 300px;
+    margin-bottom: 5%;
+    border-radius: 15px;
+}
+
+@media only screen and (max-width: 1350px) {
+    :host {
+        height: 110vh;
+    }
+
+    .card-title-text{
+        font-size: 25px;
+    }
+
+    .mat-content{
+        margin-top: 15vh;
+    }
+
+    .container-main{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content:center;
+        width: 100%;
+    }
+    .container-user-picture{
+        margin-top: 3vh;
+    }
+    .container-user-info {
+        width: 100%;
+    }
+    .container-update-data{
+        width: 100%;
+    }
+
+    router-outlet{
+        display: none;
+        height: 0;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    :host {
+        height: 110vh;
+    }
+
+    html {
+        overflow-x: hidden;
+    }
+
+    .card-title-text{
+        font-size: 20px;
+    }
+
+    .mat-content{
+        margin-top: 50vh;
+    }
+    .container-update-data{
+        flex-direction: column;
+        flex-wrap: nowrap;
+        max-height: none;
+    }
+}
+
+@media only screen and (max-width: 1300px) and (max-height: 850px) {
+    .mat-content{
+        margin-top: 30vh;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .button-profile-picture{
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+    .input-text-update-data {
+        margin: 5px;
+        width: 200px;
+    }
+    .mat-content{
+        margin-top: 30vh;
+    }
+}
+
+@media only screen and (max-height:750px){
+    .mat-content{
+        margin-top: 40vh;
+    }
+}
+
+@media only screen and (max-height:710px){
+    .mat-content{
+        margin-top: 50vh;
+    }
+}
+@media only screen and (max-height:650px){
+    .mat-content{
+        margin-top: 70vh;
+    }
+}
+
+@media only screen and (max-height:570px){
+    .mat-content{
+        margin-top: 90vh;
+    }
+}
+
+@media only screen and (max-height:900px) and (max-width: 600px){
+    .mat-content{
+        margin-top: 65vh;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+
+    .button-profile-picture{
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+    .mat-content{
+        margin-top: 60vh;
+    }
+    .input-text-update-data {
+        margin: 5px;
+        width: 200px;
+    }
+    .user-profile-picture{
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .mat-content{
+        margin-top: 80vh;
+    }
 }
