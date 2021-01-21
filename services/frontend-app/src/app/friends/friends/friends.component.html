@@ -17,39 +17,44 @@
     <div class="col-8 pt-4">
       <h1>Friends</h1>
       <hr>
-      <div  *ngIf="friends?.length==0;else display_friends">
-        <div>No friends</div>
-        <div class="text-center"><img src="assets/images/users.svg" alt="users" width="300" height="300"/></div>
-      </div>
-      <ng-template #display_friends>
-        <div class=" form-inline d-flex justify-content-center p-5">
-          <input class="form-control form-control mr-3 w-50" type="text" placeholder="Search" aria-label="Search"
-                 [(ngModel)]="searchText"> <i class="fas fa-search" aria-hidden="true"></i>
+      <div *ngIf="loadingFriends==false;else is_loading">
+        <div *ngIf="friends?.length==0;else display_friends">
+          <div>No friends</div>
+          <div class="text-center"><img src="assets/images/users.svg" alt="users" width="300" height="300"/></div>
         </div>
-        <div class="card-columns custom-columns">
-          <div *ngFor="let friend of friends;">
-            <div class="card text-center shadow-sm p-2 mb-5 bg-white rounded user-card"
-                 *ngIf="(friend.firstName).toLowerCase().includes(searchText.toLowerCase()) ||
+        <ng-template #display_friends>
+          <div class=" form-inline d-flex justify-content-center p-5">
+            <input class="form-control form-control mr-3 w-50" type="text" placeholder="Search" aria-label="Search"
+                   [(ngModel)]="searchText"> <i class="fas fa-search" aria-hidden="true"></i>
+          </div>
+          <div class="card-columns custom-columns">
+            <div *ngFor="let friend of friends;">
+              <div class="card text-center shadow-sm p-2 mb-5 bg-white rounded user-card"
+                   *ngIf="(friend.firstName).toLowerCase().includes(searchText.toLowerCase()) ||
                (friend.lastName).toLowerCase().includes(searchText.toLowerCase()) ||
                 (friend.username).toLowerCase().includes(searchText.toLowerCase())">
-              <img class="card-img-top " src="{{friend.avatarLink}}" alt="Profile image"
-                   (click)="redirectToProfile(friend.uid)">
-              <div class="card-body">
-                <h3 class="card-title">{{friend.firstName}} {{friend.lastName}}</h3>
-                <p class="card-text">@{{friend.username}}</p>
-                <button name="view" class="btn btn-success btn-sm" (click)="redirectToProfile(friend.uid)">View
-                </button>
-                <button name="block" class="btn btn-warning btn-sm"
-                        (click)="blockFriend(friend.firstName, friend.uid)">Block
-                </button>
-                <button name="delete" class="btn btn-danger btn-sm"
-                        (click)="deleteFriend(friend.firstName, friend.uid)">Remove
-                </button>
+                <img class="card-img-top " src="{{friend.avatarLink}}" alt="Profile image"
+                     (click)="redirectToProfile(friend.uid)">
+                <div class="card-body">
+                  <h3 class="card-title">{{friend.firstName}} {{friend.lastName}}</h3>
+                  <p class="card-text">@{{friend.username}}</p>
+                  <button name="view" class="btn btn-success btn-sm" (click)="redirectToProfile(friend.uid)">View
+                  </button>
+                  <button name="block" class="btn btn-warning btn-sm"
+                          (click)="blockFriend(friend.firstName, friend.uid)">Block
+                  </button>
+                  <button name="delete" class="btn btn-danger btn-sm"
+                          (click)="deleteFriend(friend.firstName, friend.uid)">Remove
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </ng-template>
+        </ng-template>
+      </div>
     </div>
+    <ng-template #is_loading>
+      <app-loading></app-loading>
+    </ng-template>
   </div>
 </div>

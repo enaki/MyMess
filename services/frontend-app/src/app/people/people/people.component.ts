@@ -5,6 +5,7 @@ import {UserService} from '../../shared/services';
 import {FriendRequestsService} from '../../shared/services/friend-requests.service';
 import {PeopleService} from '../services/people.service';
 import {Subscription} from 'rxjs';
+import {FriendRequestsListModel} from '../../shared/models/requests-list.model';
 
 
 @Component({
@@ -14,6 +15,9 @@ import {Subscription} from 'rxjs';
 })
 export class PeopleComponent implements OnInit, OnDestroy {
   subscriptions: Array<Subscription> = new Array<Subscription>();
+  sentRequests: FriendRequestsListModel;
+  loadingPeople = true;
+  loadingRequestsIds = true;
   people: BasicUserModel[];
   searchText: string;
   user: BasicUserModel;
@@ -32,12 +36,22 @@ export class PeopleComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.peopleService.getPeople(this.user.uid).subscribe((peopleList: BasicUserModel[]) => {
         this.people = peopleList;
+        this.loadingPeople = false;
+      }));
+  }
+
+  getRequestsList(): void {
+    this.subscriptions.push(
+      this.friendRequestService.getSentFriendRequests(this.user.uid).subscribe((idsList: FriendRequestsListModel) => {
+        this.sentRequests = idsList;
+        this.loadingRequestsIds = false;
       }));
   }
 
   ngOnInit(): void {
     this.user = this.userService.getBasicUserDetails();
     this.getPeople();
+    this.getRequestsList();
     this.searchText = '';
   }
 
@@ -49,9 +63,12 @@ export class PeopleComponent implements OnInit, OnDestroy {
 
   sendRequest = (id: string) => {
     this.subscriptions.push(
-      this.friendRequestService.sendRequest(this.user.uid, id).subscribe(() =>
-        this.getPeople()
-      ));
+      this.friendRequestService.sendRequest(this.user.uid, id).subscribe(() => {
+          this.getPeople();
+          this.getRequestsList();
+        }
+      ))
+    ;
   }
 
   redirectToProfile = (id: string) => {
