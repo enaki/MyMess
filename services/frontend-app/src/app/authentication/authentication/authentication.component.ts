@@ -219,7 +219,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                                 sessionStorage.setItem('userToken', response.body.token);
                                 sessionStorage.setItem('identity', JSON.stringify(response.body));
                                 this.socketService.setupSocketConnection();
-                                this.router.navigate(['inbox']).then(r => {});
+                                this.router.navigate(['home']).then(r => {});
                             }
                         }, (err) => {this.handleError(err); }
                     )
