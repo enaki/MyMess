@@ -12,11 +12,11 @@ import {FriendRequestsService} from "../services/friend-requests.service";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnDestroy, OnInit {
+export class HeaderComponent implements OnDestroy {
   socket: Socket;
   private subs: Subscription[];
   showInboxNotification = true;
-  showNotifications = true;
+  showNotifications = false;
   isInInbox = false;
 
   constructor(
@@ -36,19 +36,20 @@ export class HeaderComponent implements OnDestroy, OnInit {
     this.isInInbox = true;
   }
 
-  public ngOnInit() {
-    this.headerService.getRouter().events.subscribe((val) => {
-      try {
-        this.friendRequestsService.getFriendRequests(JSON.parse(sessionStorage.getItem('user')).uid).toPromise().then((data) => {
-          if (data.length > 0) {
-            this.showNotifications = true;
-          }
-        });
-      } catch (e) {
-        this.showNotifications = false;
-      }
-    });
-  }
+  // public ngOnInit() {
+  //   this.subs.push(
+  //   this.headerService.getRouter().events.subscribe((val) => {
+  //     try {
+  //       this.friendRequestsService.getFriendRequests(JSON.parse(sessionStorage.getItem('user')).uid).toPromise().then((data) => {
+  //         if (data.length > 0) {
+  //           this.showNotifications = true;
+  //         }
+  //       });
+  //     } catch (e) {
+  //       this.showNotifications = false;
+  //     }
+  //   }));
+  // }
 
   socketHandler(): void {
     this.socket.on('notify-inbox', (data: any) => {

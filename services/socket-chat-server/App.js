@@ -30,7 +30,28 @@ app.get('/', (req, res) => {
 
 const getMoment = () => "[" + moment().format('YYYY-MM-DD hh:mm:ss') + "] - ";
 
-const actives = {}
+const actives = {
+    "1": moment("2019-10-31", "YYYY-MM-DD").unix(),
+    "2": moment("2021-01-10", "YYYY-MM-DD").unix(),
+    "3": moment("2021-01-20 20:20:20", "YYYY-MM-DD HH:mm:ss").unix(),
+    "4": moment("2021-01-21 10:30:20", "YYYY-MM-DD HH:mm:ss").unix(),
+    "5": moment("2021-01-21 10:20:20", "YYYY-MM-DD HH:mm:ss").unix(),
+    "6": moment("2021-01-21 10:40:20", "YYYY-MM-DD HH:mm:ss").unix(),
+    "7": moment("2021-01-15", "YYYY-MM-DD").unix(),
+    "8": moment("2021-01-16", "YYYY-MM-DD").unix(),
+    "9": moment("2021-01-17", "YYYY-MM-DD").unix(),
+    "10": moment("2020-12-17", "YYYY-MM-DD").unix(),
+    "11": moment("2019-10-31", "YYYY-MM-DD").unix(),
+    "12": moment("2021-01-10", "YYYY-MM-DD").unix(),
+    "13": moment("2021-01-11", "YYYY-MM-DD").unix(),
+    "14": moment("2020-01-12", "YYYY-MM-DD").unix(),
+    "15": moment("2021-01-13", "YYYY-MM-DD").unix(),
+    "16": moment("2020-11-14", "YYYY-MM-DD").unix(),
+    "17": moment("2021-01-15", "YYYY-MM-DD").unix(),
+    "18": moment("2021-01-16", "YYYY-MM-DD").unix(),
+    "19": moment("2021-01-17", "YYYY-MM-DD").unix(),
+    "20": moment("2020-12-17", "YYYY-MM-DD").unix(),
+}
 const allUsers = {}
 const socketsUidPair = {}
 const unseenFrom = {}
