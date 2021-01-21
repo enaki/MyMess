@@ -17,7 +17,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   subscriptions: Array<Subscription> = new Array<Subscription>();
   friends: BasicUserModel[];
   user: BasicUserModel;
-  loadingFriends = true;
+  loadedFriends: Promise<boolean>;
   searchText: string;
 
   constructor(private router: Router, private userService: UserService, private friendService: FriendService) {
@@ -36,7 +36,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
             this.friends.push(basicUserModel);
           });
         }
-        this.loadingFriends = false;
+        this.loadedFriends = Promise.resolve(true);
       }));
   }
 
@@ -50,15 +50,6 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => {
       sub.unsubscribe();
     });
-  }
-
-  blockFriend = (name: string, id: string) => {
-    if (confirm(`Are you sure you want to block ${name}?`)) {
-      this.subscriptions.push(
-        this.friendService.blockFriend(this.user.uid, id).subscribe(() =>
-          this.getFriends()
-        ));
-    }
   }
 
   deleteFriend = (name: string, id: string) => {

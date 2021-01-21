@@ -16,8 +16,8 @@ import {FriendRequestsListModel} from '../../shared/models/requests-list.model';
 export class PeopleComponent implements OnInit, OnDestroy {
   subscriptions: Array<Subscription> = new Array<Subscription>();
   sentRequests: FriendRequestsListModel;
-  loadingPeople = true;
-  loadingRequestsIds = true;
+  loadedPeople: Promise<boolean>;
+  loadedRequestsIds: Promise<boolean>;
   people: BasicUserModel[];
   searchText: string;
   user: BasicUserModel;
@@ -36,7 +36,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.peopleService.getPeople(this.user.uid).subscribe((peopleList: BasicUserModel[]) => {
         this.people = peopleList;
-        this.loadingPeople = false;
+        this.loadedPeople = Promise.resolve(true);;
       }));
   }
 
@@ -44,7 +44,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.friendRequestService.getSentFriendRequests(this.user.uid).subscribe((idsList: FriendRequestsListModel) => {
         this.sentRequests = idsList;
-        this.loadingRequestsIds = false;
+        this.loadedRequestsIds = Promise.resolve(true);;
       }));
   }
 
