@@ -5,7 +5,9 @@
 button {
   margin-left: 5%;
 }
-
+.profile-card{
+  background: rgba(255,255,255,0.5);
+}
 .big-panel{
   display: flex;
   flex: 3;

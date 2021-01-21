@@ -1,15 +1,15 @@
 <div class="container-fluid main p-3">
   <div class="row cont">
     <div class="col-4 p-4">
-      <div class="card text-center p-2 usr-card">
+      <div class="card text-center p-2 usr-card profile-card">
         <img class="card-img-top card-usr-img-top" src="{{user.avatarLink}}" alt="Profile image"
              (click)="redirectToProfile(user.uid)">
         <div class="card-body">
           <h2 class="card-title">{{user.firstName}} {{user.lastName}}</h2>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">@{{user.username}}</li>
-          <li class="list-group-item">{{user.email}}</li>
+          <li class="list-group-item profile-card">@{{user.username}}</li>
+          <li class="list-group-item profile-card">{{user.email}}</li>
         </ul>
       </div>
     </div>
@@ -17,14 +17,14 @@
       <h1 class="cent">People</h1>
       <hr>
       <div class=" form-inline d-flex justify-content-center p-5">
-        <input class="form-control form-control mr-3 w-50" type="text" placeholder="Search" aria-label="Search"
+        <input class="form-control form-control mr-3 w-50 profile-card" type="text" placeholder="Search" aria-label="Search"
                [(ngModel)]="searchText"> <i class="fas fa-search" aria-hidden="true"></i>
       </div>
         <div *ngIf="loadedPeople && loadedRequestsIds | async">
         <div class="card-columns">
 
           <div *ngFor="let person of people;">
-            <div class="card  text-center shadow-sm p-3 mb-5 bg-white rounded user-card"
+            <div class="card  text-center shadow-sm p-3 mb-5 rounded user-card profile-card"
                  *ngIf="(person.firstName).toLowerCase().includes(searchText.toLowerCase()) ||
                (person.lastName).toLowerCase().includes(searchText.toLowerCase()) ||
                 (person.username).toLowerCase().includes(searchText.toLowerCase())">

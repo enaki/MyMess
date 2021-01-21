@@ -24,6 +24,9 @@ button {
     flex-direction: column;
   }
 }
+.profile-card{
+  background: rgba(255,255,255,0.5);
+}
 .cent{
   margin-left: 60px;
 }
