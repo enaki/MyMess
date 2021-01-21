@@ -10,6 +10,8 @@ import {UserProfileModel} from '../models/userprofile.model';
 import {UpdateUserProfile} from '../models/updateuserprofile';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
+import {SnakbarService} from '../../shared/services/snakbar.service';
+import {FormValidatorsService} from '../../shared/services/form-validators.service';
 
 @Component({
   selector: 'app-update-profile',
@@ -34,7 +36,9 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
       private readonly updateProfileService: UpdateProfileService,
       private readonly homeService: HomeService,
       private readonly snackBar: MatSnackBar,
-      private readonly navigatorRoute: Router
+      private readonly navigatorRoute: Router,
+      private readonly snackBarService: SnakbarService,
+      private readonly validatorsCustom: FormValidatorsService
   ) {
     this.subs = new Array<Subscription>();
     this.countries = new Array<CountryModel>();
@@ -50,14 +54,13 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
         '',
         [
           Validators.minLength(3),
-          Validators.maxLength(60),
-          Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
+          Validators.maxLength(60)
         ]
       ],
       tempPassword: [
         '',
         [
-          this.matchValidator.bind(this)
+          this.validatorsCustom.matchValidator.bind(this)
         ]
       ],
       email: [
@@ -94,6 +97,8 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
         '',
       ]
     });
+    this.validatorsCustom.setUserProfileGroup(this.updateUserProfile);
+    this.snackBarService.setSnackBar(this.snackBar);
   }
 
   ngOnInit(): void {
@@ -122,24 +127,13 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
         }));
   }
 
-  public matchValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const fromValue = control.value;
-    if (this.updateUserProfile) {
-      const toValue = (this.updateUserProfile.get('passwordHash') as FormGroup).value;
-      if (fromValue && toValue && fromValue === toValue) {
-        return null;
-      }
-      return { fieldMatch : true };
-    }
-  }
-
   public isInvalid(form: AbstractControl): boolean {
     return form.invalid && (form.touched || form.dirty);
   }
 
   public updateUserData(): void {
-    if (!this.updateUserProfile.get('tempPassword').valid){
-      this.openSnackBar('Passwords don\'t match!', 'Ok');
+    if (!this.updateUserProfile.get('tempPassword').valid && this.updateUserProfile.get('tempPassword').value !== ''){
+      this.snackBarService.openSnackBar('Passwords don\'t match!', 'Ok');
       return;
     }
     const tmp = this.updateProfileService.removePristineFields(this.updateUserProfile.getRawValue());
@@ -153,20 +147,16 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
         (response: HttpResponse<any>) => {
           if (response.status === 204){
             if (!changePassword){
-              this.openSnackBar('Updated profile successfully!', 'Ok');
+              this.snackBarService.openSnackBar('Updated profile successfully!', 'Ok');
             }
             else{
-              this.openSnackBar('Updated profile successfully! Password has changed! Redirect after 3 seconds.', 'Ok');
+              this.snackBarService.openSnackBar('Updated profile successfully! Password has changed! Redirect after 3 seconds.', 'Ok');
               setTimeout(() => {this.navigatorRoute.navigate(['authentication']).then(r => {}); }, 3000);
             }
           }else {
-            this.openSnackBar('Profile not updated! There was an error!', 'Ok');
+            this.snackBarService.openSnackBar('Profile not updated! There was an error!', 'Ok');
           }
         });
-  }
-
-  private openSnackBar(message: string, action: string): void{
-    this.snackBar.open(message, action, {duration: 2000});
   }
 
   public changeProfilePicture(fileInputEvent: any): void{
@@ -175,11 +165,11 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
     this.updateProfileService.postUserProfilePicture(this.userId, this.newProfileImage).subscribe((response: HttpResponse<any>) => {
       console.log(response);
       if (response.status === 200) {
-        this.openSnackBar('Updated profile picture successfully! Refreshing data.', 'Ok');
+        this.snackBarService.openSnackBar('Updated profile picture successfully! Refreshing data.', 'Ok');
         setTimeout(() => { window.location.reload(); }, 3000);
       }
       else{
-        this.openSnackBar('Failed to update profile picture!', 'Ok');
+        this.snackBarService.openSnackBar('Failed to update profile picture!', 'Ok');
       }
     });
 

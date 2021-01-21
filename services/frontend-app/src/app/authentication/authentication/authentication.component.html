@@ -23,7 +23,7 @@
                                class="input-text" formControlName="passwordHash" required>
                     </div>
                     <div *ngIf="isInvalid(registerFormGroup.get('passwordHash'))" class="error-alert">
-                        Password is invalid
+                        Password is invalid.
                     </div>
                     <div class="authentication-item">
                         <div class="input-icon">
@@ -33,7 +33,7 @@
                                placeholder="Confirm Password" class="input-text"
                                formControlName="confirmPassword" required>
                     </div>
-                    <div *ngIf="correspondingPasswords()" class="error-alert">
+                    <div *ngIf="isInvalid(registerFormGroup.get('confirmPassword'))" class="error-alert">
                         Password is invalid
                     </div>
                     <div class="authentication-item">
@@ -94,7 +94,7 @@
                             <i class="fas fa-globe"></i>
                         </div>
                         <select class="input-text" name="country" id="country" formControlName="country" >
-                            <option [value]="null"  *ngFor="let item of countries">{{item.country}}</option>
+                            <option *ngFor="let item of countries">{{item.country}}</option>
                         </select>
                     </div>
                     <div *ngIf="isInvalid(registerFormGroup.get('country'))" class="error-alert">
@@ -135,7 +135,7 @@
                                class="input-text" formControlName="password" (keyup.enter)="authenticate()" required>
                     </div>
                     <div *ngIf="isInvalid(loginFormGroup.get('password'))" class="error-alert">
-                        Password is invalid
+                        Password is invalid.
                     </div>
                 </div>
             </form>
