@@ -132,7 +132,7 @@ class UserServiceImpl : UserService {
             if (user_from_db == null || user_profile_from_db == null) {
                 return Response(successful_operation = false, data = user, code = 404, message = "User Not Found")
             }
-            val passwordHash = this._passwordEncoder.encode(user.passwordHash)
+            val passwordHash = if (user.passwordHash != null) this._passwordEncoder.encode(user.passwordHash) else user_from_db.passwordHash
             // updatam userul
             val tempUsername = user.username ?: user_from_db.userName
             val tempPasswordhash = passwordHash ?: user_from_db.passwordHash

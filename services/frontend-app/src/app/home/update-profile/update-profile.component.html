@@ -17,7 +17,7 @@
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                        <mat-error>Password is invalid</mat-error>
+                        <mat-error>Password must contain more than 3 characters.</mat-error>
                     </mat-form-field>
                     <mat-form-field class="input-text-update-data" appearance="outline">
                         <mat-label>Confirm password</mat-label>

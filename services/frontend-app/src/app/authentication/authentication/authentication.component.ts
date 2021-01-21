@@ -10,6 +10,8 @@ import {UserService} from '../../shared/services';
 import {SocketService} from '../../shared/services/socket.service';
 import {CountryModel} from '../models/country.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {SnakbarService} from '../../shared/services/snakbar.service';
+import {FormValidatorsService} from '../../shared/services/form-validators.service';
 
 
 @Component({
@@ -18,14 +20,25 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     styleUrls: ['./authentication.component.css']
 })
 export class AuthenticationComponent implements OnInit, OnDestroy {
+    public loginFormGroup: FormGroup;
+    public registerFormGroup: FormGroup;
+    public genders: Array<string> = ['Male', 'Female'];
+    private subs: Subscription[];
+    public isSetRegistered = false;
+    public countries: Array<CountryModel>;
+    public countriesLoaded: Promise<boolean>;
+
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly router: Router,
         private readonly authenticationService: AuthenticationService,
         private readonly userService: UserService,
         private readonly socketService: SocketService,
-        private readonly snackBar: MatSnackBar
+        private readonly snackBar: MatSnackBar,
+        private readonly snackBarService: SnakbarService,
+        private readonly validatorsCustom: FormValidatorsService,
     ) {
+        this.snackBarService.setSnackBar(this.snackBar);
         this.subs = new Array<Subscription>();
         this.countries = new Array<CountryModel>();
         this.loginFormGroup = this.formBuilder.group({
@@ -51,17 +64,16 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 '',
                 [
                     Validators.required,
+                    Validators.minLength(3),
                     Validators.maxLength(150),
-                    Validators.minLength(3)
                 ]
             ],
             passwordHash: [
                 '',
                 [
                     Validators.required,
-                    Validators.minLength(3),
+                    Validators.minLength(5),
                     Validators.maxLength(60),
-                    Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
                 ]
             ],
             email: [
@@ -75,15 +87,14 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
             confirmPassword: [
                 '',
                 [
-                    Validators.required,
-                    Validators.minLength(8),
-                    Validators.maxLength(60)
+                    this.matchValidator.bind(this)
                 ]
             ],
             firstName: [
                 '',
                 [
                     Validators.required,
+                    Validators.minLength(2),
                     Validators.maxLength(50)
                 ]
             ],
@@ -91,6 +102,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 '',
                 [
                     Validators.required,
+                    Validators.minLength(2),
                     Validators.maxLength(50)
                 ]
             ],
@@ -120,31 +132,27 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
             ]
         });
     }
-    public loginFormGroup: FormGroup;
-    public registerFormGroup: FormGroup;
-    public genders: Array<string> = ['Male', 'Female'];
-    private subs: Subscription[];
-    public isSetRegistered = false;
-    public countries: Array<CountryModel>;
-    public countriesLoaded: Promise<boolean>;
-
 
     public handleError(responseError: HttpErrorResponse): void {
         if (responseError.status === 400) {
             if ('code' in responseError.error) {
-                this.openSnackBar(responseError.error.error, 'Ok');
+                this.snackBarService.openSnackBar(responseError.error.error, 'Ok');
             } else {
-                this.openSnackBar(responseError.statusText, 'Ok');
+                this.snackBarService.openSnackBar(responseError.statusText, 'Ok');
             }
         }
     }
 
-    public openSnackBar(message: string, action: string): void{
-        this.snackBar.open(message, action, {duration: 2000});
-    }
-
-    public correspondingPasswords(): boolean{
-        return this.registerFormGroup.get('passwordHash') === this.registerFormGroup.get('confirmPassword');
+    public matchValidator(control: AbstractControl): { [key: string]: boolean } | null {
+        console.log('Validator user form' + this.registerFormGroup);
+        const fromValue = control.value;
+        if (this.registerFormGroup) {
+            const toValue = (this.registerFormGroup.get('passwordHash') as FormGroup).value;
+            if (fromValue && toValue && fromValue === toValue) {
+                return null;
+            }
+            return { fieldMatch : true };
+        }
     }
 
     ngOnInit(): void {
@@ -168,15 +176,17 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
 
     public setRegister(): void {
+        this.validatorsCustom.setUserProfileGroup(this.registerFormGroup);
         this.isSetRegistered = !this.isSetRegistered;
         if (!this.isSetRegistered){
             this.registerFormGroup.markAllAsTouched();
             this.registerFormGroup.setValue({
                 username: '',
                 passwordHash: '',
+                confirmPassword: '',
                 email: '',
-                firstname: '',
-                lastname: '',
+                firstName: '',
+                lastName: '',
                 birthdate: '',
                 gender: '',
                 country: '',
@@ -188,7 +198,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     public authenticate(): void {
         if (this.isSetRegistered) {
             if (!this.registerFormGroup.valid){
-                this.openSnackBar('Invalid register data!', 'Ok');
+                this.snackBarService.openSnackBar('Invalid register data!', 'Ok');
                 return;
             }
             const data: RegisterModel = this.registerFormGroup.getRawValue();
@@ -199,13 +209,13 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                     .subscribe((response: HttpResponse<any>) => {
                         if (response.status === 201) {
                             this.setRegister();
-                            this.openSnackBar('Successful register user, please log in!', 'Ok');
+                            this.snackBarService.openSnackBar('Successful register user, please log in!', 'Ok');
                         }
                     }, (err) => {this.handleError(err); })
             );
         } else {
             if (!this.loginFormGroup.valid){
-                this.openSnackBar('Invalid login data!', 'Ok');
+                this.snackBarService.openSnackBar('Invalid login data!', 'Ok');
                 return;
             }
             const data: LoginModel = this.loginFormGroup.getRawValue();
