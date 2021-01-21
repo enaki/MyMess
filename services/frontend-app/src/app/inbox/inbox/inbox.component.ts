@@ -207,6 +207,9 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         imagePath: null,
         date: this.moment.today
       };
+      if(this.messages[this.selectedUser.uid] === undefined){
+        this.messages[this.selectedUser.uid] = [];
+      }
       this.messages[this.selectedUser.uid].push(message);
       this.inputText = '';
       this.socket.emit('send-chat-message', message);
