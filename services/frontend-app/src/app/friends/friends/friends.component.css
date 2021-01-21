@@ -5,7 +5,30 @@
 button {
   margin-left: 5%;
 }
-
+.profile-card{
+  background: rgba(255,255,255,0.5);
+}
+.big-panel{
+  display: flex;
+  flex: 3;
+}
+.small-panel{
+  display: flex;
+  flex: 1;
+}
+.cont{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+@media only screen and (max-width: 575px){
+  .cont{
+    flex-direction: column;
+  }
+}
+.cent{
+  margin-left: 60px;
+}
 .card-img-top {
   width: 100%;
   height: 20rem;

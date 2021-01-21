@@ -1,54 +1,52 @@
-<div class="container-fluid main p-3">
-  <div class="row">
-    <div class="col-4 p-4">
-      <div class="card text-center p-2 usr-card">
-        <img class="card-img-top card-usr-img-top" src="{{user.avatarLink}}" alt="Profile image"
-             (click)="redirectToProfile(user.uid)">
-        <div class="card-body">
-          <h2 class="card-title">{{user.firstName}} {{user.lastName}}</h2>
+<div *ngIf="loadedNotifications | async">
+  <div class="container-fluid main p-3 small-panel">
+    <div class="row cont">
+      <div class="col-4 p-4">
+        <div class="card text-center p-2 usr-card profile-card">
+          <img class="card-img-top card-usr-img-top" src="{{user.avatarLink}}" alt="Profile image"
+               (click)="redirectToProfile(user.uid)">
+          <div class="card-body">
+            <h2 class="card-title">{{user.firstName}} {{user.lastName}}</h2>
+          </div>
+          <ul class="list-group list-group-flush" >
+            <li class="list-group-item profile-card profile-card">@{{user.username}}</li>
+            <li class="list-group-item profile-card profile-card">{{user.email}}</li>
+          </ul>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">@{{user.username}}</li>
-          <li class="list-group-item">{{user.email}}</li>
-        </ul>
       </div>
+
     </div>
     <div class="col-8 pt-4">
       <h1>Friend requests</h1>
       <hr>
-      <div *ngIf="loadingNotifications==false;else is_loading">
-        <div *ngIf="requests?.length==0">
-          <div>No friend requests</div>
-          <img src="assets/images/users.svg" alt="requests" width="300" height="300"/>
-        </div>
-        <div class="card-columns">
-          <div *ngFor="let request of requests;">
-            <div class="card  text-center shadow-sm p-3 mb-5 bg-white rounded user-card">
-              <div class=""></div>
-              <img class="card-img-top " src="{{request.avatarLink}}" alt="Profile image"
-                   (click)="redirectToProfile(request.uid)">
-              <div class="card-body">
-                <h3 class="card-title">{{request.firstName}} {{request.lastName}}</h3>
-                <p class="card-text">@{{request.username}}</p>
-              </div>
-              <div class="card-header">
-                <button name="view" class="btn btn-success btn-sm" (click)="redirectToProfile(request.uid)">View
-                </button>
-                <button name="block" class="btn btn-primary btn-sm"
-                        (click)="acceptRequest(request.uid)">Accept
-                </button>
-                <button name="delete" class="btn btn-danger btn-sm"
-                        (click)="refuseRequest(request.uid)">Refuse
-                </button>
-              </div>
+      <div *ngIf="requests?.length==0" class="center">
+        <div class=" form-inline d-flex justify-content-center p-5">No friend requests</div>
+        <img src="assets/images/users.svg" alt="requests" width="300" height="300"/>
+      </div>
+      <div class="card-columns">
+        <div *ngFor="let request of requests;">
+          <div class="card  text-center shadow-sm p-3 mb-5 rounded user-card profile-card">
+            <div class=""></div>
+            <img class="card-img-top " src="{{request.avatarLink}}" alt="Profile image"
+                 (click)="redirectToProfile(request.uid)">
+            <div class="card-body">
+              <h3 class="card-title">{{request.firstName}} {{request.lastName}}</h3>
+              <p class="card-text">@{{request.username}}</p>
+            </div>
+            <div class="card-header">
+              <button name="view" class="btn btn-success btn-sm" (click)="redirectToProfile(request.uid)">View
+              </button>
+              <button name="block" class="btn btn-primary btn-sm"
+                      (click)="acceptRequest(request.uid)">Accept
+              </button>
+              <button name="delete" class="btn btn-danger btn-sm"
+                      (click)="refuseRequest(request.uid)">Refuse
+              </button>
             </div>
           </div>
         </div>
       </div>
-      <ng-template #is_loading>
-        <app-loading></app-loading>
-      </ng-template>
     </div>
   </div>
-
+</div>
 

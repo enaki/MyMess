@@ -1,181 +1,193 @@
 :host {
-    height: calc(90%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: calc(90%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.mat-content{
-    width: 80%;
+.mat-content {
+  width: 80%;
 }
 
 mat-card {
-    background-color: rgb(232, 247, 253);
-    border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0, 23, 87, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 23, 87, 0.2);
 }
 
-.button-profile{
-    font-size: 20px;
-    padding: 3px;
-    outline: 0;
-    cursor: pointer;
-    width: 150px;
+.button-profile {
+  font-size: 20px;
+  padding: 3px;
+  outline: 0;
+  cursor: pointer;
+  width: 150px;
 }
 
-.card-data-component{
-    display: flex;
-    align-content: center;
-    justify-content: flex-start;
-    background-color: #fff6f5;
-    border-bottom: 1px solid #ff8275;
-    border-top: 1px solid #ff8275;
-    margin-bottom: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+.card-data-component {
+  display: flex;
+  align-content: center;
+  justify-content: flex-start;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: 2px solid white;
+  border-radius: 20px;
+  margin-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.card-title-text{
-    font-size: 30px;
-    font-weight: bold;
-    font-family: "Open Sans", serif;
-    margin-bottom: 2vh;
-    margin-top: 1vh;
-    color: #BC060B;
+.card-title-text {
+  font-size: 30px;
+  font-weight: bold;
+  font-family: "Open Sans", serif;
+  margin-bottom: 2vh;
+  margin-top: 1vh;
+  color: rgba(0, 0, 0, 0.7);
 }
 
-.card-text-static{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40%;
-}
-.card-text-dynamic{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60%;
-    font-size: 18px;
-    font-weight: normal;
-    font-family: "Tahoma", sans-serif;
-    color: #19b300;
+.card-text-static {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
 }
 
-.card-title-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 2px solid gray;
-    padding-top: 1vh;
-    margin-bottom: 2vh;
+.card-text-dynamic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  font-size: 18px;
+  font-weight: normal;
+  font-family: "Tahoma", sans-serif;
+  color: #19b300;
 }
+
+.card-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid gray;
+  padding-top: 1vh;
+  margin-bottom: 2vh;
+}
+
 .user-general-data {
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-.user-data-container{
+.user-data-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.presentation-text {
+  font-size: 20px;
+  color: #5B5AFD;
+  letter-spacing: 1px;
+}
+
+.text-padding {
+  padding: 5px;
+}
+
+.user-presentation-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  border-radius: 10px;
+  padding-top: 20px;
+  margin-right: 10px;
+}
+
+.user-profile-picture {
+  width: 250px;
+  height: 250px;
+  margin-bottom: 2%;
+  border: 5px solid white;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.user-presentation-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: space-evenly;
+  max-height: 200px;
+}
+
+@media only screen and (max-width: 1300px) {
+  :host {
+    height: 110vh;
+  }
+
+  .mat-content {
+    margin-top: 5vh;
+  }
+
+  .user-data-container {
     display: flex;
     align-items: center;
+    flex-direction: column-reverse;
     justify-content: center;
+  }
+
+  .user-general-data {
+    width: 100%;
+  }
 }
 
-.presentation-text{
+@media only screen and (max-width: 1300px) and (max-height: 830px) {
+  .mat-content {
+    margin-top: 20vh;
+  }
+}
+
+@media only screen and (max-width: 1300px) and (max-height: 740px) {
+  .mat-content {
+    margin-top: 30vh;
+  }
+}
+
+@media only screen and (max-width: 1300px) and (max-height: 680px) {
+  .mat-content {
+    margin-top: 60vh;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .text-padding {
     font-size: 20px;
-    color: #5B5AFD;
-    letter-spacing: 1px;
+  }
+
+  .card-text-dynamic {
+    font-size: 15px;
+  }
+
+  app-header {
+    width: 50%;
+  }
+
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
 }
 
-.text-padding{
-    padding: 5px;
-}
+@media only screen and (max-width: 550px) {
+  .presentation-text {
+    font-size: 15px;
+  }
 
-.user-presentation-card{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 40%;
-    border-radius: 10px;
-    padding-top: 20px;
-    margin-right: 10px;
-}
-
-.user-profile-picture{
-    border: 1px solid #ff8275;
-    width: 250px;
-    height: 250px;
-    margin-bottom: 2%;
-}
-
-.user-presentation-text{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    align-content: space-evenly;
-    max-height: 200px;
-}
-
-@media only screen and (max-width: 1300px){
-    :host {
-        height: 110vh;
-    }
-    .mat-content{
-        margin-top: 5vh;
-    }
-    .user-data-container{
-        display: flex;
-        align-items: center;
-        flex-direction: column-reverse;
-        justify-content: center;
-    }
-    .user-general-data{
-        width: 100%;
-    }
-}
-
-@media only screen and (max-width: 1300px) and (max-height: 830px){
-    .mat-content{
-        margin-top: 20vh;
-    }
-}
-
-@media only screen and (max-width: 1300px) and (max-height: 740px){
-    .mat-content{
-        margin-top: 30vh;
-    }
-}
-
-@media only screen and (max-width: 1300px) and (max-height: 680px){
-    .mat-content{
-        margin-top: 60vh;
-    }
-}
-@media only screen and (max-width: 1000px){
-    .text-padding{
-        font-size: 20px;
-    }
-    .card-text-dynamic{
-        font-size: 15px;
-    }
-    app-header{
-        width: 50%;
-    }
-    html, body {
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-}
-
-@media only screen and (max-width: 550px){
-    .presentation-text{
-        font-size: 15px;
-    }
-    .card-text-dynamic{
-        font-size: 15px;
-    }
+  .card-text-dynamic {
+    font-size: 15px;
+  }
 
 }

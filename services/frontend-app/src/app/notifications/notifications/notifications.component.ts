@@ -14,7 +14,7 @@ import {Subscription} from 'rxjs';
 export class NotificationsComponent implements OnInit, OnDestroy {
   subscriptions: Array<Subscription> = new Array<Subscription>();
   requests: BasicUserModel[];
-  loadingNotifications = true;
+  loadedNotifications: Promise<boolean>;
   user: BasicUserModel;
 
   constructor(private router: Router,
@@ -47,7 +47,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
               this.requests.push(basicUserModel);
             });
           }
-          this.loadingNotifications = false;
+          this.loadedNotifications = Promise.resolve(true);
         }
       ));
   }
