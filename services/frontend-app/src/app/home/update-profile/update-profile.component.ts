@@ -12,6 +12,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {SnakbarService} from '../../shared/services/snakbar.service';
 import {FormValidatorsService} from '../../shared/services/form-validators.service';
+import {FriendService, UserService} from '../../shared/services';
 
 @Component({
   selector: 'app-update-profile',
@@ -32,13 +33,15 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   private newProfileImage: File;
 
   constructor(
-      private readonly formBuilder: FormBuilder,
-      private readonly updateProfileService: UpdateProfileService,
-      private readonly homeService: HomeService,
-      private readonly snackBar: MatSnackBar,
-      private readonly navigatorRoute: Router,
-      private readonly snackBarService: SnakbarService,
-      private readonly validatorsCustom: FormValidatorsService
+    private readonly formBuilder: FormBuilder,
+    private readonly userService: UserService,
+    private readonly friendService: FriendService,
+    private readonly updateProfileService: UpdateProfileService,
+    private readonly homeService: HomeService,
+    private readonly snackBar: MatSnackBar,
+    private readonly navigatorRoute: Router,
+    private readonly snackBarService: SnakbarService,
+    private readonly validatorsCustom: FormValidatorsService
   ) {
     this.subs = new Array<Subscription>();
     this.countries = new Array<CountryModel>();
@@ -125,6 +128,10 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
             this.profileLoaded = Promise.resolve(true);
           }
         }));
+    this.friendService.getFriendInfo(this.userId).toPromise().then((basicUserModel) => {
+      this.userService.updateUserDetails(basicUserModel).then(() => {
+      });
+    });
   }
 
   public isInvalid(form: AbstractControl): boolean {
@@ -164,9 +171,11 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
     console.log(this.newProfileImage);
     this.updateProfileService.postUserProfilePicture(this.userId, this.newProfileImage).subscribe((response: HttpResponse<any>) => {
       console.log(response);
-      if (response.status === 200) {
-        this.snackBarService.openSnackBar('Updated profile picture successfully! Refreshing data.', 'Ok');
-        setTimeout(() => { window.location.reload(); }, 3000);
+      if (response.status === 200){
+          this.snackBarService.openSnackBar('Updated profile picture successfully! Refreshing data.', 'Ok');
+          this.userData.AvatarLink = response.body.avatarLink;
+          this.userService.updateUserAvatarLink(this.userData.AvatarLink).then(() => {});
+          // setTimeout(() => { window.location.reload(); }, 3000);
       }
       else{
         this.snackBarService.openSnackBar('Failed to update profile picture!', 'Ok');

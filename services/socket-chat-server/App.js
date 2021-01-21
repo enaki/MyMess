@@ -145,8 +145,6 @@ serverSocket.on('connection', socket => {
         }
     });
     socket.on('send-message-notifications', (uid) => {
-        console.log("HEREEEEEE" + uid);
-        console.log(unseenFrom[uid]);
         if (unseenFrom[uid] !== undefined) {
             serverSocket.to(socket.id).emit("message-notifications", unseenFrom[uid]);
         }

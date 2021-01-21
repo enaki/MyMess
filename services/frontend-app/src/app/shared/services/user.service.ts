@@ -65,6 +65,31 @@ export class UserService {
     return (data == null) ? null : JSON.parse(data);
   }
 
+  public updateUserDetails(user: BasicUserModel): Promise<void>{
+    return new Promise(() => {
+      const data = sessionStorage.getItem('user');
+      const parsedData: UserModel = JSON.parse(data);
+      parsedData.uid = user.uid;
+      parsedData.username = user.username;
+      parsedData.firstname = user.firstName;
+      parsedData.lastname = user.lastName;
+      parsedData.email = user.email;
+      parsedData.avatarPath = user.avatarLink;
+      sessionStorage.removeItem('user');
+      sessionStorage.setItem('user', JSON.stringify(parsedData));
+    });
+  }
+
+  public updateUserAvatarLink(avatarLink: string): Promise<void>{
+    return new Promise(() => {
+      const data = sessionStorage.getItem('user');
+      const parsedData: UserModel = JSON.parse(data);
+      parsedData.avatarPath = avatarLink;
+      sessionStorage.removeItem('user');
+      sessionStorage.setItem('user', JSON.stringify(parsedData));
+    });
+  }
+
   public getBasicUserDetails(): BasicUserModel{
     const data = sessionStorage.getItem('user');
     if (data == null){

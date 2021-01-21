@@ -3,6 +3,7 @@ package paw.my_mess.db_service.business.services
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.UrlResource
 import org.springframework.stereotype.Service
+import paw.my_mess.db_service.business.bussines_models.get.BusinessAvatarLink
 import paw.my_mess.db_service.business.error_handling.Response
 import paw.my_mess.db_service.business.interfaces.ImageService
 import paw.my_mess.db_service.persistence.entities.User
@@ -74,7 +75,7 @@ class ImageServiceImpl : ImageService {
                     ?: return Response(successful_operation = false, code = 404, data = null, error = "user not found", message = "");
             user.avatarPath = avatarPath
             _userRepository.update(uid, user)
-            return Response(successful_operation = true, code = 200, data = null)
+            return Response(successful_operation = true, code = 200, data = BusinessAvatarLink("http://localhost:2020/api/images/$avatarPath"))
         } catch (e: Exception) {
             return Response(successful_operation = false, code = 404, data = null, error = "user not found", message = "")
         }

@@ -44,11 +44,21 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .and()
             .authorizeRequests()
             .antMatchers("/auth/signIn").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/users").permitAll()
+            .antMatchers(HttpMethod.GET, "/api/images/**").permitAll()
+
+            //comment these and uncomment below for jwt guard on all routes
             .antMatchers(HttpMethod.GET, "/api/**").permitAll()
             .antMatchers(HttpMethod.DELETE, "/api/**").permitAll()
             .antMatchers(HttpMethod.POST, "/api/**").permitAll()
             .antMatchers(HttpMethod.PUT, "/api/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/auth/me").hasRole("USER")
+            .antMatchers(HttpMethod.GET, "/auth/me").permitAll()
+
+            //.antMatchers(HttpMethod.GET, "/api/**").hasRole("USER")
+            //.antMatchers(HttpMethod.DELETE, "/api/**").hasRole("USER")
+            //.antMatchers(HttpMethod.POST, "/api/**").hasRole("USER")
+            //.antMatchers(HttpMethod.PUT, "/api/**").hasRole("USER")
+            //.antMatchers(HttpMethod.GET, "/auth/me").hasRole("USER")
             .anyRequest().authenticated()
             .and()
             .apply(JwtSecurityConfigurer(jwtTokenProvider))

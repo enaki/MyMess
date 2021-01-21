@@ -12,8 +12,8 @@ INSERT INTO user_profiles (uid, status, birthdate, gender, dateRegistered, city,
 			'i am naruto', TO_DATE('2000-12-12','YYYY-MM-DD'), 'male', TO_DATE('2019-10-13','YYYY-MM-DD'), 'Bucharest', 'Romania');
 
 INSERT INTO user_profiles (uid, status, birthdate, gender, dateRegistered, city, country) 
-	VALUES ((SELECT uid FROM users WHERE username='alfred'), 
-			'i am alfred', TO_DATE('1990-12-12','YYYY-MM-DD'), 'male', TO_DATE('2017-10-31','YYYY-MM-DD'), 'Brasov', 'Romania');
+	VALUES ((SELECT uid FROM users WHERE username='pikachu'), 
+			'i am pikachu', TO_DATE('1990-12-12','YYYY-MM-DD'), 'male', TO_DATE('2017-10-31','YYYY-MM-DD'), 'Brasov', 'Romania');
 
 INSERT INTO user_profiles (uid, status, birthdate, gender, dateRegistered, city, country) 
 	VALUES ((SELECT uid FROM users WHERE username='alehandro'), 
@@ -154,17 +154,17 @@ INSERT INTO user_chats (chatId, uid) VALUES (12, (SELECT uid FROM users WHERE us
 INSERT INTO user_chats (chatId, uid) VALUES (12, (SELECT uid FROM users WHERE username='jerry'));
 INSERT INTO user_chats (chatId, uid) VALUES (13, (SELECT uid FROM users WHERE username='naruto'));
 INSERT INTO user_chats (chatId, uid) VALUES (13, (SELECT uid FROM users WHERE username='l'));
-INSERT INTO user_chats (chatId, uid) VALUES (14, (SELECT uid FROM users WHERE username='alfred'));
+INSERT INTO user_chats (chatId, uid) VALUES (14, (SELECT uid FROM users WHERE username='pikachu'));
 INSERT INTO user_chats (chatId, uid) VALUES (14, (SELECT uid FROM users WHERE username='ancuta'));
-INSERT INTO user_chats (chatId, uid) VALUES (15, (SELECT uid FROM users WHERE username='alfred'));
+INSERT INTO user_chats (chatId, uid) VALUES (15, (SELECT uid FROM users WHERE username='pikachu'));
 INSERT INTO user_chats (chatId, uid) VALUES (15, (SELECT uid FROM users WHERE username='edward'));
-INSERT INTO user_chats (chatId, uid) VALUES (16, (SELECT uid FROM users WHERE username='alfred'));
+INSERT INTO user_chats (chatId, uid) VALUES (16, (SELECT uid FROM users WHERE username='pikachu'));
 INSERT INTO user_chats (chatId, uid) VALUES (16, (SELECT uid FROM users WHERE username='frodo'));
-INSERT INTO user_chats (chatId, uid) VALUES (17, (SELECT uid FROM users WHERE username='alfred'));
+INSERT INTO user_chats (chatId, uid) VALUES (17, (SELECT uid FROM users WHERE username='pikachu'));
 INSERT INTO user_chats (chatId, uid) VALUES (17, (SELECT uid FROM users WHERE username='jerry'));
-INSERT INTO user_chats (chatId, uid) VALUES (18, (SELECT uid FROM users WHERE username='alfred'));
+INSERT INTO user_chats (chatId, uid) VALUES (18, (SELECT uid FROM users WHERE username='pikachu'));
 INSERT INTO user_chats (chatId, uid) VALUES (18, (SELECT uid FROM users WHERE username='lelouch'));
-INSERT INTO user_chats (chatId, uid) VALUES (19, (SELECT uid FROM users WHERE username='alfred'));
+INSERT INTO user_chats (chatId, uid) VALUES (19, (SELECT uid FROM users WHERE username='pikachu'));
 INSERT INTO user_chats (chatId, uid) VALUES (19, (SELECT uid FROM users WHERE username='taiga'));
 INSERT INTO user_chats (chatId, uid) VALUES (20, (SELECT uid FROM users WHERE username='alehandro'));
 INSERT INTO user_chats (chatId, uid) VALUES (20, (SELECT uid FROM users WHERE username='ancuta'));
@@ -221,7 +221,7 @@ INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date)
 	VALUES (1, (SELECT uid FROM users WHERE username='mikasa'), null, 'hello', null, TO_DATE('2020-10-02', 'YYYY-MM-DD'));
 	
 INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date) 
-	VALUES (1, (SELECT uid FROM users WHERE username='naruto'), null, 'hi', null, TO_DATE('2020-10-03', 'YYYY-MM-DD'));
+	VALUES (1, (SELECT uid FROM users WHERE username='naruto'), null, 'omae wa mou shindeiru', null, TO_DATE('2020-10-03', 'YYYY-MM-DD'));
 
 INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date) 
 	VALUES (2, (SELECT uid FROM users WHERE username='mikasa'), null, 'hi', null, TO_DATE('2020-10-03', 'YYYY-MM-DD'));
@@ -254,7 +254,7 @@ INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date)
 INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date) 
 	VALUES (9, (SELECT uid FROM users WHERE username='naruto'), null, 'hi', null, TO_DATE('2020-10-03', 'YYYY-MM-DD'));
 INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date) 
-	VALUES (9, (SELECT uid FROM users WHERE username='dumbledore'), null, 'hi', null, TO_DATE('2020-10-03', 'YYYY-MM-DD'));
+	VALUES (9, (SELECT uid FROM users WHERE username='dumbledore'), null, 'DID YOU PUT YOUR NAME IN THE GOBLET OF FIRE??', null, TO_DATE('2020-10-03', 'YYYY-MM-DD'));
 INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date) 
 	VALUES (10, (SELECT uid FROM users WHERE username='naruto'), null, 'hi', null, TO_DATE('2020-10-03', 'YYYY-MM-DD'));
 INSERT INTO messages (chatId, ownerId, replyToMessageId, text, imagePath, date) 
@@ -315,6 +315,7 @@ INSERT INTO friends (uid1, uid2) VALUES (13,14);
 
 
 /* POPULATE FRIEND REQUESTS TABLES */
+INSERT INTO friend_requests (fromid, toid) VALUES (4, 2);
 INSERT INTO friend_requests (fromid, toid) VALUES (3, 1);
 INSERT INTO friend_requests (fromid, toid) VALUES (1, 4);
 INSERT INTO friend_requests (fromid, toid) VALUES (5, 4);

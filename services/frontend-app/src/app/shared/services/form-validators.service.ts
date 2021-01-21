@@ -22,6 +22,7 @@ export class FormValidatorsService {
 
   public setUserProfileGroup(userProfile: FormGroup): void{
     this.updateUserProfile = userProfile;
-    console.log('Set user form' + this.updateUserProfile);
+    console.log('Set user form');
+    console.log(this.updateUserProfile);
   }
 }

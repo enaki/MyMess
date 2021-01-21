@@ -87,8 +87,10 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
       });
       Promise.all(friendInfoPromises).then(() => {
           console.log('[ngOnInit] All friendInfo Promises solved');
-          this.socket.emit('friend-ids', this.contactsIds);
-          this.socket.emit('send-message-notifications', this.basicUserDetails.uid);
+          if (this.socket !== null){
+            this.socket.emit('friend-ids', this.contactsIds);
+            this.socket.emit('send-message-notifications', this.basicUserDetails.uid);
+          }
         }
       );
     });

@@ -192,6 +192,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 country: '',
                 city: '',
             });
+            window.location.reload();
         }
     }
 
@@ -210,6 +211,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                         if (response.status === 201) {
                             this.setRegister();
                             this.snackBarService.openSnackBar('Successful register user, please log in!', 'Ok');
+                            window.location.reload();
                         }
                     }, (err) => {this.handleError(err); })
             );

@@ -6,6 +6,7 @@ import {FriendRequestsService} from '../../shared/services/friend-requests.servi
 import {PeopleService} from '../services/people.service';
 import {Subscription} from 'rxjs';
 import {FriendRequestsListModel} from '../../shared/models/requests-list.model';
+import {FriendRequestModel} from '../../shared/models/friend-request.model';
 
 
 @Component({
@@ -35,8 +36,12 @@ export class PeopleComponent implements OnInit, OnDestroy {
   getPeople(): void {
     this.subscriptions.push(
       this.peopleService.getPeople(this.user.uid).subscribe((peopleList: BasicUserModel[]) => {
-        this.people = peopleList;
-        this.loadedPeople = Promise.resolve(true);;
+        this.friendRequestService.getFriendRequests(this.user.uid).subscribe((friendModels: FriendRequestModel[]) => {
+          const ids = friendModels.map(friendModel => friendModel.fromId);
+          peopleList = peopleList.filter((human) => (!ids.includes(human.uid)));
+          this.people = peopleList;
+          this.loadedPeople = Promise.resolve(true);
+        });
       }));
   }
 
@@ -44,7 +49,7 @@ export class PeopleComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.friendRequestService.getSentFriendRequests(this.user.uid).subscribe((idsList: FriendRequestsListModel) => {
         this.sentRequests = idsList;
-        this.loadedRequestsIds = Promise.resolve(true);;
+        this.loadedRequestsIds = Promise.resolve(true);
       }));
   }
 

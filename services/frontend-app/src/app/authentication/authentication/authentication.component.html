@@ -2,7 +2,7 @@
     <img class="authenticate-img" src="assets/images/login.svg"  alt="login" width="300" height="300"/>
     <div class="authentication-container">
         <p class="authentication-title">{{ isSetRegistered ? "Register" : "Log in" }}</p>
-        <ng-container *ngIf="isSetRegistered ; else login">
+        <ng-container *ngIf="isSetRegistered; else login">
             <form [formGroup]="registerFormGroup" class="authentication-form">
                 <div class="form-container">
                     <div class="authentication-item ">

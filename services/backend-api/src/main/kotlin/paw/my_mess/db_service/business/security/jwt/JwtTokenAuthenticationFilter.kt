@@ -13,9 +13,6 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
-
-
-
 class JwtTokenAuthenticationFilter(private val jwtTokenProvider: JwtTokenProvider) : GenericFilterBean() {
     @Throws(IOException::class, ServletException::class)
     override fun doFilter(req: ServletRequest, res: ServletResponse, filterChain: FilterChain) {

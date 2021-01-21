@@ -33,13 +33,13 @@
               <h3 class="card-title">{{request.firstName}} {{request.lastName}}</h3>
               <p class="card-text">@{{request.username}}</p>
             </div>
-            <div class="card-header">
-              <button name="view" class="btn btn-success btn-sm" (click)="redirectToProfile(request.uid)">View
+            <div class="card-header row">
+              <button name="view" class="btn btn-success btn-sm col-12 m-1" (click)="redirectToProfile(request.uid)">View
               </button>
-              <button name="block" class="btn btn-primary btn-sm"
+              <button name="block" class="btn btn-primary btn-sm col-12 m-1"
                       (click)="acceptRequest(request.uid)">Accept
               </button>
-              <button name="delete" class="btn btn-danger btn-sm"
+              <button name="delete" class="btn btn-danger btn-sm col-12 m-1"
                       (click)="refuseRequest(request.uid)">Refuse
               </button>
             </div>

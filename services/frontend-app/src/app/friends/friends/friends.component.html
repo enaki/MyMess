@@ -15,11 +15,11 @@
     </div>
 
     <div class="col-8 pt-4 big-panel">
-      <h1 class="cent">Friends</h1>
+      <h1 *ngIf="friends?.length!==0" class="cent">Friends</h1>
       <hr>
       <div *ngIf="loadedFriends | async">
         <div *ngIf="friends?.length==0;else display_friends">
-          <div>No friends</div>
+          <div class="cent">No friends</div>
           <div class="text-center"><img src="assets/images/users.svg" alt="users" width="300" height="300"/></div>
         </div>
         <ng-template #display_friends>
@@ -27,7 +27,7 @@
             <input class="form-control form-control mr-3 w-50 profile-card" type="text" placeholder="Search" aria-label="Search"
                    [(ngModel)]="searchText"> <i class="fas fa-search " aria-hidden="true"></i>
           </div>
-          <div class="card-columns custom-columns">
+          <div class="card-columns">
             <div *ngFor="let friend of friends;">
               <div class="card text-center shadow-sm p-2 mb-5 rounded user-card profile-card"
                    *ngIf="(friend.firstName).toLowerCase().includes(searchText.toLowerCase()) ||
@@ -38,11 +38,13 @@
                 <div class="card-body">
                   <h3 class="card-title">{{friend.firstName}} {{friend.lastName}}</h3>
                   <p class="card-text">@{{friend.username}}</p>
-                  <button name="view" class="btn btn-success btn-sm" (click)="redirectToProfile(friend.uid)">View
-                  </button>
-                  <button name="delete" class="btn btn-danger btn-sm"
-                          (click)="deleteFriend(friend.firstName, friend.uid)">Remove
-                  </button>
+                  <div class="row">
+                    <button name="view" class="btn btn-success btn-sm col-12 m-1" (click)="redirectToProfile(friend.uid)">View
+                    </button>
+                    <button name="delete" class="btn btn-danger btn-sm col-12 m-1"
+                            (click)="deleteFriend(friend.firstName, friend.uid)">Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -8,7 +8,6 @@ button {
 .big-panel{
   display: flex;
   flex: 3;
-  flex-direction: column;
 }
 .small-panel{
   display: flex;
