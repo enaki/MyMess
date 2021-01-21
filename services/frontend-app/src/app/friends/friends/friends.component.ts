@@ -17,6 +17,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   subscriptions: Array<Subscription> = new Array<Subscription>();
   friends: BasicUserModel[];
   user: BasicUserModel;
+  loadingFriends = true;
   searchText: string;
 
   constructor(private router: Router, private userService: UserService, private friendService: FriendService) {
@@ -35,6 +36,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
             this.friends.push(basicUserModel);
           });
         }
+        this.loadingFriends = false;
       }));
   }
 
