@@ -20,7 +20,7 @@
         <input class="form-control form-control mr-3 w-50" type="text" placeholder="Search" aria-label="Search"
                [(ngModel)]="searchText"> <i class="fas fa-search" aria-hidden="true"></i>
       </div>
-      <div *ngIf="loadingPeople==false && loadingRequestsIds==false;else is_loading">
+        <div *ngIf="loadedPeople && loadedRequestsIds | async">
         <div class="card-columns">
 
           <div *ngFor="let person of people;">
@@ -33,7 +33,7 @@
               <div class="card-body">
                 <h3 class="card-title">{{person.firstName}} {{person.lastName}}</h3>
                 <p class="card-text">@{{person.username}}</p>
-                <button name="view" class="btn btn-outline-dark btn-sm" (click)="redirectToProfile(person.uid)">View
+                <button name="view" class="btn btn-success btn-sm" (click)="redirectToProfile(person.uid)">View
                 </button>
                 <button name="delete" class="btn btn-outline-dark btn-sm"
                         (click)="sendRequest(person.uid)"
@@ -45,9 +45,6 @@
           </div>
         </div>
       </div>
-      <ng-template #is_loading>
-        <app-loading></app-loading>
-      </ng-template>
     </div>
   </div>
 </div>

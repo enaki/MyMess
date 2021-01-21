@@ -17,7 +17,7 @@
     <div class="col-8 pt-4 big-panel">
       <h1 class="cent">Friends</h1>
       <hr>
-      <div *ngIf="loadingFriends==false;else is_loading">
+      <div *ngIf="loadedFriends | async">
         <div *ngIf="friends?.length==0;else display_friends">
           <div>No friends</div>
           <div class="text-center"><img src="assets/images/users.svg" alt="users" width="300" height="300"/></div>
@@ -40,9 +40,6 @@
                   <p class="card-text">@{{friend.username}}</p>
                   <button name="view" class="btn btn-success btn-sm" (click)="redirectToProfile(friend.uid)">View
                   </button>
-                  <button name="block" class="btn btn-warning btn-sm"
-                          (click)="blockFriend(friend.firstName, friend.uid)">Block
-                  </button>
                   <button name="delete" class="btn btn-danger btn-sm"
                           (click)="deleteFriend(friend.firstName, friend.uid)">Remove
                   </button>
@@ -53,8 +50,5 @@
         </ng-template>
       </div>
     </div>
-    <ng-template #is_loading>
-      <app-loading></app-loading>
-    </ng-template>
   </div>
 </div>

@@ -1,17 +1,20 @@
-<div class="container-fluid main p-3 small-panel">
-  <div class="row">
-    <div class="col-4 p-4">
-      <div class="card text-center p-2 usr-card">
-        <img class="card-img-top card-usr-img-top" src="{{user.avatarLink}}" alt="Profile image"
-             (click)="redirectToProfile(user.uid)">
-        <div class="card-body">
-          <h2 class="card-title">{{user.firstName}} {{user.lastName}}</h2>
+<div *ngIf="loadedNotifications | async">
+  <div class="container-fluid main p-3 small-panel">
+    <div class="row cont">
+      <div class="col-4 p-4">
+        <div class="card text-center p-2 usr-card">
+          <img class="card-img-top card-usr-img-top" src="{{user.avatarLink}}" alt="Profile image"
+               (click)="redirectToProfile(user.uid)">
+          <div class="card-body">
+            <h2 class="card-title">{{user.firstName}} {{user.lastName}}</h2>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">@{{user.username}}</li>
+            <li class="list-group-item">{{user.email}}</li>
+          </ul>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">@{{user.username}}</li>
-          <li class="list-group-item">{{user.email}}</li>
-        </ul>
       </div>
+
     </div>
     <div class="col-8 pt-4">
       <h1>Friend requests</h1>
@@ -45,10 +48,7 @@
           </div>
         </div>
       </div>
-      <ng-template #is_loading>
-        <app-loading></app-loading>
-      </ng-template>
     </div>
   </div>
-
+</div>
 
