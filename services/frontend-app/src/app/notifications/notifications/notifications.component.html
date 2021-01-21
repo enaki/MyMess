@@ -1,5 +1,5 @@
 <div class="container-fluid main p-3 small-panel">
-  <div class="row cont">
+  <div class="row">
     <div class="col-4 p-4">
       <div class="card text-center p-2 usr-card">
         <img class="card-img-top card-usr-img-top" src="{{user.avatarLink}}" alt="Profile image"
@@ -13,8 +13,8 @@
         </ul>
       </div>
     </div>
-    <div class="col-8 pt-4 big-panel">
-      <h1 class="cent">Friend requests</h1>
+    <div class="col-8 pt-4">
+      <h1>Friend requests</h1>
       <hr>
       <div *ngIf="loadingNotifications==false;else is_loading">
         <div *ngIf="requests?.length==0">
