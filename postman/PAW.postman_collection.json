@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "33895c9e-5293-4afc-9450-2add4b19c6b8",
+		"_postman_id": "7c72f149-ecdb-42f6-bec0-1ec907f35133",
 		"name": "PAW",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -358,6 +358,37 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get Chat Of Users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:2020/api/chat/?uid1=3&uid2=16",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "2020",
+									"path": [
+										"api",
+										"chat",
+										""
+									],
+									"query": [
+										{
+											"key": "uid1",
+											"value": "3"
+										},
+										{
+											"key": "uid2",
+											"value": "16"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -406,7 +437,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "http://localhost:2020/api/friends/accept-request/5?sender=3",
+									"raw": "http://localhost:2020/api/friends/accept-request/3?sender=16",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -416,12 +447,12 @@
 										"api",
 										"friends",
 										"accept-request",
-										"5"
+										"3"
 									],
 									"query": [
 										{
 											"key": "sender",
-											"value": "3"
+											"value": "16"
 										}
 									]
 								}
@@ -466,7 +497,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:2020/api/friends/friend-requests/4",
+									"raw": "http://localhost:2020/api/friends/friend-requests/3",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -476,7 +507,7 @@
 										"api",
 										"friends",
 										"friend-requests",
-										"4"
+										"3"
 									]
 								}
 							},

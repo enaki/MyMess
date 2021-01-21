@@ -9,6 +9,9 @@ import paw.my_mess.db_service.persistence.persistence.postgresql.mappers.UserCha
 
 @Repository
 class UserChatRepository : GenericRepository<UserChat>(), IUserChatRepository<UserChat> {
+    private val tableName = "user_chats"
+
+
     init {
         _rowMapper = UserChatRowMapper()
     }
@@ -18,7 +21,8 @@ class UserChatRepository : GenericRepository<UserChat>(), IUserChatRepository<Us
     }
 
     override fun add(item: UserChat): String? {
-        throw Exception("Not yet implemented")
+        val result = _jdbcTemplate.update("INSERT INTO ${tableName} (chatId, uid) VALUES (?, ?)", item.chatId.toLong(), item.uid.toLong())
+        return if (result == 0) null else item.chatId
     }
 
     override fun get(id: String): UserChat? {
@@ -34,14 +38,14 @@ class UserChatRepository : GenericRepository<UserChat>(), IUserChatRepository<Us
     }
 
     override fun getChat(chatId: String, ownerId: String): UserChat? {
-        val chatList = _jdbcTemplate.query("SELECT * FROM user_chats WHERE chatId=? AND uid=?", _rowMapper, chatId.toLong(), ownerId.toLong())
+        val chatList = _jdbcTemplate.query("SELECT * FROM ${tableName} WHERE chatId=? AND uid=?", _rowMapper, chatId.toLong(), ownerId.toLong())
         return if (chatList.isEmpty()) null else chatList[0]
     }
 
     override fun getChatID(uid1: String, uid2: String): String? {
         val _idRowMapper = IdRowMapper()
         val chatId = _jdbcTemplate.query(
-                "SELECT chatId FROM user_chats WHERE chatId IN (SELECT chatId FROM user_chats WHERE uid=?) AND uid=?",
+                "SELECT chatId FROM ${tableName} WHERE chatId IN (SELECT chatId FROM user_chats WHERE uid=?) AND uid=?",
                 _idRowMapper, uid1.toLong(), uid2.toLong())
         if(chatId.size > 0)
             return chatId[0]

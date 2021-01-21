@@ -19,6 +19,13 @@ class ChatRepository : GenericRepository<Chat>(), IChatRepository<Chat> {
     }
 
     override fun add(item: Chat): String? {
+        val chatList =  _jdbcTemplate.query("SELECT max(chatId) chatId FROM ${tableName}", _rowMapper)
+        if (chatList.size > 0){
+            item.chatId = (chatList[0].chatId.toLong() + 1).toString()
+        } else {
+            item.chatId = "1"
+        }
+
         val result = _jdbcTemplate.update("INSERT INTO ${tableName} (chatId) VALUES (default)")
 
         return if (result == 0) null else item.chatId

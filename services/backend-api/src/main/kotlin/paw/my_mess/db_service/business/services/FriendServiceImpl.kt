@@ -5,14 +5,8 @@ import org.springframework.stereotype.Service
 import paw.my_mess.db_service.business.bussines_models.get.*
 import paw.my_mess.db_service.business.error_handling.Response
 import paw.my_mess.db_service.business.interfaces.FriendService
-import paw.my_mess.db_service.persistence.entities.BlockedUser
-import paw.my_mess.db_service.persistence.entities.FriendRequest
-import paw.my_mess.db_service.persistence.entities.Friendship
-import paw.my_mess.db_service.persistence.entities.User
-import paw.my_mess.db_service.persistence.persistence.interfaces.IBlockedUserRepository
-import paw.my_mess.db_service.persistence.persistence.interfaces.IFriendRepository
-import paw.my_mess.db_service.persistence.persistence.interfaces.IRequestFriendRepository
-import paw.my_mess.db_service.persistence.persistence.interfaces.IUserRepository
+import paw.my_mess.db_service.persistence.entities.*
+import paw.my_mess.db_service.persistence.persistence.interfaces.*
 import java.sql.SQLDataException
 
 @Service
@@ -20,6 +14,12 @@ class FriendServiceImpl: FriendService {
 
     @Autowired
     private lateinit var _friendRepository: IFriendRepository<Friendship>
+
+    @Autowired
+    private lateinit var _chatRepository: IChatRepository<Chat>
+
+    @Autowired
+    private lateinit var _userChatRepository: IUserChatRepository<UserChat>
 
     @Autowired
     private lateinit var _blockedUserRepository: IBlockedUserRepository<BlockedUser>
@@ -154,6 +154,7 @@ class FriendServiceImpl: FriendService {
             )
             if (!response) throw SQLDataException("The operation was not performed. The data is not found in database.")
             if(response){
+
                 val tmp = this._friendRepository.add(
                         Friendship(
                                 friendShipId = "",
@@ -161,6 +162,10 @@ class FriendServiceImpl: FriendService {
                                 uid2 = targetId
                         )
                 )
+                val chatId = _chatRepository.add(Chat("-1"))
+                _userChatRepository.add(UserChat(chatId!!, senderId))
+                _userChatRepository.add(UserChat(chatId, targetId))
+
                 Response(
                         successful_operation = true,
                         code = 201,
