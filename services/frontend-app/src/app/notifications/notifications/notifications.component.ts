@@ -14,6 +14,7 @@ import {Subscription} from 'rxjs';
 export class NotificationsComponent implements OnInit, OnDestroy {
   subscriptions: Array<Subscription> = new Array<Subscription>();
   requests: BasicUserModel[];
+  loadingNotifications = true;
   user: BasicUserModel;
 
   constructor(private router: Router,
@@ -40,13 +41,15 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   getFriendRequests(): void {
     this.subscriptions.push(
       this.friendRequestsService.getFriendRequests(this.user.uid).subscribe((requestsList: FriendRequestModel[]) => {
-        this.requests = [];
-        for (const req of requestsList) {
-          this.friendService.getFriendInfo(req.fromId).subscribe((basicUserModel) => {
-            this.requests.push(basicUserModel);
-          });
+          this.requests = [];
+          for (const req of requestsList) {
+            this.friendService.getFriendInfo(req.fromId).subscribe((basicUserModel) => {
+              this.requests.push(basicUserModel);
+            });
+          }
+          this.loadingNotifications = false;
         }
-      }));
+      ));
   }
 
   acceptRequest = (id: string) => {
