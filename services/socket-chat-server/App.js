@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
 
 const getMoment = () => "[" + moment().format('YYYY-MM-DD hh:mm:ss') + "] - ";
 
+// mock data, user onlines
 const actives = {
     "1": moment("2019-10-31", "YYYY-MM-DD").unix(),
     "2": moment("2021-01-10", "YYYY-MM-DD").unix(),
@@ -52,8 +53,12 @@ const actives = {
     "19": moment("2021-01-17", "YYYY-MM-DD").unix(),
     "20": moment("2020-12-17", "YYYY-MM-DD").unix(),
 }
+
+// contain socket id, friendId, and username
 const allUsers = {}
+// contain socket id - uid dict
 const socketsUidPair = {}
+// contain a dict of uid - list of unseen messages from user
 const unseenFrom = {}
 
 const messageFields = ["chatId", "ownerId", "text", "imagePath"]
@@ -136,9 +141,7 @@ serverSocket.on('connection', socket => {
                     if (unseenFrom[friendId] === undefined) {
                         unseenFrom[friendId] = [];
                     }
-
                     unseenFrom[friendId].push(uid);
-
                 });
         } else {
             console.log(getMoment() + socketsUidPair[socket.id] + " send an invalid message ");
